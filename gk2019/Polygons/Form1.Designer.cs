@@ -113,6 +113,8 @@
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1008, 725);
             this.Controls.Add(this.canvasPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Menu = this.mainMenu;
             this.Name = "Form1";
             this.Text = "Polygons Editor";
