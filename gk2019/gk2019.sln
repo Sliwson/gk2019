@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polygons", "Polygons\Polygons.csproj", "{4EAE4006-F67F-4EE1-B8A7-600CAA4D9C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "CommonTests\CommonTests.csproj", "{37C9ACEE-57A8-4EB8-A9B2-074B1BDE57AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37C9ACEE-57A8-4EB8-A9B2-074B1BDE57AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37C9ACEE-57A8-4EB8-A9B2-074B1BDE57AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37C9ACEE-57A8-4EB8-A9B2-074B1BDE57AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37C9ACEE-57A8-4EB8-A9B2-074B1BDE57AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
