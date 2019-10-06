@@ -38,25 +38,25 @@ namespace Common
                     bitmap.SetPixel(j, i, clearColor);
         }
 
-        public void DrawPoint(PointF position, float radius = 1f, Color? color = null)
+        public void SetPixel(Point position, Color color)
         {
-            Color drawColor = color ?? Color.Black;
+            if (!IsPointOnBitmap(position))
+                return;
 
-            Point startingPoint = Point.Round(position);
-            int r = (int)Math.Ceiling(radius);
+            bitmap.SetPixel(position.X, position.Y, color);
+        }
 
-            for (int y = startingPoint.Y - r; y <= startingPoint.Y + r; y++)
-            {
-                for (int x = startingPoint.X - r; x <= startingPoint.X + r; x++)
-                {
-                    Point currentPoint = new Point(x, y);
-                    if (IsPointOnBitmap(currentPoint))
-                    {
-                        if (currentPoint.DistanceTo(startingPoint) <= radius)
-                            bitmap.SetPixel(currentPoint.X, currentPoint.Y, drawColor);
-                    }
-                }
-            }
+        public void SetPixel(int x, int y, Color color)
+        {
+            SetPixel(new Point(x, y), color);
+        }
+
+        public Color GetPixel(Point position)
+        {
+            if (IsPointOnBitmap(position))
+                return bitmap.GetPixel(position.X, position.Y);
+
+            return Color.White;
         }
     }
 }
