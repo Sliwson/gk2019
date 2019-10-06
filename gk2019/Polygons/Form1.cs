@@ -16,10 +16,5 @@ namespace Polygons
         {
             InitializeComponent();
         }
-
-        private void hierarchyGroupbox_Enter(object sender, EventArgs e)
-        {
-
-        }
     }
 }
