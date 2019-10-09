@@ -10,17 +10,13 @@ namespace Common
         bool HitTest(Point position);
     }
 
-    public interface IDrawable
+    public interface IGeometric
     {
         void Draw(BitmapCanvas canvas);
-    }
-
-    public interface IMovable
-    {
         void Move(Point offset);
     }
 
-    public class Polygon : IDrawable, IMovable
+    public class Polygon : IGeometric
     {
         public enum HitTestResult
         {
@@ -83,7 +79,7 @@ namespace Common
             return edges;
         }
 
-        public (HitTestResult, IMovable)  HitTest(Point position)
+        public (HitTestResult, IGeometric)  HitTest(Point position)
         {
             foreach (var vertex in vertices)
                 if (vertex.HitTest(position))

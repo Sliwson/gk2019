@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Vertex : IHitTesable, IDrawable, IMovable
+    public class Vertex : IHitTesable, IGeometric
     {
         public Point Position { get; set; }
         public double Radius { get; set; }

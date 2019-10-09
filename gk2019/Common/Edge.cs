@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Edge : IHitTesable, IDrawable, IMovable
+    public class Edge : IHitTesable, IGeometric
     {
         public Vertex Begin { get; set; }
         public Vertex End { get; set; }
