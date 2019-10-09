@@ -16,7 +16,7 @@ namespace Common
             Radius = radius;
         }
 
-        public bool HitTest(Point position)
+        public override bool HitTest(Point position)
         {
             if (position.DistanceTo(Position) <= Radius)
                 return true;

@@ -10,7 +10,7 @@ namespace Common
         bool HitTest(Point position);
     }
 
-    public abstract class PlaneStructure
+    public abstract class PlaneStructure : IHitTesable
     {
         public virtual Color DrawingColor { get; set; }
 
@@ -22,6 +22,8 @@ namespace Common
         public abstract void Draw(Graphics graphics);
 
         public abstract void Move(Point offset);
+
+        public abstract bool HitTest(Point position);
     }
 
     public class Polygon : PlaneStructure
@@ -63,7 +65,7 @@ namespace Common
 
         public bool AddVertex(Point position)
         {
-            var hitTest = HitTest(position);
+            var hitTest = HitTestPolygon(position);
 
             //check vertex hittest
             if (hitTest.Item1 == HitTestResult.Vertex)
@@ -109,7 +111,7 @@ namespace Common
             return edges;
         }
 
-        public (HitTestResult, PlaneStructure)  HitTest(Point position)
+        public (HitTestResult, PlaneStructure)  HitTestPolygon(Point position)
         {
             foreach (var vertex in vertices)
                 if (vertex.HitTest(position))
@@ -120,6 +122,11 @@ namespace Common
                     return (HitTestResult.Edge, edge);
 
             return (HitTestResult.Empty, null);
+        }
+
+        public override bool HitTest(Point position)
+        {
+            return HitTestPolygon(position).Item1 != HitTestResult.Empty;
         }
 
         public override void Draw(Graphics graphics)

@@ -18,7 +18,7 @@ namespace Common
             End = end;
         }
 
-        public bool HitTest(Point position)
+        public override bool HitTest(Point position)
         {
             const double epsilon = 0.5;
             double distanceThroughPoint = Begin.Position.DistanceTo(position) + position.DistanceTo(End.Position);
