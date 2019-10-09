@@ -12,5 +12,10 @@ namespace Common
             Point p3 = new Point(p1.X - p2.X, p1.Y - p2.Y);
             return Math.Sqrt(Math.Pow(p3.X, 2) + Math.Pow(p3.Y, 2));
         }
+
+        public static Point Add(this Point p1, Point p2)
+        {
+            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+        }
     }
 }
