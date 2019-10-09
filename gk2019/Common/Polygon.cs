@@ -73,6 +73,16 @@ namespace Common
             return true;
         }
 
+        public List<Vertex> GetVertices()
+        {
+            return vertices;
+        }
+
+        public List<Edge> GetEdges()
+        {
+            return edges;
+        }
+
         public (HitTestResult, IMovable)  HitTest(Point position)
         {
             foreach (var vertex in vertices)
