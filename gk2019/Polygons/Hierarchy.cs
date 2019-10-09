@@ -52,9 +52,18 @@ namespace Polygons
             if (treeView.HitTest(e.X, e.Y).Node != null)
                 return;
 
+            if (e.Button != MouseButtons.Right)
+                return;
+
             var contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Add polygon");
+            var addPolygon = contextMenu.Items.Add("Add polygon");
+            addPolygon.Click += AddPolygonContextMenu;
             contextMenu.Show(treeView, e.X, e.Y);
+        }
+
+        private void AddPolygonContextMenu(object sender, EventArgs e)
+        {
+            
         }
 
         private void HierarchyClick(object sender, MouseEventArgs e)
@@ -66,26 +75,9 @@ namespace Polygons
             treeView.SelectedNode = clickNode;
             var knownNode = clickNode as GeometricNode;
 
-            var contextMenu = new ContextMenuStrip();
-            switch (knownNode.Type)
-            {
-                case NodeType.Edge:
-                    contextMenu.Items.Add("Remove");
-                    contextMenu.Items.Add("Split");
-                    break;
-                case NodeType.Vertex:
-                    contextMenu.Items.Add("Remove");
-                    break;
-                case NodeType.EdgesList:
-                    return;
-                case NodeType.VerticesList:
-                    return;
-                case NodeType.Polygon:
-                    contextMenu.Items.Add("Remove");
-                    break;
-            }
-
-            contextMenu.Show(treeView, e.X, e.Y);
+            var contextMenu = CreateContextMenu(knownNode);
+            if (contextMenu != null)
+                contextMenu.Show(treeView, e.X, e.Y);
         }
 
         public PlaneStructure GetStructureSelected()
@@ -134,6 +126,38 @@ namespace Polygons
             node.Structure.DrawingColor = Color.Red;
 
             polygonManager.UpdateSelectedStructure(structureSelected);
+        }
+
+        private ContextMenuStrip CreateContextMenu(GeometricNode node)
+        {
+            if (node.Type == NodeType.EdgesList || node.Type == NodeType.VerticesList)
+                return null;
+
+            var contextMenu = new ContextMenuStrip();
+
+            if (node.Type == NodeType.Edge)
+            {
+                var split = contextMenu.Items.Add("Split");
+                split.Click += SplitClick;
+            }
+
+            if (node.Type == NodeType.Edge || node.Type == NodeType.Vertex || node.Type == NodeType.Polygon)
+            {
+                var remove = contextMenu.Items.Add("Remove");
+                remove.Click += RemoveClick;
+            }
+
+            return contextMenu;
+        }
+
+        private void RemoveClick(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void SplitClick(object sender, EventArgs e)
+        {
+            
         }
     }
 }
