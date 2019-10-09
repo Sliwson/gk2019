@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Vertex : IHitTesable
+    public class Vertex : IHitTesable, IDrawable
     {
         public Point Position { get; set; }
         public double Radius { get; set; }
@@ -16,6 +16,11 @@ namespace Common
                 return true;
 
             return false;
+        }
+
+        public void Draw(BitmapCanvas canvas)
+        {
+            Algorithms.DrawCircle(canvas, Position, Radius, Color.Black);
         }
     }
 }

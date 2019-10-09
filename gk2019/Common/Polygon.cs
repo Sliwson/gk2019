@@ -10,7 +10,12 @@ namespace Common
         bool HitTest(Point position);
     }
 
-    public class Polygon
+    public interface IDrawable
+    {
+        void Draw(BitmapCanvas canvas);
+    }
+
+    public class Polygon : IDrawable
     {
         public enum HitTestResult
         {
