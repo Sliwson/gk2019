@@ -19,7 +19,7 @@ namespace Common
             DrawingColor = Color.Black;
         }
 
-        public abstract void Draw(BitmapCanvas canvas);
+        public abstract void Draw(Graphics graphics);
 
         public abstract void Move(Point offset);
     }
@@ -122,13 +122,13 @@ namespace Common
             return (HitTestResult.Empty, null);
         }
 
-        public override void Draw(BitmapCanvas canvas)
+        public override void Draw(Graphics graphics)
         {
             foreach (var edge in edges)
-                edge.Draw(canvas);
+                edge.Draw(graphics);
 
             foreach (var vertex in vertices)
-                vertex.Draw(canvas);
+                vertex.Draw(graphics);
         }
         
         public override void Move(Point offset)

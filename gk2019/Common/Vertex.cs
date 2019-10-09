@@ -24,9 +24,9 @@ namespace Common
             return false;
         }
 
-        public override void Draw(BitmapCanvas canvas)
+        public override void Draw(Graphics graphics)
         {
-            Algorithms.DrawCircle(canvas, Position, Radius, DrawingColor);
+            graphics.FillEllipse(new SolidBrush(DrawingColor),  (float)(Position.X - Radius), (float)(Position.Y - Radius), (float)Radius * 2, (float)Radius * 2);
         }
 
         public override void Move(Point offset)

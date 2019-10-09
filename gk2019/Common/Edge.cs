@@ -29,9 +29,9 @@ namespace Common
             return false;
         }
 
-        public override void Draw(BitmapCanvas canvas)
+        public override void Draw(Graphics graphics)
         {
-            Algorithms.DrawLine(canvas, Begin.Position, End.Position, DrawingColor);
+            graphics.DrawLine(new Pen(DrawingColor), Begin.Position.X, Begin.Position.Y, End.Position.X, End.Position.Y);
         }
 
         public override void Move(Point offset)
