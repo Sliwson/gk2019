@@ -25,12 +25,19 @@ namespace Polygons
         private TreeView treeView;
         private PolygonManager polygonManager;
 
+        private PlaneStructure structureSelected = null;
+
         public Hierarchy(TreeView treeView, PolygonManager polygonManager)
         {
             this.treeView = treeView;
             this.polygonManager = polygonManager;
 
             treeView.AfterSelect += ItemSelected;
+        }
+
+        public PlaneStructure GetStructureSelected()
+        {
+            return structureSelected;
         }
 
         public void Update()
@@ -61,13 +68,17 @@ namespace Polygons
         private void ItemSelected(object sender, TreeViewEventArgs e)
         {
             if (!(e.Node is GeometricNode))
+            {
+                structureSelected = null;
                 return;
+            }
 
             polygonManager.ClearDrawColor(Color.Black);
             var node = e.Node as GeometricNode;
+            structureSelected = node.Structure;
             node.Structure.DrawingColor = Color.Red;
 
-            polygonManager.Update();
+            polygonManager.UpdateSelectedStructure(structureSelected);
         }
     }
 }
