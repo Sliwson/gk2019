@@ -5,12 +5,12 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Vertex : IHitTesable, IGeometric
+    public class Vertex : PlaneStructure, IHitTesable
     {
         public Point Position { get; set; }
         public double Radius { get; set; }
 
-        public Vertex(Point position, double radius)
+        public Vertex(Point position, double radius) : base()
         {
             Position = position;
             Radius = radius;
@@ -24,12 +24,12 @@ namespace Common
             return false;
         }
 
-        public void Draw(BitmapCanvas canvas)
+        public override void Draw(BitmapCanvas canvas)
         {
             Algorithms.DrawCircle(canvas, Position, Radius, Color.Black);
         }
 
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
             Position = Position.Add(offset);
         }

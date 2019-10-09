@@ -5,14 +5,14 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Edge : IHitTesable, IGeometric
+    public class Edge : PlaneStructure, IHitTesable
     {
         public Vertex Begin { get; set; }
         public Vertex End { get; set; }
 
         public double Length { get { return Begin.Position.DistanceTo(End.Position); } }
 
-        public Edge (Vertex begin, Vertex end)
+        public Edge (Vertex begin, Vertex end) : base()
         {
             Begin = begin;
             End = end;
@@ -29,12 +29,12 @@ namespace Common
             return false;
         }
 
-        public void Draw(BitmapCanvas canvas)
+        public override void Draw(BitmapCanvas canvas)
         {
             Algorithms.DrawLine(canvas, Begin.Position, End.Position, Color.Black);
         }
 
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
             Begin.Move(offset);
             End.Move(offset);

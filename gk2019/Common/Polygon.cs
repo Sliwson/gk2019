@@ -10,13 +10,21 @@ namespace Common
         bool HitTest(Point position);
     }
 
-    public interface IGeometric
+    public abstract class PlaneStructure
     {
-        void Draw(BitmapCanvas canvas);
-        void Move(Point offset);
+        public Color DrawingColor { get; set; }
+
+        public PlaneStructure()
+        {
+            DrawingColor = Color.Black;
+        }
+
+        public abstract void Draw(BitmapCanvas canvas);
+
+        public abstract void Move(Point offset);
     }
 
-    public class Polygon : IGeometric
+    public class Polygon : PlaneStructure
     {
         public enum HitTestResult
         {
@@ -30,6 +38,11 @@ namespace Common
 
         private Vertex lastProcessedVertex = null;
         private readonly double vertexRadius = 3;
+
+        public Polygon() : base()
+        {
+
+        }
 
         public bool AddVertex(Point position)
         {
@@ -79,7 +92,7 @@ namespace Common
             return edges;
         }
 
-        public (HitTestResult, IGeometric)  HitTest(Point position)
+        public (HitTestResult, PlaneStructure)  HitTest(Point position)
         {
             foreach (var vertex in vertices)
                 if (vertex.HitTest(position))
@@ -92,7 +105,7 @@ namespace Common
             return (HitTestResult.Empty, null);
         }
 
-        public void Draw(BitmapCanvas canvas)
+        public override void Draw(BitmapCanvas canvas)
         {
             foreach (var edge in edges)
                 edge.Draw(canvas);
@@ -101,7 +114,7 @@ namespace Common
                 vertex.Draw(canvas);
         }
         
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
             foreach (var edge in edges)
                 edge.Move(offset);
