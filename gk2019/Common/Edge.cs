@@ -31,7 +31,7 @@ namespace Common
 
         public override void Draw(BitmapCanvas canvas)
         {
-            Algorithms.DrawLine(canvas, Begin.Position, End.Position, Color.Black);
+            Algorithms.DrawLine(canvas, Begin.Position, End.Position, DrawingColor);
         }
 
         public override void Move(Point offset)

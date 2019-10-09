@@ -26,7 +26,7 @@ namespace Common
 
         public override void Draw(BitmapCanvas canvas)
         {
-            Algorithms.DrawCircle(canvas, Position, Radius, Color.Black);
+            Algorithms.DrawCircle(canvas, Position, Radius, DrawingColor);
         }
 
         public override void Move(Point offset)
