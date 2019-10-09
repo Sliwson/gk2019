@@ -12,7 +12,7 @@ namespace Common
 
     public abstract class PlaneStructure
     {
-        public Color DrawingColor { get; set; }
+        public virtual Color DrawingColor { get; set; }
 
         public PlaneStructure()
         {
@@ -31,6 +31,23 @@ namespace Common
             Empty,
             Vertex,
             Edge
+        }
+
+        private Color drawingColor = Color.Black;
+        public override Color DrawingColor
+        {
+            get
+            {
+                return drawingColor;
+            }
+            set
+            {
+                drawingColor = value;
+                foreach (var edge in edges)
+                    edge.DrawingColor = value;
+                foreach (var vertex in vertices)
+                    vertex.DrawingColor = value;
+            }
         }
 
         private List<Edge> edges = new List<Edge>();
