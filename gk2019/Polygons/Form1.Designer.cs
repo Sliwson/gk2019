@@ -30,15 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.canvasPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.canvas = new System.Windows.Forms.PictureBox();
             this.rightPanel = new System.Windows.Forms.TableLayoutPanel();
             this.hierarchyGroupbox = new System.Windows.Forms.GroupBox();
             this.hierarchy = new System.Windows.Forms.TreeView();
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.canvas = new System.Windows.Forms.PictureBox();
             this.canvasPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.rightPanel.SuspendLayout();
             this.hierarchyGroupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.SuspendLayout();
             // 
             // canvasPanel
@@ -56,18 +56,6 @@
             this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.canvasPanel.Size = new System.Drawing.Size(1008, 725);
             this.canvasPanel.TabIndex = 0;
-            // 
-            // canvas
-            // 
-            this.canvas.BackColor = System.Drawing.Color.White;
-            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvas.Location = new System.Drawing.Point(10, 10);
-            this.canvas.Margin = new System.Windows.Forms.Padding(10);
-            this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(649, 705);
-            this.canvas.TabIndex = 0;
-            this.canvas.TabStop = false;
             // 
             // rightPanel
             // 
@@ -106,6 +94,19 @@
             this.hierarchy.Size = new System.Drawing.Size(301, 330);
             this.hierarchy.TabIndex = 0;
             // 
+            // canvas
+            // 
+            this.canvas.BackColor = System.Drawing.Color.White;
+            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point(10, 10);
+            this.canvas.Margin = new System.Windows.Forms.Padding(10);
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size(649, 705);
+            this.canvas.TabIndex = 0;
+            this.canvas.TabStop = false;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -119,9 +120,9 @@
             this.Name = "Form1";
             this.Text = "Polygons Editor";
             this.canvasPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.rightPanel.ResumeLayout(false);
             this.hierarchyGroupbox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -129,11 +130,11 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel canvasPanel;
-        private System.Windows.Forms.PictureBox canvas;
         private System.Windows.Forms.TableLayoutPanel rightPanel;
         private System.Windows.Forms.GroupBox hierarchyGroupbox;
         private System.Windows.Forms.TreeView hierarchy;
         private System.Windows.Forms.MainMenu mainMenu;
+        private System.Windows.Forms.PictureBox canvas;
     }
 }
 

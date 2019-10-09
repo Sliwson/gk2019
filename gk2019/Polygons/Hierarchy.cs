@@ -66,7 +66,8 @@ namespace Polygons
             polygonManager.ClearDrawColor(Color.Black);
             var node = e.Node as GeometricNode;
             node.Structure.DrawingColor = Color.Red;
-            polygonManager.Draw();
+
+            polygonManager.Update();
         }
     }
 }

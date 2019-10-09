@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using Common;
+using System.Windows.Forms;
 
 namespace Polygons
 {
     class PolygonManager
     {
-        private BitmapCanvas canvas;
+        private PictureBox canvas;
         private List<Polygon> polygons = new List<Polygon>();
-        public PolygonManager(BitmapCanvas canvas)
+        public PolygonManager(PictureBox canvas)
         {
             this.canvas = canvas;
         }
@@ -30,14 +31,10 @@ namespace Polygons
             return polygons;
         }
 
-        public void Draw()
+        public void Draw(Graphics graphics)
         {
-            canvas.Clear(Color.White);
-
             foreach (var polygon in polygons)
-                polygon.Draw(canvas);
-
-            canvas.Update();
+                polygon.Draw(graphics);
         }
 
         public void InitSample()
@@ -48,6 +45,11 @@ namespace Polygons
                 p.Move(new Point(i * 50, i * 50));
                 polygons.Add(p);
             }
+        }
+
+        public void Update()
+        {
+            canvas.Invalidate();
         }
     }
 }

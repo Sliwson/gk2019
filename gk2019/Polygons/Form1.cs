@@ -13,50 +13,22 @@ namespace Polygons
 {
     public partial class Form1 : Form
     {
-        private BitmapCanvas bitmapCanvas;
-        private List<Polygon> polygons = new List<Polygon>();
-
+        private PolygonManager polygonManager;
         public Form1()
         {
             InitializeComponent();
 
-            var bitmap = new Bitmap(canvas.Width, canvas.Height);
-            canvas.Image = bitmap;
-            bitmapCanvas = new BitmapCanvas(bitmap);
-            bitmapCanvas.Clear(Color.Yellow);
-
-
-            for (int i = 0; i < 4; i++)
-            {
-                var p = Polygon.GetSampleSquare();
-                p.Move(new Point(i * 100, i * 100));
-                p.Draw(bitmapCanvas);
-                polygons.Add(p);
-            }
-
-            UpdateTreeView();
+            polygonManager = new PolygonManager(canvas);
+            polygonManager.InitSample();
+            
+            var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
+            treeHierarchy.Update();
         }
 
-        public void UpdateTreeView()
+        private void canvas_Paint(object sender, PaintEventArgs e)
         {
-            for (int i = 0; i < polygons.Count; i++)
-            {
-                var polygonNode = new TreeNode($"Polygon{i}");
-
-                var edgesNode = new TreeNode("Edges");
-                var verticesNode = new TreeNode("Vertices");
-
-                for (int j = 0; j < polygons[i].GetEdges().Count; j++)
-                    edgesNode.Nodes.Add($"Edge{j}");
-
-                for (int j = 0; j < polygons[i].GetVertices().Count; j++)
-                    verticesNode.Nodes.Add($"Vertex{j}");
-
-                polygonNode.Nodes.Add(edgesNode);
-                polygonNode.Nodes.Add(verticesNode);
-
-                hierarchy.Nodes.Add(polygonNode);
-            }
+            var graphics = e.Graphics;
+            polygonManager.Draw(graphics);
         }
     }
 }
