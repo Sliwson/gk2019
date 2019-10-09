@@ -140,8 +140,8 @@ namespace Common
         
         public override void Move(Point offset)
         {
-            foreach (var edge in edges)
-                edge.Move(offset);
+            foreach (var vertex in vertices)
+                vertex.Move(offset);
         }
 
         public static Polygon GetSampleSquare()
