@@ -29,7 +29,6 @@ namespace Common
             Edge
         }
 
-        private Vertex lastVertex = null;
         private List<Edge> edges = new List<Edge>();
         private List<Vertex> vertices = new List<Vertex>();
 
@@ -65,6 +64,8 @@ namespace Common
 
             //add normal vertex
             Vertex newVertex = new Vertex(position, vertexRadius);
+            vertices.Add(newVertex);
+
             if (lastProcessedVertex != null)
                 edges.Add(new Edge(lastProcessedVertex, newVertex));
 
