@@ -8,7 +8,7 @@ namespace Common
     public class Algorithms
     {
         //naive implementation for now
-        public static void DrawCircle(BitmapCanvas canvas, Point position, float radius = 1f, Color? color = null)
+        public static void DrawCircle(BitmapCanvas canvas, Point position, double radius = 1, Color? color = null)
         {
             Color drawColor = color ?? Color.Black;
 
