@@ -10,7 +10,7 @@ namespace Common
         public Point Position { get; set; }
         public double Radius { get; set; }
 
-        public Vertex(Point position, double radius) : base()
+        public Vertex(Point position, double radius, Polygon underlyingPolygon = null) : base(underlyingPolygon)
         {
             Position = position;
             Radius = radius;

@@ -9,10 +9,9 @@ namespace Common
     {
         public Vertex Begin { get; set; }
         public Vertex End { get; set; }
-
         public double Length { get { return Begin.Position.DistanceTo(End.Position); } }
 
-        public Edge (Vertex begin, Vertex end) : base()
+        public Edge (Vertex begin, Vertex end, Polygon underlyingPolygon = null) : base(underlyingPolygon)
         {
             Begin = begin;
             End = end;

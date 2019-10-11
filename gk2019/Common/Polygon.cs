@@ -14,9 +14,13 @@ namespace Common
     {
         public virtual Color DrawingColor { get; set; }
 
-        public PlaneStructure()
+        public Polygon UnderlyingPolygon { get; set; }
+
+        public PlaneStructure(Polygon underlyingPolygon)
         {
             DrawingColor = Color.Black;
+
+            UnderlyingPolygon = underlyingPolygon;
         }
 
         public abstract void Draw(Graphics graphics);
@@ -58,7 +62,7 @@ namespace Common
         private Vertex lastProcessedVertex = null;
         private readonly double vertexRadius = 3;
 
-        public Polygon() : base()
+        public Polygon() : base(null)
         {
 
         }
@@ -76,7 +80,7 @@ namespace Common
                     if (lastProcessedVertex == null)
                         lastProcessedVertex = vertices[vertices.Count - 1];
 
-                    edges.Add(new Edge(lastProcessedVertex, targetVertex));
+                    edges.Add(new Edge(lastProcessedVertex, targetVertex, this));
                     lastProcessedVertex = targetVertex;
                     return true;
                 }
@@ -91,11 +95,11 @@ namespace Common
                 return false;
 
             //add normal vertex
-            Vertex newVertex = new Vertex(position, vertexRadius);
+            Vertex newVertex = new Vertex(position, vertexRadius, this);
             vertices.Add(newVertex);
 
             if (lastProcessedVertex != null)
-                edges.Add(new Edge(lastProcessedVertex, newVertex));
+                edges.Add(new Edge(lastProcessedVertex, newVertex, this));
 
             lastProcessedVertex = newVertex;
             return true;
