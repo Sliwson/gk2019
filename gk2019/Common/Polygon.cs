@@ -60,7 +60,6 @@ namespace Common
         private List<Vertex> vertices = new List<Vertex>();
 
         private Vertex lastProcessedVertex = null;
-        private readonly double vertexRadius = 3;
 
         public Polygon() : base(null)
         {
@@ -95,7 +94,7 @@ namespace Common
                 return false;
 
             //add normal vertex
-            Vertex newVertex = new Vertex(position, vertexRadius, this);
+            Vertex newVertex = new Vertex(position, DrawingConstants.PointRadius, this);
             vertices.Add(newVertex);
 
             if (lastProcessedVertex != null)
