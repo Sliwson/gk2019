@@ -7,6 +7,6 @@ namespace Common
     class DrawingConstants
     {
         public static readonly double PointRadius = 3;
-        public static readonly double MinimumSplitLength = 7;
+        public static readonly double MinimumSplitLength = 10;
     }
 }
