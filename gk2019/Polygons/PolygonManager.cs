@@ -67,6 +67,27 @@ namespace Polygons
             return polygons;
         }
 
+        public void DeleteStructure(PlaneStructure structure)
+        {
+            if (structure is Polygon)
+            {
+                polygons.Remove(structure as Polygon);
+                return;
+            }
+
+            var polygon = structure.UnderlyingPolygon;
+            if (polygon == null)
+                return;
+
+            if (structure is Edge)
+                polygon.DeleteEdge(structure as Edge);
+            else if (structure is Vertex)
+                polygon.DeleteVertex(structure as Vertex);
+
+            if (polygon.GetEdges().Count <= 2)
+                DeleteStructure(polygon);
+        }
+
         public void Draw(Graphics graphics)
         {
             foreach (var polygon in polygons)

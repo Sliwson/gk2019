@@ -172,7 +172,13 @@ namespace Polygons
 
         private void RemoveClick(object sender, EventArgs e)
         {
-           
+            if (!(structureSelected is PlaneStructure))
+                 return;
+
+            polygonManager.DeleteStructure(structureSelected);
+            Update();
+            ExpandNode(structureSelected.UnderlyingPolygon);
+            StructureSelected(null);
         }
 
         private void SplitClick(object sender, EventArgs e)
