@@ -23,6 +23,8 @@ namespace Polygons
             
             var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
             treeHierarchy.Update();
+
+            polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;
         }
 
         private void canvas_Paint(object sender, PaintEventArgs e)
