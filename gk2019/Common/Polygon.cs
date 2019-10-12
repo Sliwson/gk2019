@@ -108,10 +108,7 @@ namespace Common
             if (edge.Length < DrawingConstants.MinimumSplitLength)
                 return false;
 
-            var begin = edge.Begin.Position;
-            var end = edge.End.Position;
-            Point splitPoint = new Point((begin.X +end.X) / 2, (begin.Y + end.Y) / 2);
-            Vertex splitVertex = new Vertex(splitPoint, DrawingConstants.PointRadius, this);
+            var splitVertex = GetSplitVertex(edge);
 
             lastProcessedVertex = edge.End;
             var secondEdge = new Edge(splitVertex, edge.End, this);
@@ -121,6 +118,51 @@ namespace Common
             vertices.Add(splitVertex);
 
             return true;
+        }
+
+        private Vertex GetSplitVertex(Edge edge)
+        {
+            var begin = edge.Begin.Position;
+            var end = edge.End.Position;
+            Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
+            return new Vertex(splitPoint, DrawingConstants.PointRadius, this);
+        }
+
+        public void DeleteVertex(Vertex vertex)
+        {
+            Edge leftEdge = null, rightEdge = null;
+            foreach (var e in edges)
+            {
+                if (e.End == vertex)
+                    leftEdge = e;
+                else if (e.Begin == vertex)
+                    rightEdge = e;
+            }
+
+            vertices.Remove(vertex);
+            if (leftEdge == null && rightEdge == null)
+                return;
+
+            leftEdge.End = rightEdge.End;
+            edges.Remove(rightEdge);
+        }
+
+        public void DeleteEdge(Edge edge)
+        {
+            var splitVertex = GetSplitVertex(edge);
+            
+            foreach (var e in edges)
+            {
+                if (e.End == edge.Begin)
+                    e.End = splitVertex;
+                else if (e.Begin == edge.End)
+                    e.Begin = splitVertex;
+            }
+
+            vertices.Remove(edge.Begin);
+            vertices.Remove(edge.End);
+            vertices.Add(splitVertex);
+            edges.Remove(edge);
         }
 
         public List<Vertex> GetVertices()
