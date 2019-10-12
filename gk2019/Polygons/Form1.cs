@@ -26,11 +26,5 @@ namespace Polygons
 
             polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;
         }
-
-        private void canvas_Paint(object sender, PaintEventArgs e)
-        {
-            var graphics = e.Graphics;
-            polygonManager.Draw(graphics);
-        }
     }
 }

@@ -34,58 +34,12 @@ namespace Polygons
             canvas.MouseMove += Canvas_MouseMove;
             canvas.MouseDown += Canvas_MouseDown;
             canvas.MouseUp += Canvas_MouseUp;
+            canvas.Paint += CanvasDraw;
         }
-
-        private void Canvas_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (mouseState == MouseState.Dragging)
-                mouseState = MouseState.Normal;
-        }
-
-        private void Canvas_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (currentStructure == null)
-                return;
-
-            //handle add
-            if (mouseState == MouseState.Drawing)
-            {
-                if (!(currentStructure is Polygon))
-                    return;
-
-                var polygon = currentStructure as Polygon;
-                var result = polygon.AddVertex(e.Location);
-                OnStructureChanged?.Invoke(this, polygon);
-                Update();
-                if (result == Polygon.AddVertexResult.Closed)
-                    mouseState = MouseState.Normal;
-            }
-
-            //handle dragging
-            previousMousePosition = e.Location;
-            if (currentStructure.HitTest(e.Location))
-            {
-                if (mouseState == MouseState.Normal)
-                    mouseState = MouseState.Dragging;
-            }
-        }
-
-        private void Canvas_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (currentStructure == null || !(mouseState == MouseState.Dragging))
-                return;
-
-            var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
-            previousMousePosition = e.Location;
-
-            currentStructure.Move(delta);
-            Update();
-        }
-
         public void ClearDrawColor(Color? color = null)
         {
             Color drawingColor = color ?? Color.Black;
-            
+
             foreach (var polygon in polygons)
                 polygon.DrawingColor = drawingColor;
         }
@@ -144,12 +98,6 @@ namespace Polygons
             OnStructureChanged?.Invoke(this, polygon);
         }
 
-        public void Draw(Graphics graphics)
-        {
-            foreach (var polygon in polygons)
-                polygon.Draw(graphics);
-        }
-
         public void InitSample()
         {
             for (int i = 0; i < 4; i++)
@@ -169,6 +117,59 @@ namespace Polygons
         public void Update()
         {
             canvas.Invalidate();
+        }
+
+
+        private void Canvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (mouseState == MouseState.Dragging)
+                mouseState = MouseState.Normal;
+        }
+
+        private void Canvas_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (currentStructure == null)
+                return;
+
+            //handle add
+            if (mouseState == MouseState.Drawing)
+            {
+                if (!(currentStructure is Polygon))
+                    return;
+
+                var polygon = currentStructure as Polygon;
+                var result = polygon.AddVertex(e.Location);
+                OnStructureChanged?.Invoke(this, polygon);
+                Update();
+                if (result == Polygon.AddVertexResult.Closed)
+                    mouseState = MouseState.Normal;
+            }
+
+            //handle dragging
+            previousMousePosition = e.Location;
+            if (currentStructure.HitTest(e.Location))
+            {
+                if (mouseState == MouseState.Normal)
+                    mouseState = MouseState.Dragging;
+            }
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (currentStructure == null || !(mouseState == MouseState.Dragging))
+                return;
+
+            var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
+            previousMousePosition = e.Location;
+
+            currentStructure.Move(delta);
+            Update();
+        }
+
+        private void CanvasDraw(object sender, PaintEventArgs e)
+        {
+            foreach (var polygon in polygons)
+                polygon.Draw(e.Graphics);
         }
     }
 }

@@ -56,7 +56,7 @@
             this.canvasPanel.Name = "canvasPanel";
             this.canvasPanel.RowCount = 1;
             this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 725F));
             this.canvasPanel.Size = new System.Drawing.Size(1008, 725);
             this.canvasPanel.TabIndex = 0;
             // 
@@ -71,7 +71,6 @@
             this.canvas.Size = new System.Drawing.Size(649, 705);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
             // rightPanel
             // 
