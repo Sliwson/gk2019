@@ -121,10 +121,17 @@ namespace Polygons
                 return;
             }
 
-            polygonManager.ClearDrawColor(Color.Black);
-            structureSelected = node.Structure;
-            node.Structure.DrawingColor = Color.Red;
+            StructureSelected(node.Structure);
+        }
 
+        private void StructureSelected(PlaneStructure structure)
+        {
+            polygonManager.ClearDrawColor(Color.Black);
+            structureSelected = structure;
+
+            if (structure != null)
+                structure.DrawingColor = Color.Red;
+            
             polygonManager.UpdateSelectedStructure(structureSelected);
         }
 
@@ -150,6 +157,19 @@ namespace Polygons
             return contextMenu;
         }
 
+        private void ExpandNode(Polygon polygon)
+        {
+            if (polygon == null)
+                return;
+
+            for (int i = 0; i < treeView.Nodes.Count; i++)
+            {
+                var geometricNode = treeView.Nodes[i] as GeometricNode;
+                if (geometricNode.Type == NodeType.Polygon && geometricNode.Structure as Polygon == polygon)
+                    treeView.Nodes[i].ExpandAll();
+            }
+        }
+
         private void RemoveClick(object sender, EventArgs e)
         {
            
@@ -157,7 +177,19 @@ namespace Polygons
 
         private void SplitClick(object sender, EventArgs e)
         {
-            
+            if (!(structureSelected is Edge))
+                return;
+
+            var edge = structureSelected as Edge;
+            if (edge.UnderlyingPolygon == null)
+                return;
+
+            if (edge.UnderlyingPolygon.SplitEdge(edge))
+            {
+                Update();
+                StructureSelected(null);
+                ExpandNode(edge.UnderlyingPolygon);
+            }
         }
     }
 }
