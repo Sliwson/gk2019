@@ -61,11 +61,6 @@ namespace Polygons
             contextMenu.Show(treeView, e.X, e.Y);
         }
 
-        private void AddPolygonContextMenu(object sender, EventArgs e)
-        {
-            
-        }
-
         private void HierarchyClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
@@ -86,7 +81,7 @@ namespace Polygons
         }
 
         public void Update()
-        {
+        { 
             treeView.Nodes.Clear();
             var polygons = polygonManager.GetPolygons();
 
@@ -109,6 +104,17 @@ namespace Polygons
                 polygonNode.Nodes.Add(verticesNode);
 
                 treeView.Nodes.Add(polygonNode);
+            }
+        }
+
+        public void HandleHierarchyChange(object sender, Polygon polygon)
+        {
+            Update();
+
+            if (polygon != null)
+            {
+                ExpandNode(polygon);
+                StructureSelected(polygon);
             }
         }
 
@@ -196,6 +202,11 @@ namespace Polygons
                 StructureSelected(null);
                 ExpandNode(edge.UnderlyingPolygon);
             }
+        }
+
+        private void AddPolygonContextMenu(object sender, EventArgs e)
+        {
+            polygonManager.InitPolygonAdd();
         }
     }
 }

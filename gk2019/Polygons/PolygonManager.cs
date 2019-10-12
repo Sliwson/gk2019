@@ -25,6 +25,8 @@ namespace Polygons
         private Point previousMousePosition = new Point(0, 0);
         private MouseState mouseState = MouseState.Normal;
 
+        public event EventHandler<Polygon> OnStructureChanged;
+
         public PolygonManager(PictureBox canvas)
         {
             this.canvas = canvas;
@@ -45,6 +47,21 @@ namespace Polygons
             if (currentStructure == null)
                 return;
 
+            //handle add
+            if (mouseState == MouseState.Drawing)
+            {
+                if (!(currentStructure is Polygon))
+                    return;
+
+                var polygon = currentStructure as Polygon;
+                var result = polygon.AddVertex(e.Location);
+                OnStructureChanged?.Invoke(this, polygon);
+                Update();
+                if (result == Polygon.AddVertexResult.Closed)
+                    mouseState = MouseState.Normal;
+            }
+
+            //handle dragging
             previousMousePosition = e.Location;
             if (currentStructure.HitTest(e.Location))
             {
@@ -97,6 +114,34 @@ namespace Polygons
 
             if (polygon.GetEdges().Count <= 2)
                 DeleteStructure(polygon);
+        }
+
+        public void InitPolygonAdd()
+        {
+            if (mouseState == MouseState.Drawing)
+            {
+                if (currentStructure is Polygon)
+                {
+                    var p = currentStructure as Polygon;
+                    var result = p.ForceClose();
+                    mouseState = MouseState.Normal;
+
+                    if (result == Polygon.ForceCloseResult.DeleteMe)
+                        polygons.Remove(p);
+                }
+                else
+                    return;
+            }
+
+            if (mouseState != MouseState.Normal)
+                return;
+
+            mouseState = MouseState.Drawing;
+            var polygon = new Polygon();
+            currentStructure = polygon;
+            polygons.Add(polygon);
+            Update();
+            OnStructureChanged?.Invoke(this, polygon);
         }
 
         public void Draw(Graphics graphics)
