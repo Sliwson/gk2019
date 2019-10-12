@@ -11,12 +11,19 @@ namespace Polygons
 {
     class PolygonManager
     {
+        private enum MouseState
+        {
+            Normal,
+            Dragging,
+            Drawing
+        }
+
         private PictureBox canvas;
         private List<Polygon> polygons = new List<Polygon>();
 
         private PlaneStructure currentStructure = null;
         private Point previousMousePosition = new Point(0, 0);
-        private bool canDrag = false;
+        private MouseState mouseState = MouseState.Normal;
 
         public PolygonManager(PictureBox canvas)
         {
@@ -29,7 +36,8 @@ namespace Polygons
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
-            canDrag = false;
+            if (mouseState == MouseState.Dragging)
+                mouseState = MouseState.Normal;
         }
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
@@ -38,13 +46,16 @@ namespace Polygons
                 return;
 
             previousMousePosition = e.Location;
-            if(currentStructure.HitTest(e.Location))
-                canDrag = true;            
+            if (currentStructure.HitTest(e.Location))
+            {
+                if (mouseState == MouseState.Normal)
+                    mouseState = MouseState.Dragging;
+            }
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (currentStructure == null || !canDrag)
+            if (currentStructure == null || !(mouseState == MouseState.Dragging))
                 return;
 
             var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
