@@ -103,6 +103,25 @@ namespace Common
             lastProcessedVertex = newVertex;
             return true;
         }
+        public bool SplitEdge(Edge edge)
+        {
+            if (edge.Length < DrawingConstants.MinimumSplitLength)
+                return false;
+
+            var begin = edge.Begin.Position;
+            var end = edge.End.Position;
+            Point splitPoint = new Point((begin.X +end.X) / 2, (begin.Y + end.Y) / 2);
+            Vertex splitVertex = new Vertex(splitPoint, DrawingConstants.PointRadius, this);
+
+            lastProcessedVertex = edge.End;
+            var secondEdge = new Edge(splitVertex, edge.End, this);
+            edge.End = splitVertex;
+
+            edges.Add(secondEdge);
+            vertices.Add(splitVertex);
+
+            return true;
+        }
 
         public List<Vertex> GetVertices()
         {
