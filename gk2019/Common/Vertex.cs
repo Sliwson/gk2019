@@ -5,18 +5,18 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Vertex : IHitTesable, IDrawable, IMovable
+    public class Vertex : PlaneStructure, IHitTesable
     {
         public Point Position { get; set; }
         public double Radius { get; set; }
 
-        public Vertex(Point position, double radius)
+        public Vertex(Point position, double radius, Polygon underlyingPolygon = null) : base(underlyingPolygon)
         {
             Position = position;
             Radius = radius;
         }
 
-        public bool HitTest(Point position)
+        public override bool HitTest(Point position)
         {
             if (position.DistanceTo(Position) <= Radius)
                 return true;
@@ -24,12 +24,12 @@ namespace Common
             return false;
         }
 
-        public void Draw(BitmapCanvas canvas)
+        public override void Draw(Graphics graphics)
         {
-            Algorithms.DrawCircle(canvas, Position, Radius, Color.Black);
+            graphics.FillEllipse(new SolidBrush(DrawingColor),  (float)(Position.X - Radius), (float)(Position.Y - Radius), (float)Radius * 2, (float)Radius * 2);
         }
 
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
             Position = Position.Add(offset);
         }

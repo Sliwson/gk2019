@@ -13,16 +13,24 @@ namespace Polygons
 {
     public partial class Form1 : Form
     {
-        private BitmapCanvas bitmapCanvas;
-
+        private PolygonManager polygonManager;
         public Form1()
         {
             InitializeComponent();
 
-            var bitmap = new Bitmap(canvas.Width, canvas.Height);
-            canvas.Image = bitmap;
-            bitmapCanvas = new BitmapCanvas(bitmap);
-            bitmapCanvas.Clear(Color.Yellow);
+            polygonManager = new PolygonManager(canvas);
+            polygonManager.InitSample();
+            
+            var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
+            treeHierarchy.Update();
+
+            polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;
+        }
+
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            var graphics = e.Graphics;
+            polygonManager.Draw(graphics);
         }
     }
 }

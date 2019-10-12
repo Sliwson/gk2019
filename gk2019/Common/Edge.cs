@@ -5,20 +5,19 @@ using System.Drawing;
 
 namespace Common
 {
-    public class Edge : IHitTesable, IDrawable, IMovable
+    public class Edge : PlaneStructure, IHitTesable
     {
         public Vertex Begin { get; set; }
         public Vertex End { get; set; }
-
         public double Length { get { return Begin.Position.DistanceTo(End.Position); } }
 
-        public Edge (Vertex begin, Vertex end)
+        public Edge (Vertex begin, Vertex end, Polygon underlyingPolygon = null) : base(underlyingPolygon)
         {
             Begin = begin;
             End = end;
         }
 
-        public bool HitTest(Point position)
+        public override bool HitTest(Point position)
         {
             const double epsilon = 0.5;
             double distanceThroughPoint = Begin.Position.DistanceTo(position) + position.DistanceTo(End.Position);
@@ -29,12 +28,12 @@ namespace Common
             return false;
         }
 
-        public void Draw(BitmapCanvas canvas)
+        public override void Draw(Graphics graphics)
         {
-            Algorithms.DrawLine(canvas, Begin.Position, End.Position, Color.Black);
+            graphics.DrawLine(new Pen(DrawingColor), Begin.Position.X, Begin.Position.Y, End.Position.X, End.Position.Y);
         }
 
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
             Begin.Move(offset);
             End.Move(offset);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Linq;
 
 namespace Common
 {
@@ -10,17 +11,27 @@ namespace Common
         bool HitTest(Point position);
     }
 
-    public interface IDrawable
+    public abstract class PlaneStructure : IHitTesable
     {
-        void Draw(BitmapCanvas canvas);
+        public virtual Color DrawingColor { get; set; }
+
+        public Polygon UnderlyingPolygon { get; set; }
+
+        public PlaneStructure(Polygon underlyingPolygon)
+        {
+            DrawingColor = Color.Black;
+
+            UnderlyingPolygon = underlyingPolygon;
+        }
+
+        public abstract void Draw(Graphics graphics);
+
+        public abstract void Move(Point offset);
+
+        public abstract bool HitTest(Point position);
     }
 
-    public interface IMovable
-    {
-        void Move(Point offset);
-    }
-
-    public class Polygon : IDrawable, IMovable
+    public class Polygon : PlaneStructure
     {
         public enum HitTestResult
         {
@@ -29,15 +40,50 @@ namespace Common
             Edge
         }
 
+        public enum AddVertexResult
+        {
+            Added,
+            Closed,
+            Failed
+        }
+
+        public enum ForceCloseResult
+        {
+            Closed,
+            DeleteMe,
+            IsOk
+        }
+
+        private Color drawingColor = Color.Black;
+        public override Color DrawingColor
+        {
+            get
+            {
+                return drawingColor;
+            }
+            set
+            {
+                drawingColor = value;
+                foreach (var edge in edges)
+                    edge.DrawingColor = value;
+                foreach (var vertex in vertices)
+                    vertex.DrawingColor = value;
+            }
+        }
+
         private List<Edge> edges = new List<Edge>();
         private List<Vertex> vertices = new List<Vertex>();
 
         private Vertex lastProcessedVertex = null;
-        private readonly double vertexRadius = 3;
 
-        public bool AddVertex(Point position)
+        public Polygon() : base(null)
         {
-            var hitTest = HitTest(position);
+
+        }
+
+        public AddVertexResult AddVertex(Point position)
+        {
+            var hitTest = HitTestPolygon(position);
 
             //check vertex hittest
             if (hitTest.Item1 == HitTestResult.Vertex)
@@ -48,32 +94,132 @@ namespace Common
                     if (lastProcessedVertex == null)
                         lastProcessedVertex = vertices[vertices.Count - 1];
 
-                    edges.Add(new Edge(lastProcessedVertex, targetVertex));
+                    edges.Add(new Edge(lastProcessedVertex, targetVertex, this));
                     lastProcessedVertex = targetVertex;
-                    return true;
+                    return AddVertexResult.Closed;
                 }
                 else
                 {
-                    return false;
+                    return AddVertexResult.Failed;
                 }
             }
 
             //disallow adding vertices on edges
             if (hitTest.Item1 == HitTestResult.Edge)
-                return false;
+                return AddVertexResult.Failed;
 
             //add normal vertex
-            Vertex newVertex = new Vertex(position, vertexRadius);
+            Vertex newVertex = new Vertex(position, DrawingConstants.PointRadius, this);
             vertices.Add(newVertex);
 
             if (lastProcessedVertex != null)
-                edges.Add(new Edge(lastProcessedVertex, newVertex));
+                edges.Add(new Edge(lastProcessedVertex, newVertex, this));
 
             lastProcessedVertex = newVertex;
+            return AddVertexResult.Added;
+        }
+        public bool SplitEdge(Edge edge)
+        {
+            if (edge.Length < DrawingConstants.MinimumSplitLength)
+                return false;
+
+            var splitVertex = GetSplitVertex(edge);
+
+            lastProcessedVertex = edge.End;
+            var secondEdge = new Edge(splitVertex, edge.End, this);
+            edge.End = splitVertex;
+
+            edges.Add(secondEdge);
+            vertices.Add(splitVertex);
+
             return true;
         }
 
-        public (HitTestResult, IMovable)  HitTest(Point position)
+        private Vertex GetSplitVertex(Edge edge)
+        {
+            var begin = edge.Begin.Position;
+            var end = edge.End.Position;
+            Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
+            return new Vertex(splitPoint, DrawingConstants.PointRadius, this);
+        }
+
+        public void DeleteVertex(Vertex vertex)
+        {
+            Edge leftEdge = null, rightEdge = null;
+            foreach (var e in edges)
+            {
+                if (e.End == vertex)
+                    leftEdge = e;
+                else if (e.Begin == vertex)
+                    rightEdge = e;
+            }
+
+            vertices.Remove(vertex);
+            if (leftEdge == null && rightEdge == null)
+                return;
+
+            leftEdge.End = rightEdge.End;
+            edges.Remove(rightEdge);
+        }
+
+        public void DeleteEdge(Edge edge)
+        {
+            var splitVertex = GetSplitVertex(edge);
+            
+            foreach (var e in edges)
+            {
+                if (e.End == edge.Begin)
+                    e.End = splitVertex;
+                else if (e.Begin == edge.End)
+                    e.Begin = splitVertex;
+            }
+
+            vertices.Remove(edge.Begin);
+            vertices.Remove(edge.End);
+            vertices.Add(splitVertex);
+            edges.Remove(edge);
+        }
+        
+        public ForceCloseResult ForceClose()
+        {
+            if (edges.Count <= 1)
+                return ForceCloseResult.DeleteMe;
+
+            Dictionary<Vertex, int> dict = new Dictionary<Vertex, int>();
+            foreach (var v in vertices)
+                dict.Add(v, 0);
+            
+            foreach (var e in edges)
+            {
+                dict[e.Begin] += 1;
+                dict[e.End] += 1;
+            }
+
+            var singleVertices = dict.Where(x => x.Value == 1);
+            if (singleVertices.Count() == 0)
+                return ForceCloseResult.IsOk;
+            else if (singleVertices.Count() != 2)
+                return ForceCloseResult.DeleteMe;
+
+            var v1 = singleVertices.First();
+            var v2 = singleVertices.Last();
+
+            lastProcessedVertex = v2.Key;
+            AddVertex(v1.Key.Position);
+            return ForceCloseResult.Closed;
+        }
+
+        public List<Vertex> GetVertices()
+        {
+            return vertices;
+        }
+
+        public List<Edge> GetEdges()
+        {
+            return edges;
+        }
+
+        public (HitTestResult, PlaneStructure)  HitTestPolygon(Point position)
         {
             foreach (var vertex in vertices)
                 if (vertex.HitTest(position))
@@ -86,19 +232,24 @@ namespace Common
             return (HitTestResult.Empty, null);
         }
 
-        public void Draw(BitmapCanvas canvas)
+        public override bool HitTest(Point position)
+        {
+            return HitTestPolygon(position).Item1 != HitTestResult.Empty;
+        }
+
+        public override void Draw(Graphics graphics)
         {
             foreach (var edge in edges)
-                edge.Draw(canvas);
+                edge.Draw(graphics);
 
             foreach (var vertex in vertices)
-                vertex.Draw(canvas);
+                vertex.Draw(graphics);
         }
         
-        public void Move(Point offset)
+        public override void Move(Point offset)
         {
-            foreach (var edge in edges)
-                edge.Move(offset);
+            foreach (var vertex in vertices)
+                vertex.Move(offset);
         }
 
         public static Polygon GetSampleSquare()
