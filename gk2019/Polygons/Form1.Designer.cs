@@ -30,15 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             this.canvasPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.canvas = new System.Windows.Forms.PictureBox();
             this.rightPanel = new System.Windows.Forms.TableLayoutPanel();
             this.hierarchyGroupbox = new System.Windows.Forms.GroupBox();
             this.hierarchy = new System.Windows.Forms.TreeView();
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
-            this.canvas = new System.Windows.Forms.PictureBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.canvasPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.rightPanel.SuspendLayout();
             this.hierarchyGroupbox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // canvasPanel
@@ -56,6 +59,19 @@
             this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.canvasPanel.Size = new System.Drawing.Size(1008, 725);
             this.canvasPanel.TabIndex = 0;
+            // 
+            // canvas
+            // 
+            this.canvas.BackColor = System.Drawing.Color.White;
+            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point(10, 10);
+            this.canvas.Margin = new System.Windows.Forms.Padding(10);
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size(649, 705);
+            this.canvas.TabIndex = 0;
+            this.canvas.TabStop = false;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
             // rightPanel
             // 
@@ -94,18 +110,21 @@
             this.hierarchy.Size = new System.Drawing.Size(301, 330);
             this.hierarchy.TabIndex = 0;
             // 
-            // canvas
+            // statusStrip1
             // 
-            this.canvas.BackColor = System.Drawing.Color.White;
-            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvas.Location = new System.Drawing.Point(10, 10);
-            this.canvas.Margin = new System.Windows.Forms.Padding(10);
-            this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(649, 705);
-            this.canvas.TabIndex = 0;
-            this.canvas.TabStop = false;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 703);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(66, 17);
+            this.statusLabel.Text = "statusLabel";
             // 
             // Form1
             // 
@@ -113,6 +132,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1008, 725);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.canvasPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -120,10 +140,13 @@
             this.Name = "Form1";
             this.Text = "Polygons Editor";
             this.canvasPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.rightPanel.ResumeLayout(false);
             this.hierarchyGroupbox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -135,6 +158,8 @@
         private System.Windows.Forms.TreeView hierarchy;
         private System.Windows.Forms.MainMenu mainMenu;
         private System.Windows.Forms.PictureBox canvas;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
     }
 }
 
