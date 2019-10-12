@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Linq;
 
 namespace Common
 {
@@ -39,6 +40,20 @@ namespace Common
             Edge
         }
 
+        public enum AddVertexResult
+        {
+            Added,
+            Closed,
+            Failed
+        }
+
+        public enum ForceCloseResult
+        {
+            Closed,
+            DeleteMe,
+            IsOk
+        }
+
         private Color drawingColor = Color.Black;
         public override Color DrawingColor
         {
@@ -66,7 +81,7 @@ namespace Common
 
         }
 
-        public bool AddVertex(Point position)
+        public AddVertexResult AddVertex(Point position)
         {
             var hitTest = HitTestPolygon(position);
 
@@ -81,17 +96,17 @@ namespace Common
 
                     edges.Add(new Edge(lastProcessedVertex, targetVertex, this));
                     lastProcessedVertex = targetVertex;
-                    return true;
+                    return AddVertexResult.Closed;
                 }
                 else
                 {
-                    return false;
+                    return AddVertexResult.Failed;
                 }
             }
 
             //disallow adding vertices on edges
             if (hitTest.Item1 == HitTestResult.Edge)
-                return false;
+                return AddVertexResult.Failed;
 
             //add normal vertex
             Vertex newVertex = new Vertex(position, DrawingConstants.PointRadius, this);
@@ -101,7 +116,7 @@ namespace Common
                 edges.Add(new Edge(lastProcessedVertex, newVertex, this));
 
             lastProcessedVertex = newVertex;
-            return true;
+            return AddVertexResult.Added;
         }
         public bool SplitEdge(Edge edge)
         {
@@ -163,6 +178,35 @@ namespace Common
             vertices.Remove(edge.End);
             vertices.Add(splitVertex);
             edges.Remove(edge);
+        }
+        
+        public ForceCloseResult ForceClose()
+        {
+            if (edges.Count <= 1)
+                return ForceCloseResult.DeleteMe;
+
+            Dictionary<Vertex, int> dict = new Dictionary<Vertex, int>();
+            foreach (var v in vertices)
+                dict.Add(v, 0);
+            
+            foreach (var e in edges)
+            {
+                dict[e.Begin] += 1;
+                dict[e.End] += 1;
+            }
+
+            var singleVertices = dict.Where(x => x.Value == 1);
+            if (singleVertices.Count() == 0)
+                return ForceCloseResult.IsOk;
+            else if (singleVertices.Count() != 2)
+                return ForceCloseResult.DeleteMe;
+
+            var v1 = singleVertices.First();
+            var v2 = singleVertices.Last();
+
+            lastProcessedVertex = v2.Key;
+            AddVertex(v1.Key.Position);
+            return ForceCloseResult.Closed;
         }
 
         public List<Vertex> GetVertices()
