@@ -79,30 +79,101 @@ namespace Polygons
         }
 
         public void Update()
-        { 
-            treeView.Nodes.Clear();
+        {
+            //remove polygon, //remove edge // remove vertex, //add polygon //add edge //add vertex
             var polygons = polygonManager.GetPolygons();
+            if (treeView.Nodes.Count < polygons.Count)
+            {
+                var node = CreatePolygonNode(polygons.Last(), treeView.Nodes.Count);
+                treeView.Nodes.Add(node);
+            }
+            else if (treeView.Nodes.Count > polygons.Count)
+            {
+                RemoveMissingNode();
+            }
+
+            //treeView.Nodes.Count == polygons.Count
+            for (int i = 0; i < polygons.Count; i++)
+                UpdateNode(treeView.Nodes[i] as GeometricNode, polygons[i], i);
+        }
+
+        private GeometricNode CreatePolygonNode(Polygon polygon, int i)
+        {
+            var polygonNode = new GeometricNode($"Polygon{i}", NodeType.Polygon, polygon);
+
+            var edgesNode = new GeometricNode("Edges", NodeType.EdgesList, null);
+            var verticesNode = new GeometricNode("Vertices", NodeType.VerticesList, null);
+
+            var edges = polygon.GetEdges();
+            for (int j = 0; j < edges.Count; j++)
+                edgesNode.Nodes.Add(new GeometricNode($"Edge{j}", NodeType.Edge, edges[j]));
+
+            var vertices = polygon.GetVertices();
+            for (int j = 0; j < vertices.Count; j++)
+                verticesNode.Nodes.Add(new GeometricNode($"Vertex{j}", NodeType.Vertex, vertices[j]));
+
+            polygonNode.Nodes.Add(edgesNode);
+            polygonNode.Nodes.Add(verticesNode);
+
+            return polygonNode;
+        }
+
+        private void RemoveMissingNode()
+        {
+            var polygons = polygonManager.GetPolygons();
+            bool removed = false;
 
             for (int i = 0; i < polygons.Count; i++)
             {
-                var polygonNode = new GeometricNode($"Polygon{i}", NodeType.Polygon, polygons[i]);
-
-                var edgesNode = new GeometricNode("Edges", NodeType.EdgesList, null);
-                var verticesNode = new GeometricNode("Vertices", NodeType.VerticesList, null);
-
-                var edges = polygons[i].GetEdges();
-                for (int j = 0; j < edges.Count; j++)
-                    edgesNode.Nodes.Add(new GeometricNode($"Edge{j}", NodeType.Edge, edges[j]));
-
-                var vertices = polygons[i].GetVertices();
-                for (int j = 0; j < vertices.Count; j++)
-                    verticesNode.Nodes.Add(new GeometricNode($"Vertex{j}", NodeType.Vertex, vertices[j]));
-
-                polygonNode.Nodes.Add(edgesNode);
-                polygonNode.Nodes.Add(verticesNode);
-
-                treeView.Nodes.Add(polygonNode);
+                if ((treeView.Nodes[i] as GeometricNode).Structure != polygons[i])
+                {
+                    treeView.Nodes[i].Remove();
+                    removed = true;
+                }
             }
+
+            if (!removed)
+                treeView.Nodes.RemoveAt(treeView.Nodes.Count - 1);
+        }
+
+        private void UpdateNode(GeometricNode node, Polygon polygon, int i)
+        {
+            if (!node.Structure.Equals(polygon))
+            {
+                node = CreatePolygonNode(polygon, i);
+                return;
+            }
+
+            UpdateEdges(node.Nodes[0].Nodes, polygon.GetEdges());
+            UpdateVertices(node.Nodes[1].Nodes, polygon.GetVertices());
+        }
+
+        private void UpdateEdges(TreeNodeCollection edgesList, List<Edge> polygonEdgesList)
+        {
+            int i = 0;
+            for (; i < polygonEdgesList.Count && i < edgesList.Count; i++)
+                if ((edgesList[i] as GeometricNode).Structure != polygonEdgesList[i])
+                    break;
+
+            while (i < edgesList.Count)
+                edgesList.RemoveAt(i);
+
+            for (; i < polygonEdgesList.Count; i++)
+                edgesList.Add(new GeometricNode($"Edge{i}", NodeType.Edge, polygonEdgesList[i]));
+        }
+
+        private void UpdateVertices(TreeNodeCollection verticesList, List<Vertex> polygonVertexList)
+        {
+            int i = 0;
+            for (; i < polygonVertexList.Count && i < verticesList.Count; i++)
+                if ((verticesList[i] as GeometricNode).Structure != polygonVertexList[i])
+                    break;
+
+            while (i < verticesList.Count)
+                verticesList.RemoveAt(i);
+
+            for (; i < polygonVertexList.Count; i++)
+                verticesList.Add(new GeometricNode($"Vertex{i}", NodeType.Vertex, polygonVertexList[i]));
         }
 
         public void HandleHierarchyChange(object sender, Polygon polygon)
@@ -138,6 +209,8 @@ namespace Polygons
 
             if (structure != null)
                 structure.DrawingColor = Color.Red;
+            else
+                treeView.SelectedNode = null;
 
             polygonManager.UpdateSelectedStructure(structureSelected);
         }
@@ -235,6 +308,7 @@ namespace Polygons
 
         private void AddPolygonContextMenu(object sender, EventArgs e)
         {
+            treeView.SelectedNode = null;
             polygonManager.InitPolygonAdd();
         }
     }
