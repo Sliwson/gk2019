@@ -19,7 +19,6 @@ namespace Polygons
         }
 
         private PictureBox canvas;
-        private ToolStripStatusLabel label;
 
         private List<Polygon> polygons = new List<Polygon>();
 
@@ -28,11 +27,18 @@ namespace Polygons
         private MouseState mouseState = MouseState.Normal;
 
         public event EventHandler<Polygon> OnStructureChanged;
+        
+        public delegate void CursorChanger(Cursor c);
+        private CursorChanger ChangeCursor;
 
-        public PolygonManager(PictureBox canvas, ToolStripStatusLabel label)
+        public delegate void StatusStripChanger(string s);
+        private StatusStripChanger ChangeStatusStrip;
+
+        public PolygonManager(PictureBox canvas, CursorChanger cursorChanger, StatusStripChanger statusStripChanger)
         {
             this.canvas = canvas;
-            this.label = label;
+            ChangeCursor = cursorChanger;
+            ChangeStatusStrip = statusStripChanger;
 
             canvas.MouseMove += Canvas_MouseMove;
             canvas.MouseDown += Canvas_MouseDown;
@@ -136,7 +142,7 @@ namespace Polygons
         public void Update()
         {
             canvas.Invalidate();
-            UpdateStatusStrip();
+            UpdateGui();
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
@@ -144,7 +150,7 @@ namespace Polygons
             if (mouseState == MouseState.Dragging)
                 mouseState = MouseState.Normal;
 
-            UpdateStatusStrip();
+            UpdateGui();
         }
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
@@ -195,24 +201,29 @@ namespace Polygons
                 polygon.Draw(e.Graphics);
         }
 
-        private void UpdateStatusStrip()
+        private void UpdateGui()
         {
-            string state = "Mouse state: ";
+            var state = "Mouse state: ";
+            var cursor = Cursors.Default;
 
             switch (mouseState)
             {
                 case MouseState.Dragging:
+                    cursor = Cursors.Hand;
                     state += "Dragging structure";
                     break;
                 case MouseState.Drawing:
+                    cursor = Cursors.Hand;
                     state += "Drawing polygon";
                     break;
                 case MouseState.Normal:
+                    cursor = Cursors.Default;
                     state += "Normal";
                     break;
             }
 
-            label.Text = state;
+            ChangeStatusStrip(state);
+            ChangeCursor(cursor);
         }
 
         private bool IsMouseOver()

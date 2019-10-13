@@ -18,12 +18,23 @@ namespace Polygons
         {
             InitializeComponent();
 
-            polygonManager = new PolygonManager(canvas, statusLabel);
+            polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
+
             var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
             treeHierarchy.Update();
 
             polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;
             polygonManager.Update();
+        }
+
+        private void ChangeCursor(Cursor cursor)
+        {
+            this.Cursor = cursor;
+        }
+
+        private void ChangeStatusStrip(string text)
+        {
+            statusLabel.Text = text;
         }
     }
 }
