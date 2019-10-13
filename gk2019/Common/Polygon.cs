@@ -265,6 +265,9 @@ namespace Common
 
         private bool IsVertexGoodForClosing(Vertex v)
         {
+            if (lastProcessedVertex == v)
+                return false;
+
             int neighbours = 0;
 
             foreach (var edge in edges)
