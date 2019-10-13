@@ -18,13 +18,12 @@ namespace Polygons
         {
             InitializeComponent();
 
-            polygonManager = new PolygonManager(canvas);
-            polygonManager.InitSample();
-            
+            polygonManager = new PolygonManager(canvas, statusLabel);
             var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
             treeHierarchy.Update();
 
             polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;
+            polygonManager.Update();
         }
     }
 }

@@ -19,6 +19,8 @@ namespace Polygons
         }
 
         private PictureBox canvas;
+        private ToolStripStatusLabel label;
+
         private List<Polygon> polygons = new List<Polygon>();
 
         private PlaneStructure currentStructure = null;
@@ -27,9 +29,10 @@ namespace Polygons
 
         public event EventHandler<Polygon> OnStructureChanged;
 
-        public PolygonManager(PictureBox canvas)
+        public PolygonManager(PictureBox canvas, ToolStripStatusLabel label)
         {
             this.canvas = canvas;
+            this.label = label;
 
             canvas.MouseMove += Canvas_MouseMove;
             canvas.MouseDown += Canvas_MouseDown;
@@ -133,12 +136,15 @@ namespace Polygons
         public void Update()
         {
             canvas.Invalidate();
+            UpdateStatusStrip();
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
             if (mouseState == MouseState.Dragging)
                 mouseState = MouseState.Normal;
+
+            UpdateStatusStrip();
         }
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
@@ -155,9 +161,11 @@ namespace Polygons
                 var polygon = currentStructure as Polygon;
                 var result = polygon.AddVertex(e.Location);
                 OnStructureChanged?.Invoke(this, polygon);
-                Update();
                 if (result == Polygon.AddVertexResult.Closed)
                     mouseState = MouseState.Normal;
+
+                Update();
+                return;
             }
 
             //handle dragging
@@ -185,6 +193,26 @@ namespace Polygons
         {
             foreach (var polygon in polygons)
                 polygon.Draw(e.Graphics);
+        }
+
+        private void UpdateStatusStrip()
+        {
+            string state = "Mouse state: ";
+
+            switch (mouseState)
+            {
+                case MouseState.Dragging:
+                    state += "Dragging structure";
+                    break;
+                case MouseState.Drawing:
+                    state += "Drawing polygon";
+                    break;
+                case MouseState.Normal:
+                    state += "Normal";
+                    break;
+            }
+
+            label.Text = state;
         }
 
         private bool IsMouseOver()
