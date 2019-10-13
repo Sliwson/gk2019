@@ -55,9 +55,7 @@ namespace Polygons
             if (e.Button != MouseButtons.Right)
                 return;
 
-            var contextMenu = new ContextMenuStrip();
-            var addPolygon = contextMenu.Items.Add("Add polygon");
-            addPolygon.Click += AddPolygonContextMenu;
+            var contextMenu = CreateContextMenu(null);
             contextMenu.Show(treeView, e.X, e.Y);
         }
 
@@ -140,28 +138,56 @@ namespace Polygons
 
             if (structure != null)
                 structure.DrawingColor = Color.Red;
-            
+
             polygonManager.UpdateSelectedStructure(structureSelected);
+        }
+
+        private TreeNode FindTreeNode(PlaneStructure structure)
+        {
+            //polygons
+            foreach (GeometricNode node in treeView.Nodes)
+            {
+                if (node.Structure == structure)
+                    return node;
+
+                //edges
+                foreach (GeometricNode edgeNode in node.Nodes[0].Nodes)
+                    if (edgeNode.Structure == structure)
+                        return edgeNode;
+
+                //vertices
+                foreach (GeometricNode vertexNode in node.Nodes[1].Nodes)
+                    if (vertexNode.Structure == structure)
+                        return vertexNode;
+            }
+
+            return null;
         }
 
         private ContextMenuStrip CreateContextMenu(GeometricNode node)
         {
-            if (node.Type == NodeType.EdgesList || node.Type == NodeType.VerticesList)
-                return null;
-
             var contextMenu = new ContextMenuStrip();
 
-            if (node.Type == NodeType.Edge)
+            if (node != null)
             {
-                var split = contextMenu.Items.Add("Split");
-                split.Click += SplitClick;
+                if (node.Type == NodeType.Edge)
+                {
+                    var split = contextMenu.Items.Add("Split");
+                    split.Click += SplitClick;
+                }
+
+                if (node.Type == NodeType.Edge || node.Type == NodeType.Vertex || node.Type == NodeType.Polygon)
+                {
+                    var remove = contextMenu.Items.Add("Remove");
+                    remove.Click += RemoveClick;
+                }
+
+                if (node.Type != NodeType.EdgesList && node.Type != NodeType.VerticesList)
+                    contextMenu.Items.Add("-");
             }
 
-            if (node.Type == NodeType.Edge || node.Type == NodeType.Vertex || node.Type == NodeType.Polygon)
-            {
-                var remove = contextMenu.Items.Add("Remove");
-                remove.Click += RemoveClick;
-            }
+            var addPolygon = contextMenu.Items.Add("Add polygon");
+            addPolygon.Click += AddPolygonContextMenu;
 
             return contextMenu;
         }
