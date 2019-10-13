@@ -19,6 +19,7 @@ namespace Polygons
         }
 
         private PictureBox canvas;
+
         private List<Polygon> polygons = new List<Polygon>();
 
         private PlaneStructure currentStructure = null;
@@ -26,66 +27,29 @@ namespace Polygons
         private MouseState mouseState = MouseState.Normal;
 
         public event EventHandler<Polygon> OnStructureChanged;
+        
+        public delegate void CursorChanger(Cursor c);
+        private CursorChanger ChangeCursor;
 
-        public PolygonManager(PictureBox canvas)
+        public delegate void StatusStripChanger(string s);
+        private StatusStripChanger ChangeStatusStrip;
+
+        public PolygonManager(PictureBox canvas, CursorChanger cursorChanger, StatusStripChanger statusStripChanger)
         {
             this.canvas = canvas;
+            ChangeCursor = cursorChanger;
+            ChangeStatusStrip = statusStripChanger;
 
             canvas.MouseMove += Canvas_MouseMove;
             canvas.MouseDown += Canvas_MouseDown;
             canvas.MouseUp += Canvas_MouseUp;
-        }
-
-        private void Canvas_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (mouseState == MouseState.Dragging)
-                mouseState = MouseState.Normal;
-        }
-
-        private void Canvas_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (currentStructure == null)
-                return;
-
-            //handle add
-            if (mouseState == MouseState.Drawing)
-            {
-                if (!(currentStructure is Polygon))
-                    return;
-
-                var polygon = currentStructure as Polygon;
-                var result = polygon.AddVertex(e.Location);
-                OnStructureChanged?.Invoke(this, polygon);
-                Update();
-                if (result == Polygon.AddVertexResult.Closed)
-                    mouseState = MouseState.Normal;
-            }
-
-            //handle dragging
-            previousMousePosition = e.Location;
-            if (currentStructure.HitTest(e.Location))
-            {
-                if (mouseState == MouseState.Normal)
-                    mouseState = MouseState.Dragging;
-            }
-        }
-
-        private void Canvas_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (currentStructure == null || !(mouseState == MouseState.Dragging))
-                return;
-
-            var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
-            previousMousePosition = e.Location;
-
-            currentStructure.Move(delta);
-            Update();
+            canvas.Paint += CanvasDraw;
         }
 
         public void ClearDrawColor(Color? color = null)
         {
             Color drawingColor = color ?? Color.Black;
-            
+
             foreach (var polygon in polygons)
                 polygon.DrawingColor = drawingColor;
         }
@@ -121,14 +85,7 @@ namespace Polygons
             if (mouseState == MouseState.Drawing)
             {
                 if (currentStructure is Polygon)
-                {
-                    var p = currentStructure as Polygon;
-                    var result = p.ForceClose();
-                    mouseState = MouseState.Normal;
-
-                    if (result == Polygon.ForceCloseResult.DeleteMe)
-                        polygons.Remove(p);
-                }
+                    TryClosePolygon(currentStructure as Polygon);
                 else
                     return;
             }
@@ -144,10 +101,26 @@ namespace Polygons
             OnStructureChanged?.Invoke(this, polygon);
         }
 
-        public void Draw(Graphics graphics)
+        private void TryClosePolygon(Polygon polygon)
         {
-            foreach (var polygon in polygons)
-                polygon.Draw(graphics);
+            var result = polygon.ForceClose();
+            mouseState = MouseState.Normal;
+
+            if (result == Polygon.ForceCloseResult.DeleteMe)
+                polygons.Remove(polygon);
+        }
+
+        public void HandleMouseDown()
+        {
+            if (!(currentStructure is Polygon))
+                return;
+
+            if (mouseState == MouseState.Drawing && !IsMouseOver())
+            {
+                TryClosePolygon(currentStructure as Polygon);
+                Update();
+                OnStructureChanged?.Invoke(this, currentStructure as Polygon);
+            }
         }
 
         public void InitSample()
@@ -169,6 +142,93 @@ namespace Polygons
         public void Update()
         {
             canvas.Invalidate();
+            UpdateGui();
+        }
+
+        private void Canvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (mouseState == MouseState.Dragging)
+                mouseState = MouseState.Normal;
+
+            UpdateGui();
+        }
+
+        private void Canvas_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (currentStructure == null)
+                return;
+
+            //handle add
+            if (mouseState == MouseState.Drawing)
+            {
+                if (!(currentStructure is Polygon))
+                    return;
+
+                var polygon = currentStructure as Polygon;
+                var result = polygon.AddVertex(e.Location);
+                OnStructureChanged?.Invoke(this, polygon);
+                if (result == Polygon.AddVertexResult.Closed)
+                    mouseState = MouseState.Normal;
+
+                Update();
+                return;
+            }
+
+            //handle dragging
+            previousMousePosition = e.Location;
+            if (currentStructure.HitTest(e.Location))
+            {
+                if (mouseState == MouseState.Normal)
+                    mouseState = MouseState.Dragging;
+            }
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (currentStructure == null || !(mouseState == MouseState.Dragging))
+                return;
+
+            var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
+            previousMousePosition = e.Location;
+
+            currentStructure.Move(delta);
+            Update();
+        }
+
+        private void CanvasDraw(object sender, PaintEventArgs e)
+        {
+            foreach (var polygon in polygons)
+                polygon.Draw(e.Graphics);
+        }
+
+        private void UpdateGui()
+        {
+            var state = "Mouse state: ";
+            var cursor = Cursors.Default;
+
+            switch (mouseState)
+            {
+                case MouseState.Dragging:
+                    cursor = Cursors.Hand;
+                    state += "Dragging structure";
+                    break;
+                case MouseState.Drawing:
+                    cursor = Cursors.Hand;
+                    state += "Drawing polygon";
+                    break;
+                case MouseState.Normal:
+                    cursor = Cursors.Default;
+                    state += "Normal";
+                    break;
+            }
+
+            ChangeStatusStrip(state);
+            ChangeCursor(cursor);
+        }
+
+        private bool IsMouseOver()
+        {
+            return canvas.ClientRectangle.Contains(canvas.PointToClient(Cursor.Position));
         }
     }
 }

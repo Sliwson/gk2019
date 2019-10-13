@@ -56,7 +56,7 @@
             this.canvasPanel.Name = "canvasPanel";
             this.canvasPanel.RowCount = 1;
             this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 725F));
             this.canvasPanel.Size = new System.Drawing.Size(1008, 725);
             this.canvasPanel.TabIndex = 0;
             // 
@@ -66,12 +66,11 @@
             this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvas.Location = new System.Drawing.Point(10, 10);
-            this.canvas.Margin = new System.Windows.Forms.Padding(10);
+            this.canvas.Margin = new System.Windows.Forms.Padding(10, 10, 10, 30);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(649, 705);
+            this.canvas.Size = new System.Drawing.Size(649, 685);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
             // rightPanel
             // 
@@ -117,14 +116,14 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 703);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
+            this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(66, 17);
-            this.statusLabel.Text = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // Form1
             // 
