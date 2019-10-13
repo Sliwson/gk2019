@@ -36,6 +36,7 @@ namespace Polygons
             canvas.MouseUp += Canvas_MouseUp;
             canvas.Paint += CanvasDraw;
         }
+
         public void ClearDrawColor(Color? color = null)
         {
             Color drawingColor = color ?? Color.Black;
@@ -75,14 +76,7 @@ namespace Polygons
             if (mouseState == MouseState.Drawing)
             {
                 if (currentStructure is Polygon)
-                {
-                    var p = currentStructure as Polygon;
-                    var result = p.ForceClose();
-                    mouseState = MouseState.Normal;
-
-                    if (result == Polygon.ForceCloseResult.DeleteMe)
-                        polygons.Remove(p);
-                }
+                    TryClosePolygon(currentStructure as Polygon);
                 else
                     return;
             }
@@ -96,6 +90,28 @@ namespace Polygons
             polygons.Add(polygon);
             Update();
             OnStructureChanged?.Invoke(this, polygon);
+        }
+
+        private void TryClosePolygon(Polygon polygon)
+        {
+            var result = polygon.ForceClose();
+            mouseState = MouseState.Normal;
+
+            if (result == Polygon.ForceCloseResult.DeleteMe)
+                polygons.Remove(polygon);
+        }
+
+        public void HandleMouseDown()
+        {
+            if (!(currentStructure is Polygon))
+                return;
+
+            if (mouseState == MouseState.Drawing && !IsMouseOver())
+            {
+                TryClosePolygon(currentStructure as Polygon);
+                Update();
+                OnStructureChanged?.Invoke(this, currentStructure as Polygon);
+            }
         }
 
         public void InitSample()
@@ -118,7 +134,6 @@ namespace Polygons
         {
             canvas.Invalidate();
         }
-
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
@@ -170,6 +185,11 @@ namespace Polygons
         {
             foreach (var polygon in polygons)
                 polygon.Draw(e.Graphics);
+        }
+
+        private bool IsMouseOver()
+        {
+            return canvas.ClientRectangle.Contains(canvas.PointToClient(Cursor.Position));
         }
     }
 }

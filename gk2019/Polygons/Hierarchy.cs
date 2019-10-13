@@ -120,6 +120,9 @@ namespace Polygons
 
         private void ItemSelected(object sender, TreeViewEventArgs e)
         {
+            //close currently drawn polygon
+            polygonManager.HandleMouseDown();
+
             var node = e.Node as GeometricNode;
             if (node.Type == NodeType.EdgesList || node.Type == NodeType.VerticesList)
             {
