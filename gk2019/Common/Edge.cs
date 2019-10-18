@@ -44,7 +44,7 @@ namespace Common
             if (RelationType != EdgeRelation.None)
                 DrawRelationInfo(graphics);
         }
-
+        
         private void DrawRelationInfo(Graphics graphics)
         {
             string relationString = "";
@@ -75,12 +75,20 @@ namespace Common
             Begin.Move(offset);
             End.Move(offset);
         }
+
         public Vertex GetSplitVertex()
         {
             var begin = Begin.Position;
             var end = End.Position;
             Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
             return new Vertex(splitPoint, DrawingConstants.PointRadius, UnderlyingPolygon);
+        }
+
+        public void SetRelationData(EdgeRelation type, Edge edge, int id)
+        {
+            RelationType = type;
+            RelationEdge = edge;
+            RelationId = id;
         }
     }
 }

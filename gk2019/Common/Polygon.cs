@@ -6,13 +6,6 @@ using System.Linq;
 
 namespace Common
 {
-    public enum EdgeRelation
-    {
-        None,
-        EqualLength,
-        Perpendicular
-    }
-
     public interface IHitTesable
     {
         bool HitTest(Point position);
@@ -82,6 +75,7 @@ namespace Common
         private List<Vertex> vertices = new List<Vertex>();
 
         private Vertex lastProcessedVertex = null;
+        private int relationCounter = 0;
 
         public Polygon() : base(null)
         {
@@ -155,6 +149,7 @@ namespace Common
             lastProcessedVertex = newVertex;
             return AddVertexResult.Added;
         }
+
         public bool SplitEdge(Edge edge)
         {
             if (edge.Length < DrawingConstants.MinimumSplitLength)
@@ -249,6 +244,48 @@ namespace Common
                     return (HitTestResult.Edge, edge);
 
             return (HitTestResult.Empty, null);
+        }
+
+        public bool AddRelation(RelationInfo relation)
+        {
+            if (!ValidateIncomingRelation(relation))
+                return false;
+
+            var e1 = relation.E1;
+            var e2 = relation.E2;
+
+            e1.SetRelationData(relation.Type, e2, relationCounter);
+            e2.SetRelationData(relation.Type, e1, relationCounter);
+            
+            if (!CorrectRelations(e1.Begin))
+            {
+                //rollback relation add
+                e1.SetRelationData(EdgeRelation.None, null, 0);
+                e2.SetRelationData(EdgeRelation.None, null, 0);
+                return false;
+            }
+
+            relationCounter++;
+            return true;
+        }
+
+        private bool ValidateIncomingRelation(RelationInfo relation)
+        {
+            var e1 = relation.E1;
+            var e2 = relation.E2;
+
+            if (!edges.Contains(e1) || !edges.Contains(e2))
+                return false;
+
+            if (e1.RelationType != EdgeRelation.None || e2.RelationType != EdgeRelation.None || relation.Type == EdgeRelation.None)
+                return false;
+
+            return true;
+        }
+
+        public bool CorrectRelations(Vertex startingVertex)
+        {
+            return true;
         }
 
         public static Polygon GetSampleSquare()
