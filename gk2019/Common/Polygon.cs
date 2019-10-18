@@ -155,6 +155,8 @@ namespace Common
             if (edge.Length < DrawingConstants.MinimumSplitLength)
                 return false;
 
+            RemoveRelation(edge);
+
             var splitVertex = edge.GetSplitVertex();
 
             lastProcessedVertex = edge.End;
@@ -182,12 +184,20 @@ namespace Common
             if (leftEdge == null && rightEdge == null)
                 return;
 
+            RemoveRelation(leftEdge);
+            RemoveRelation(rightEdge);
+
             leftEdge.End = rightEdge.End;
             edges.Remove(rightEdge);
         }
 
         public void DeleteEdge(Edge edge)
         {
+            if (!edges.Contains(edge))
+                return;
+
+            RemoveRelation(edge);
+
             var splitVertex = edge.GetSplitVertex();
             
             foreach (var e in edges)
@@ -267,6 +277,17 @@ namespace Common
 
             relationCounter++;
             return true;
+        }
+
+        public void RemoveRelation(Edge edge)
+        {
+            if (!edges.Contains(edge) || edge.RelationType == EdgeRelation.None)
+                return;
+
+            var pair = edge.RelationEdge;
+            edge.SetRelationData(EdgeRelation.None, null, 0);
+            if (pair != null)
+                pair.SetRelationData(EdgeRelation.None, null, 0);
         }
 
         private bool ValidateIncomingRelation(RelationInfo relation)
