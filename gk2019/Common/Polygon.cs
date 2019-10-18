@@ -296,6 +296,13 @@ namespace Common
             p.AddVertex(new Point(100, 100));
             p.AddVertex(new Point(100, 10));
             p.AddVertex(new Point(10, 10));
+
+            var edges = p.GetEdges();
+            var r1 = new RelationInfo(edges[0], edges[1], EdgeRelation.EqualLength);
+            var r2 = new RelationInfo(edges[2], edges[3], EdgeRelation.Perpendicular);
+            p.AddRelation(r1);
+            p.AddRelation(r2);
+
             return p;
         }
 
