@@ -38,5 +38,12 @@ namespace Common
             Begin.Move(offset);
             End.Move(offset);
         }
+        public Vertex GetSplitVertex()
+        {
+            var begin = Begin.Position;
+            var end = End.Position;
+            Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
+            return new Vertex(splitPoint, DrawingConstants.PointRadius, UnderlyingPolygon);
+        }
     }
 }

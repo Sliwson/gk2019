@@ -123,7 +123,7 @@ namespace Common
             if (edge.Length < DrawingConstants.MinimumSplitLength)
                 return false;
 
-            var splitVertex = GetSplitVertex(edge);
+            var splitVertex = edge.GetSplitVertex();
 
             lastProcessedVertex = edge.End;
             var secondEdge = new Edge(splitVertex, edge.End, this);
@@ -133,14 +133,6 @@ namespace Common
             vertices.Add(splitVertex);
 
             return true;
-        }
-
-        private Vertex GetSplitVertex(Edge edge)
-        {
-            var begin = edge.Begin.Position;
-            var end = edge.End.Position;
-            Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
-            return new Vertex(splitPoint, DrawingConstants.PointRadius, this);
         }
 
         public void DeleteVertex(Vertex vertex)
@@ -164,7 +156,7 @@ namespace Common
 
         public void DeleteEdge(Edge edge)
         {
-            var splitVertex = GetSplitVertex(edge);
+            var splitVertex = edge.GetSplitVertex();
             
             foreach (var e in edges)
             {
