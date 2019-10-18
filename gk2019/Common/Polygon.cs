@@ -88,6 +88,36 @@ namespace Common
 
         }
 
+        public List<Vertex> GetVertices()
+        {
+            return vertices;
+        }
+
+        public List<Edge> GetEdges()
+        {
+            return edges;
+        }
+
+        public override bool HitTest(Point position)
+        {
+            return HitTestPolygon(position).Item1 != HitTestResult.Empty;
+        }
+
+        public override void Draw(Graphics graphics)
+        {
+            foreach (var edge in edges)
+                edge.Draw(graphics);
+
+            foreach (var vertex in vertices)
+                vertex.Draw(graphics);
+        }
+
+        public override void Move(Point offset)
+        {
+            foreach (var vertex in vertices)
+                vertex.Move(offset);
+        }
+
         public AddVertexResult AddVertex(Point position)
         {
             var hitTest = HitTestPolygon(position);
@@ -208,16 +238,6 @@ namespace Common
             return ForceCloseResult.Closed;
         }
 
-        public List<Vertex> GetVertices()
-        {
-            return vertices;
-        }
-
-        public List<Edge> GetEdges()
-        {
-            return edges;
-        }
-
         public (HitTestResult, PlaneStructure)  HitTestPolygon(Point position)
         {
             foreach (var vertex in vertices)
@@ -229,26 +249,6 @@ namespace Common
                     return (HitTestResult.Edge, edge);
 
             return (HitTestResult.Empty, null);
-        }
-
-        public override bool HitTest(Point position)
-        {
-            return HitTestPolygon(position).Item1 != HitTestResult.Empty;
-        }
-
-        public override void Draw(Graphics graphics)
-        {
-            foreach (var edge in edges)
-                edge.Draw(graphics);
-
-            foreach (var vertex in vertices)
-                vertex.Draw(graphics);
-        }
-        
-        public override void Move(Point offset)
-        {
-            foreach (var vertex in vertices)
-                vertex.Move(offset);
         }
 
         public static Polygon GetSampleSquare()
