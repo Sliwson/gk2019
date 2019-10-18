@@ -6,6 +6,13 @@ using System.Linq;
 
 namespace Common
 {
+    public enum EdgeRelation
+    {
+        None,
+        EqualLength,
+        Perpendicular
+    }
+
     public interface IHitTesable
     {
         bool HitTest(Point position);

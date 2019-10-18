@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Numerics;
 
 namespace Common
 {
@@ -11,10 +12,18 @@ namespace Common
         public Vertex End { get; set; }
         public double Length { get { return Begin.Position.DistanceTo(End.Position); } }
 
+        public EdgeRelation RelationType { get; set; }
+        public Edge RelationEdge { get; set; }
+        public int RelationId { get; set; }
+
         public Edge (Vertex begin, Vertex end, Polygon underlyingPolygon = null) : base(underlyingPolygon)
         {
             Begin = begin;
             End = end;
+
+            RelationType = EdgeRelation.None;
+            RelationEdge = null;
+            RelationId = 0;
         }
 
         public override bool HitTest(Point position)
@@ -31,6 +40,34 @@ namespace Common
         public override void Draw(Graphics graphics)
         {
             graphics.DrawLine(new Pen(DrawingColor), Begin.Position.X, Begin.Position.Y, End.Position.X, End.Position.Y);
+
+            if (RelationType != EdgeRelation.None)
+                DrawRelationInfo(graphics);
+        }
+
+        private void DrawRelationInfo(Graphics graphics)
+        {
+            string relationString = "";
+            if (RelationType == EdgeRelation.Perpendicular)
+                relationString += "P";
+            else if (RelationType == EdgeRelation.EqualLength)
+                relationString += "L";
+
+            relationString += RelationId.ToString();
+
+            graphics.DrawString(relationString, SystemFonts.DefaultFont, Brushes.Black, GetRelationInfoPosition());
+        }
+
+        private Point GetRelationInfoPosition()
+        {
+            Point middle = GetSplitVertex().Position;
+
+            Vector2 edgeDirection = new Vector2(End.Position.X - Begin.Position.X, End.Position.Y - Begin.Position.Y);
+            edgeDirection = Vector2.Normalize(edgeDirection);
+            edgeDirection = new Vector2(-edgeDirection.Y, edgeDirection.X);
+            edgeDirection *= 15; //offset
+
+            return new Point(middle.X + (int)edgeDirection.X, middle.Y + (int)edgeDirection.Y);
         }
 
         public override void Move(Point offset)
