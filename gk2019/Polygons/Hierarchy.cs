@@ -106,7 +106,9 @@ namespace Polygons
 
             var edges = polygon.GetEdges();
             for (int j = 0; j < edges.Count; j++)
-                edgesNode.Nodes.Add(new GeometricNode($"Edge{j}", NodeType.Edge, edges[j]));
+                edgesNode.Nodes.Add(new GeometricNode("", NodeType.Edge, edges[j]));
+
+            UpdateEdgesLabels(edgesNode.Nodes);
 
             var vertices = polygon.GetVertices();
             for (int j = 0; j < vertices.Count; j++)
@@ -116,6 +118,21 @@ namespace Polygons
             polygonNode.Nodes.Add(verticesNode);
 
             return polygonNode;
+        }
+
+        private void UpdateEdgesLabels(TreeNodeCollection edgeNodes)
+        {
+            for (int i = 0; i < edgeNodes.Count; i++)
+            {
+                var geometricNode = edgeNodes[i] as GeometricNode;
+                var edge = geometricNode.Structure as Edge;
+                var label = $"Edge{i}";
+
+                if (edge.RelationType != EdgeRelation.None)
+                    label += $" [{edge.GetRelationString()}]";
+
+                geometricNode.Text = label;
+            }
         }
 
         private void RemoveMissingNode()
@@ -159,7 +176,9 @@ namespace Polygons
                 edgesList.RemoveAt(i);
 
             for (; i < polygonEdgesList.Count; i++)
-                edgesList.Add(new GeometricNode($"Edge{i}", NodeType.Edge, polygonEdgesList[i]));
+                edgesList.Add(new GeometricNode("", NodeType.Edge, polygonEdgesList[i]));
+
+            UpdateEdgesLabels(edgesList);
         }
 
         private void UpdateVertices(TreeNodeCollection verticesList, List<Vertex> polygonVertexList)
@@ -247,6 +266,13 @@ namespace Polygons
                 {
                     var split = contextMenu.Items.Add("Split");
                     split.Click += SplitClick;
+
+                    var edge = node.Structure as Edge;
+                    if (edge.RelationType != EdgeRelation.None)
+                    {
+                        var removeRelation = contextMenu.Items.Add("Remove relation");
+                        removeRelation.Click += RemoveRelationClick;
+                    }
                 }
 
                 if (node.Type == NodeType.Edge || node.Type == NodeType.Vertex || node.Type == NodeType.Polygon)
@@ -307,6 +333,20 @@ namespace Polygons
                 StructureSelected(null);
                 ExpandNode(edge.UnderlyingPolygon);
             }
+        }
+
+        private void RemoveRelationClick(object sender, EventArgs e)
+        {
+            if (!(structureSelected is Edge))
+                return;
+
+            var edge = structureSelected as Edge;
+            if (edge.UnderlyingPolygon == null)
+                return;
+
+            edge.UnderlyingPolygon.RemoveRelation(edge);
+            Update();
+            polygonManager.Update();
         }
 
         private void AddPolygonContextMenu(object sender, EventArgs e)

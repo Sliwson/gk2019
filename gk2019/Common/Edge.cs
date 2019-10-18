@@ -47,6 +47,12 @@ namespace Common
         
         private void DrawRelationInfo(Graphics graphics)
         {
+            string relationString = GetRelationString();        
+            graphics.DrawString(relationString, SystemFonts.DefaultFont, Brushes.Black, GetRelationInfoPosition());
+        }
+
+        public string GetRelationString()
+        {
             string relationString = "";
             if (RelationType == EdgeRelation.Perpendicular)
                 relationString += "P";
@@ -55,7 +61,7 @@ namespace Common
 
             relationString += RelationId.ToString();
 
-            graphics.DrawString(relationString, SystemFonts.DefaultFont, Brushes.Black, GetRelationInfoPosition());
+            return relationString;
         }
 
         private Point GetRelationInfoPosition()
@@ -83,7 +89,6 @@ namespace Common
             Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
             return new Vertex(splitPoint, DrawingConstants.PointRadius, UnderlyingPolygon);
         }
-
         public void SetRelationData(EdgeRelation type, Edge edge, int id)
         {
             RelationType = type;
