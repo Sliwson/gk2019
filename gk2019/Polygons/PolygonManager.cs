@@ -104,7 +104,8 @@ namespace Polygons
 
             mouseState = MouseState.PutingSample;
             Update();
-            OnStructureChanged?.Invoke(this, null);
+            if (currentStructure is Polygon)
+                OnStructureChanged?.Invoke(this, currentStructure as Polygon);
         }
 
         private void TryClosePolygon(Polygon polygon)
