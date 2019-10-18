@@ -291,11 +291,11 @@ namespace Common
         public static Polygon GetSampleSquare()
         {
             Polygon p = new Polygon();
-            p.AddVertex(new Point(10, 10));
-            p.AddVertex(new Point(10, 100));
-            p.AddVertex(new Point(100, 100));
-            p.AddVertex(new Point(100, 10));
-            p.AddVertex(new Point(10, 10));
+            p.AddVertex(new Point(0, 0));
+            p.AddVertex(new Point(0, 150));
+            p.AddVertex(new Point(150, 150));
+            p.AddVertex(new Point(150, 0));
+            p.AddVertex(new Point(0, 0));
 
             var edges = p.GetEdges();
             var r1 = new RelationInfo(edges[0], edges[1], EdgeRelation.EqualLength);

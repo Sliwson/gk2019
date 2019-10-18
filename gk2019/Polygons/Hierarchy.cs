@@ -262,6 +262,9 @@ namespace Polygons
             var addPolygon = contextMenu.Items.Add("Add polygon");
             addPolygon.Click += AddPolygonContextMenu;
 
+            var addSamplePolygon = contextMenu.Items.Add("Add sample polygon");
+            addSamplePolygon.Click += AddSamplePolygonContextMenu;
+
             return contextMenu;
         }
 
@@ -311,5 +314,12 @@ namespace Polygons
             treeView.SelectedNode = null;
             polygonManager.InitPolygonAdd();
         }
+
+        private void AddSamplePolygonContextMenu(object sender, EventArgs e)
+        {
+            treeView.SelectedNode = null;
+            polygonManager.InitSamplePolygonAdd();
+        }
+
     }
 }

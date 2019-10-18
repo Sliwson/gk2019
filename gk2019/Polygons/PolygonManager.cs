@@ -15,7 +15,8 @@ namespace Polygons
         {
             Normal,
             Dragging,
-            Drawing
+            Drawing,
+            PutingSample
         }
 
         private PictureBox canvas;
@@ -82,14 +83,9 @@ namespace Polygons
 
         public void InitPolygonAdd()
         {
-            if (mouseState == MouseState.Drawing)
-            {
-                if (currentStructure is Polygon)
-                    TryClosePolygon(currentStructure as Polygon);
-                else
-                    return;
-            }
-
+            if (mouseState == MouseState.Drawing && currentStructure is Polygon)
+                TryClosePolygon(currentStructure as Polygon);
+            
             if (mouseState != MouseState.Normal)
                 return;
 
@@ -99,6 +95,16 @@ namespace Polygons
             polygons.Add(polygon);
             Update();
             OnStructureChanged?.Invoke(this, polygon);
+        }
+
+        public void InitSamplePolygonAdd()
+        {
+            if (mouseState == MouseState.Drawing && currentStructure is Polygon)
+                TryClosePolygon(currentStructure as Polygon);
+
+            mouseState = MouseState.PutingSample;
+            Update();
+            OnStructureChanged?.Invoke(this, null);
         }
 
         private void TryClosePolygon(Polygon polygon)
@@ -155,6 +161,18 @@ namespace Polygons
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
+            //handle add sample
+            if (mouseState == MouseState.PutingSample)
+            {
+                var polygon = Polygon.GetSampleSquare();
+                polygon.Move(e.Location);
+                polygons.Add(polygon);
+                OnStructureChanged?.Invoke(this, polygon);
+                Update();
+                mouseState = MouseState.Normal;
+                return;
+            }
+
             if (currentStructure == null)
                 return;
 
@@ -219,6 +237,10 @@ namespace Polygons
                 case MouseState.Normal:
                     cursor = Cursors.Default;
                     state += "Normal";
+                    break;
+                case MouseState.PutingSample:
+                    cursor = Cursors.Hand;
+                    state += "Ready to put sample";
                     break;
             }
 
