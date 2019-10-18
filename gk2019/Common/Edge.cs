@@ -39,7 +39,7 @@ namespace Common
 
         public override void Draw(Graphics graphics)
         {
-            graphics.DrawLine(new Pen(DrawingColor), Begin.Position.X, Begin.Position.Y, End.Position.X, End.Position.Y);
+            Algorithm.BresenhamLine(Begin.Position, End.Position, DrawingColor, graphics);
 
             if (RelationType != EdgeRelation.None)
                 DrawRelationInfo(graphics);
