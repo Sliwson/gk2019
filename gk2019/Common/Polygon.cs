@@ -157,6 +157,9 @@ namespace Common
             if (edge.Length < DrawingConstants.MinimumSplitLength)
                 return false;
 
+            if (!edges.Contains(edge))
+                return false;
+
             RemoveRelation(edge);
 
             var splitVertex = edge.GetSplitVertex();
@@ -165,8 +168,8 @@ namespace Common
             var secondEdge = new Edge(splitVertex, edge.End, this);
             edge.End = splitVertex;
 
-            edges.Add(secondEdge);
-            vertices.Add(splitVertex);
+            edges.Insert(edges.IndexOf(edge) + 1, secondEdge);
+            vertices.Insert(vertices.IndexOf(edge.Begin) + 1, splitVertex);
 
             return true;
         }
