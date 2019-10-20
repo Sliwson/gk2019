@@ -13,20 +13,26 @@ namespace Polygons
 {
     public partial class Form1 : Form
     {
+        private PolygonManager polygonManager;
+        private Hierarchy hierarchyController;
+
         public Form1()
         {
             InitializeComponent();
 
-            var polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
+            polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
 
             var relationCreator = new RelationCreator(errorLabel, (selectedEdge1, selectedEdge2));
             relationCreator.InitEvents(remove1, remove2, addEqualButton, addPerpendicularButton);            
 
-            var treeHierarchy = new Hierarchy(hierarchy, polygonManager, relationCreator);
-            treeHierarchy.Update();
+            hierarchyController = new Hierarchy(hierarchy, polygonManager, relationCreator);
+            hierarchyController.Update();
 
-            polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;
+            polygonManager.OnStructureChanged += hierarchyController.HandleHierarchyChange;
             polygonManager.Update();
+
+            addEqualButton.Click += UpdateAll;
+            addPerpendicularButton.Click += UpdateAll;
         }
 
         private void ChangeCursor(Cursor cursor)
@@ -37,6 +43,12 @@ namespace Polygons
         private void ChangeStatusStrip(string text)
         {
             statusLabel.Text = text;
+        }
+
+        private void UpdateAll(object sender, EventArgs a)
+        {
+            hierarchyController.Update();
+            polygonManager.Update();
         }
     }
 }
