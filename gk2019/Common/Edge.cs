@@ -76,10 +76,12 @@ namespace Common
             return new Point(middle.X + (int)edgeDirection.X, middle.Y + (int)edgeDirection.Y);
         }
 
-        public override void Move(Point offset)
+        public override bool Move(Point offset)
         {
-            Begin.Move(offset);
-            End.Move(offset);
+            Begin.MoveIgnoringRelations(offset);
+            End.MoveIgnoringRelations(offset);
+
+            return true;
         }
 
         public Vertex GetSplitVertex()

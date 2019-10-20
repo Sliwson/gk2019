@@ -26,7 +26,7 @@ namespace Common
 
         public abstract void Draw(Graphics graphics);
 
-        public abstract void Move(Point offset);
+        public abstract bool Move(Point offset);
 
         public abstract bool HitTest(Point position);
     }
@@ -106,10 +106,12 @@ namespace Common
                 vertex.Draw(graphics);
         }
 
-        public override void Move(Point offset)
+        public override bool Move(Point offset)
         {
             foreach (var vertex in vertices)
-                vertex.Move(offset);
+                vertex.MoveIgnoringRelations(offset);
+
+            return true;
         }
 
         public AddVertexResult AddVertex(Point position)

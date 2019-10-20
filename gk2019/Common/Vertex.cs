@@ -29,9 +29,26 @@ namespace Common
             graphics.FillEllipse(new SolidBrush(DrawingColor),  (float)(Position.X - Radius), (float)(Position.Y - Radius), (float)Radius * 2, (float)Radius * 2);
         }
 
-        public override void Move(Point offset)
+        public void MoveIgnoringRelations(Point offset)
         {
             Position = Position.Add(offset);
+        }
+
+        public override bool Move(Point offset)
+        {
+            var previousPosition = new Point(Position.X, Position.Y);
+            Position = Position.Add(offset);
+
+            if (UnderlyingPolygon != null)
+            {
+                if (!UnderlyingPolygon.CorrectRelations(this))
+                {
+                    Position = previousPosition;
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
