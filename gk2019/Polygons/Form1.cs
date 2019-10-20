@@ -13,12 +13,14 @@ namespace Polygons
 {
     public partial class Form1 : Form
     {
-        private PolygonManager polygonManager;
         public Form1()
         {
             InitializeComponent();
 
-            polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
+            var polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
+
+            var relationCreator = new RelationCreator(errorLabel, (selectedEdge1, selectedEdge2));
+            
 
             var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
             treeHierarchy.Update();

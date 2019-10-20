@@ -23,6 +23,50 @@ namespace Polygons
             errorLabel.Text = "";
         }
 
+        public void InitEvents(Button cancelFirstButton, Button cancelSecondButton, Button addEqualButton, Button addPerpendicularButton)
+        {
+            cancelFirstButton.Click += EdgeFirstCancel;
+            cancelSecondButton.Click += EdgeSecondCancel;
+            addEqualButton.Click += AddEqualRelation;
+            addPerpendicularButton.Click += AddPerpendicularRelation;
+        }
+
+        private void AddPerpendicularRelation(object sender, EventArgs e)
+        {
+            if (!CanAddRelation() || !AddRelation(EdgeRelation.Perpendicular))
+            {
+                errorLabel.Text = "You can't add this relation";
+            }
+            else
+            {
+                errorLabel.Text = "";
+            }
+        }
+
+        private void AddEqualRelation(object sender, EventArgs e)
+        {
+            if (!CanAddRelation() || !AddRelation(EdgeRelation.EqualLength))
+            {
+                errorLabel.Text = "You can't add this relation";
+            }
+            else
+            {
+                errorLabel.Text = "";
+            }
+        }
+
+        private bool AddRelation(EdgeRelation relationType)
+        {
+            if (relatedEdges.Item1.UnderlyingPolygon == null)
+                return false;
+
+            var relationInfo = new RelationInfo(relatedEdges.Item1, relatedEdges.Item2, relationType);
+            if (!relatedEdges.Item1.UnderlyingPolygon.AddRelation(relationInfo))
+                return false;
+
+            return true;
+        }
+
         public bool CanAddEdge(Edge edge)
         {
             if (relatedEdges.Item1 != null && relatedEdges.Item2 != null)
@@ -59,11 +103,31 @@ namespace Polygons
                 errorLabel.Text = "You can't add this edge to relation creator";
                 return;
             }
+            else
+                errorLabel.Text = "";
 
             if (relatedEdges.Item1 == null)
                 relatedEdges.Item1 = edge;
             else if (relatedEdges.Item2 == null)
                 relatedEdges.Item2 = edge;
+        }
+
+        private bool CanAddRelation()
+        {
+            if (relatedEdges.Item1 == null || relatedEdges.Item2 == null)
+                return false;
+
+            return true;
+        }
+
+        private void EdgeFirstCancel(object sender, EventArgs e)
+        {
+            relatedEdges.Item1 = null;
+        }
+
+        private void EdgeSecondCancel(object sender, EventArgs e)
+        {
+            relatedEdges.Item2 = null;
         }
     }
 }
