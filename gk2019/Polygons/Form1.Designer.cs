@@ -93,8 +93,8 @@
             this.rightPanel.Location = new System.Drawing.Point(672, 3);
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.RowCount = 3;
-            this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 71.3467F));
-            this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.6533F));
+            this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 71.7765F));
+            this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.2235F));
             this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.rightPanel.Size = new System.Drawing.Size(333, 719);
             this.rightPanel.TabIndex = 1;
@@ -107,7 +107,7 @@
             this.hierarchyGroupbox.Location = new System.Drawing.Point(10, 10);
             this.hierarchyGroupbox.Margin = new System.Windows.Forms.Padding(10);
             this.hierarchyGroupbox.Name = "hierarchyGroupbox";
-            this.hierarchyGroupbox.Size = new System.Drawing.Size(313, 478);
+            this.hierarchyGroupbox.Size = new System.Drawing.Size(313, 481);
             this.hierarchyGroupbox.TabIndex = 0;
             this.hierarchyGroupbox.TabStop = false;
             this.hierarchyGroupbox.Text = "Hierarchy";
@@ -119,7 +119,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hierarchy.Location = new System.Drawing.Point(6, 19);
             this.hierarchy.Name = "hierarchy";
-            this.hierarchy.Size = new System.Drawing.Size(301, 453);
+            this.hierarchy.Size = new System.Drawing.Size(301, 456);
             this.hierarchy.TabIndex = 0;
             // 
             // statusStrip1
@@ -152,10 +152,10 @@
             this.relationCreator.Dock = System.Windows.Forms.DockStyle.Fill;
             this.relationCreator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.relationCreator.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.relationCreator.Location = new System.Drawing.Point(10, 508);
-            this.relationCreator.Margin = new System.Windows.Forms.Padding(10);
+            this.relationCreator.Location = new System.Drawing.Point(10, 511);
+            this.relationCreator.Margin = new System.Windows.Forms.Padding(10, 10, 10, 6);
             this.relationCreator.Name = "relationCreator";
-            this.relationCreator.Size = new System.Drawing.Size(313, 180);
+            this.relationCreator.Size = new System.Drawing.Size(313, 181);
             this.relationCreator.TabIndex = 1;
             this.relationCreator.TabStop = false;
             this.relationCreator.Text = "Relation Creator";
@@ -165,7 +165,7 @@
             this.selectedEdge1.Enabled = false;
             this.selectedEdge1.Location = new System.Drawing.Point(93, 24);
             this.selectedEdge1.Name = "selectedEdge1";
-            this.selectedEdge1.Size = new System.Drawing.Size(189, 20);
+            this.selectedEdge1.Size = new System.Drawing.Size(185, 20);
             this.selectedEdge1.TabIndex = 0;
             // 
             // label1
@@ -191,7 +191,7 @@
             this.selectedEdge2.Enabled = false;
             this.selectedEdge2.Location = new System.Drawing.Point(93, 58);
             this.selectedEdge2.Name = "selectedEdge2";
-            this.selectedEdge2.Size = new System.Drawing.Size(189, 20);
+            this.selectedEdge2.Size = new System.Drawing.Size(185, 20);
             this.selectedEdge2.TabIndex = 3;
             // 
             // addEqualButton
@@ -216,7 +216,7 @@
             // 
             this.remove1.BackgroundImage = global::Polygons.Properties.Resources.buttonX;
             this.remove1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.remove1.Location = new System.Drawing.Point(288, 22);
+            this.remove1.Location = new System.Drawing.Point(284, 22);
             this.remove1.Name = "remove1";
             this.remove1.Size = new System.Drawing.Size(23, 23);
             this.remove1.TabIndex = 6;
@@ -226,7 +226,7 @@
             // 
             this.remove2.BackgroundImage = global::Polygons.Properties.Resources.buttonX;
             this.remove2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.remove2.Location = new System.Drawing.Point(288, 56);
+            this.remove2.Location = new System.Drawing.Point(284, 58);
             this.remove2.Name = "remove2";
             this.remove2.Size = new System.Drawing.Size(23, 23);
             this.remove2.TabIndex = 7;
