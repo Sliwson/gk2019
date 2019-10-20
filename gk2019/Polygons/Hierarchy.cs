@@ -314,7 +314,6 @@ namespace Polygons
 
             polygonManager.DeleteStructure(structureSelected);
             Update();
-            ExpandNode(structureSelected.UnderlyingPolygon);
             StructureSelected(null);
         }
 
