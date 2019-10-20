@@ -309,6 +309,11 @@ namespace Common
             return true;
         }
 
+        public bool IsEdgeInPolygon(Edge e)
+        {
+            return edges.Contains(e);
+        }
+
         public static Polygon GetSampleSquare()
         {
             Polygon p = new Polygon();
