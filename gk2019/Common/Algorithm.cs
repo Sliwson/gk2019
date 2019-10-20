@@ -7,6 +7,9 @@ namespace Common
 {
     public class Algorithm
     {
+        //////////////////////////////////////////////////////////////////////
+        /// Bresenham
+        //////////////////////////////////////////////////////////////////////
         public static void BresenhamLine(Point p1, Point p2, Color c, Graphics graphics)
         {
             Brush brush = new SolidBrush(c);
@@ -113,6 +116,14 @@ namespace Common
             T temporary = l;
             l = r;
             r = temporary;
+        }
+
+        //////////////////////////////////////////////////////////////////////
+        /// Relations
+        //////////////////////////////////////////////////////////////////////
+        public static bool CorrectRelation(Polygon clonedPolygon, int startingIndex)
+        {
+            return true;
         }
     }
 }

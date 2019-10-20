@@ -311,6 +311,15 @@ namespace Common
 
         public bool CorrectRelations(Vertex startingVertex)
         {
+            var polygonClone = Clone();
+            var startingIndex = vertices.IndexOf(startingVertex);
+
+            if (!Algorithm.CorrectRelation(polygonClone, startingIndex))
+                return false; //couldn't compute relations
+
+            for (int i = 0; i < vertices.Count; i++)
+                vertices[i].Position = polygonClone.GetVertices()[i].Position;
+
             return true;
         }
 
@@ -350,6 +359,33 @@ namespace Common
 
             //we can close rectangle if given vertex has one neighbour and we have at least 2 edges
             return neighbours == 1 && edges.Count > 1;
+        }
+
+        private Polygon Clone()
+        {
+            var polygon = new Polygon();
+            var newVertices = polygon.GetVertices();
+            var newEdges = polygon.GetEdges();
+
+            foreach (var vertex in vertices)
+                newVertices.Add(new Vertex(vertex.Position, vertex.Radius, polygon));
+
+            for (int i = 0; i < newVertices.Count; i++)
+                newEdges.Add(new Edge(newVertices[i], newVertices[(i + 1) % newVertices.Count], polygon));
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                if (edges[i].RelationType == EdgeRelation.None)
+                    continue;
+
+                var newEdge = newEdges[i];
+                newEdge.RelationType = edges[i].RelationType;
+
+                var pairIndex = edges.IndexOf(edges[i].RelationEdge);
+                newEdge.RelationEdge = newEdges[pairIndex];
+            }
+
+            return polygon;
         }
     }
 }
