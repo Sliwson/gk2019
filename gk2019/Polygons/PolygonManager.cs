@@ -140,6 +140,14 @@ namespace Polygons
             }
         }
 
+        public string GetPolygonString(Polygon polygon)
+        {
+            if (!polygons.Contains(polygon))
+                return "Unidentified polygon";
+            else
+                return $"Polygon{polygons.IndexOf(polygon)}";
+        }
+
         public void UpdateSelectedStructure(PlaneStructure structure)
         {
             currentStructure = structure;

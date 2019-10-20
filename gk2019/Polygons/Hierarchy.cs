@@ -34,13 +34,15 @@ namespace Polygons
     {
         private TreeView treeView;
         private PolygonManager polygonManager;
+        private RelationCreator relationCreator;
 
         private PlaneStructure structureSelected = null;
 
-        public Hierarchy(TreeView treeView, PolygonManager polygonManager)
+        public Hierarchy(TreeView treeView, PolygonManager polygonManager, RelationCreator relationCreator)
         {
             this.treeView = treeView;
             this.polygonManager = polygonManager;
+            this.relationCreator = relationCreator;
 
             treeView.AfterSelect += ItemSelected;
             treeView.MouseClick += HierarchyClick;
@@ -273,6 +275,12 @@ namespace Polygons
                         var removeRelation = contextMenu.Items.Add("Remove relation");
                         removeRelation.Click += RemoveRelationClick;
                     }
+
+                    if (relationCreator.CanAddEdge(edge))
+                    {
+                        var addToCreator = contextMenu.Items.Add("Add to relation creator");
+                        addToCreator.Click += AddToCreator;
+                    }
                 }
 
                 if (node.Type == NodeType.Edge || node.Type == NodeType.Vertex || node.Type == NodeType.Polygon)
@@ -346,6 +354,17 @@ namespace Polygons
             edge.UnderlyingPolygon.RemoveRelation(edge);
             Update();
             polygonManager.Update();
+        }
+
+        private void AddToCreator(object sender, EventArgs e)
+        {
+            if (!(structureSelected is Edge))
+                return;
+
+            var edge = structureSelected as Edge;
+            var edgeId = treeView.SelectedNode.Text;
+            var polygonId = polygonManager.GetPolygonString(edge.UnderlyingPolygon);
+            relationCreator.AddEdge(edge, polygonId + ": " + edgeId);
         }
 
         private void AddPolygonContextMenu(object sender, EventArgs e)

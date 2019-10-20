@@ -64,12 +64,17 @@ namespace Polygons
             if (!relatedEdges.Item1.UnderlyingPolygon.AddRelation(relationInfo))
                 return false;
 
+            EdgeFirstCancel(null, null);
+            EdgeSecondCancel(null, null);
             return true;
         }
 
         public bool CanAddEdge(Edge edge)
         {
             if (relatedEdges.Item1 != null && relatedEdges.Item2 != null)
+                return false;
+
+            if (edge.RelationType != EdgeRelation.None)
                 return false;
 
             if (relatedEdges.Item1 == edge || relatedEdges.Item2 == edge)
@@ -96,7 +101,7 @@ namespace Polygons
             return true;
         }
 
-        public void AddEdge(Edge edge)
+        public void AddEdge(Edge edge, string text)
         {
             if (!CanAddEdge(edge))
             {
@@ -107,9 +112,15 @@ namespace Polygons
                 errorLabel.Text = "";
 
             if (relatedEdges.Item1 == null)
+            {
                 relatedEdges.Item1 = edge;
+                informationTextboxes.Item1.Text = text;
+            }
             else if (relatedEdges.Item2 == null)
+            {
                 relatedEdges.Item2 = edge;
+                informationTextboxes.Item2.Text = text;
+            }
         }
 
         private bool CanAddRelation()
@@ -123,11 +134,13 @@ namespace Polygons
         private void EdgeFirstCancel(object sender, EventArgs e)
         {
             relatedEdges.Item1 = null;
+            informationTextboxes.Item1.Text = "";
         }
 
         private void EdgeSecondCancel(object sender, EventArgs e)
         {
             relatedEdges.Item2 = null;
+            informationTextboxes.Item2.Text = "";
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Polygons
             var polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
 
             var relationCreator = new RelationCreator(errorLabel, (selectedEdge1, selectedEdge2));
-            
+            relationCreator.InitEvents(remove1, remove2, addEqualButton, addPerpendicularButton);            
 
-            var treeHierarchy = new Hierarchy(hierarchy, polygonManager);
+            var treeHierarchy = new Hierarchy(hierarchy, polygonManager, relationCreator);
             treeHierarchy.Update();
 
             polygonManager.OnStructureChanged += treeHierarchy.HandleHierarchyChange;

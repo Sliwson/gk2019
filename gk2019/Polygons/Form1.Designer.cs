@@ -34,25 +34,25 @@
             this.rightPanel = new System.Windows.Forms.TableLayoutPanel();
             this.hierarchyGroupbox = new System.Windows.Forms.GroupBox();
             this.hierarchy = new System.Windows.Forms.TreeView();
+            this.relationCreator = new System.Windows.Forms.GroupBox();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.remove2 = new System.Windows.Forms.Button();
+            this.remove1 = new System.Windows.Forms.Button();
+            this.addPerpendicularButton = new System.Windows.Forms.Button();
+            this.addEqualButton = new System.Windows.Forms.Button();
+            this.selectedEdge2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.selectedEdge1 = new System.Windows.Forms.TextBox();
             this.mainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.relationCreator = new System.Windows.Forms.GroupBox();
-            this.selectedEdge1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.selectedEdge2 = new System.Windows.Forms.TextBox();
-            this.addEqualButton = new System.Windows.Forms.Button();
-            this.addParallelButton = new System.Windows.Forms.Button();
-            this.remove1 = new System.Windows.Forms.Button();
-            this.remove2 = new System.Windows.Forms.Button();
-            this.errorLabel = new System.Windows.Forms.Label();
             this.canvasPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.rightPanel.SuspendLayout();
             this.hierarchyGroupbox.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.relationCreator.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // canvasPanel
@@ -122,28 +122,12 @@
             this.hierarchy.Size = new System.Drawing.Size(301, 456);
             this.hierarchy.TabIndex = 0;
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 703);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 17);
-            // 
             // relationCreator
             // 
             this.relationCreator.Controls.Add(this.errorLabel);
             this.relationCreator.Controls.Add(this.remove2);
             this.relationCreator.Controls.Add(this.remove1);
-            this.relationCreator.Controls.Add(this.addParallelButton);
+            this.relationCreator.Controls.Add(this.addPerpendicularButton);
             this.relationCreator.Controls.Add(this.addEqualButton);
             this.relationCreator.Controls.Add(this.selectedEdge2);
             this.relationCreator.Controls.Add(this.label2);
@@ -160,78 +144,6 @@
             this.relationCreator.TabStop = false;
             this.relationCreator.Text = "Relation Creator";
             // 
-            // selectedEdge1
-            // 
-            this.selectedEdge1.Enabled = false;
-            this.selectedEdge1.Location = new System.Drawing.Point(93, 24);
-            this.selectedEdge1.Name = "selectedEdge1";
-            this.selectedEdge1.Size = new System.Drawing.Size(185, 20);
-            this.selectedEdge1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "First Edge:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 61);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Second Edge:";
-            // 
-            // selectedEdge2
-            // 
-            this.selectedEdge2.Enabled = false;
-            this.selectedEdge2.Location = new System.Drawing.Point(93, 58);
-            this.selectedEdge2.Name = "selectedEdge2";
-            this.selectedEdge2.Size = new System.Drawing.Size(185, 20);
-            this.selectedEdge2.TabIndex = 3;
-            // 
-            // addEqualButton
-            // 
-            this.addEqualButton.Location = new System.Drawing.Point(11, 96);
-            this.addEqualButton.Name = "addEqualButton";
-            this.addEqualButton.Size = new System.Drawing.Size(142, 43);
-            this.addEqualButton.TabIndex = 4;
-            this.addEqualButton.Text = "Add equal length relation";
-            this.addEqualButton.UseVisualStyleBackColor = true;
-            // 
-            // addParallelButton
-            // 
-            this.addParallelButton.Location = new System.Drawing.Point(171, 96);
-            this.addParallelButton.Name = "addParallelButton";
-            this.addParallelButton.Size = new System.Drawing.Size(142, 43);
-            this.addParallelButton.TabIndex = 5;
-            this.addParallelButton.Text = "Add perpendicular relation";
-            this.addParallelButton.UseVisualStyleBackColor = true;
-            // 
-            // remove1
-            // 
-            this.remove1.BackgroundImage = global::Polygons.Properties.Resources.buttonX;
-            this.remove1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.remove1.Location = new System.Drawing.Point(284, 22);
-            this.remove1.Name = "remove1";
-            this.remove1.Size = new System.Drawing.Size(23, 23);
-            this.remove1.TabIndex = 6;
-            this.remove1.UseVisualStyleBackColor = true;
-            // 
-            // remove2
-            // 
-            this.remove2.BackgroundImage = global::Polygons.Properties.Resources.buttonX;
-            this.remove2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.remove2.Location = new System.Drawing.Point(284, 58);
-            this.remove2.Name = "remove2";
-            this.remove2.Size = new System.Drawing.Size(23, 23);
-            this.remove2.TabIndex = 7;
-            this.remove2.UseVisualStyleBackColor = true;
-            // 
             // errorLabel
             // 
             this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -244,6 +156,94 @@
             this.errorLabel.Size = new System.Drawing.Size(187, 13);
             this.errorLabel.TabIndex = 8;
             this.errorLabel.Text = "Error - label already in Relation Creator";
+            // 
+            // remove2
+            // 
+            this.remove2.BackgroundImage = global::Polygons.Properties.Resources.buttonX;
+            this.remove2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.remove2.Location = new System.Drawing.Point(284, 58);
+            this.remove2.Name = "remove2";
+            this.remove2.Size = new System.Drawing.Size(23, 23);
+            this.remove2.TabIndex = 7;
+            this.remove2.UseVisualStyleBackColor = true;
+            // 
+            // remove1
+            // 
+            this.remove1.BackgroundImage = global::Polygons.Properties.Resources.buttonX;
+            this.remove1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.remove1.Location = new System.Drawing.Point(284, 22);
+            this.remove1.Name = "remove1";
+            this.remove1.Size = new System.Drawing.Size(23, 23);
+            this.remove1.TabIndex = 6;
+            this.remove1.UseVisualStyleBackColor = true;
+            // 
+            // addPerpendicularButton
+            // 
+            this.addPerpendicularButton.Location = new System.Drawing.Point(171, 96);
+            this.addPerpendicularButton.Name = "addPerpendicularButton";
+            this.addPerpendicularButton.Size = new System.Drawing.Size(142, 43);
+            this.addPerpendicularButton.TabIndex = 5;
+            this.addPerpendicularButton.Text = "Add perpendicular relation";
+            this.addPerpendicularButton.UseVisualStyleBackColor = true;
+            // 
+            // addEqualButton
+            // 
+            this.addEqualButton.Location = new System.Drawing.Point(11, 96);
+            this.addEqualButton.Name = "addEqualButton";
+            this.addEqualButton.Size = new System.Drawing.Size(142, 43);
+            this.addEqualButton.TabIndex = 4;
+            this.addEqualButton.Text = "Add equal length relation";
+            this.addEqualButton.UseVisualStyleBackColor = true;
+            // 
+            // selectedEdge2
+            // 
+            this.selectedEdge2.Enabled = false;
+            this.selectedEdge2.Location = new System.Drawing.Point(93, 58);
+            this.selectedEdge2.Name = "selectedEdge2";
+            this.selectedEdge2.Size = new System.Drawing.Size(185, 20);
+            this.selectedEdge2.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(75, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Second Edge:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "First Edge:";
+            // 
+            // selectedEdge1
+            // 
+            this.selectedEdge1.Enabled = false;
+            this.selectedEdge1.Location = new System.Drawing.Point(93, 24);
+            this.selectedEdge1.Name = "selectedEdge1";
+            this.selectedEdge1.Size = new System.Drawing.Size(185, 20);
+            this.selectedEdge1.TabIndex = 0;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 703);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
+            this.statusStrip1.SizingGrip = false;
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // Form1
             // 
@@ -262,10 +262,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.rightPanel.ResumeLayout(false);
             this.hierarchyGroupbox.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.relationCreator.ResumeLayout(false);
             this.relationCreator.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,7 +283,7 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.GroupBox relationCreator;
         private System.Windows.Forms.TextBox selectedEdge1;
-        private System.Windows.Forms.Button addParallelButton;
+        private System.Windows.Forms.Button addPerpendicularButton;
         private System.Windows.Forms.Button addEqualButton;
         private System.Windows.Forms.TextBox selectedEdge2;
         private System.Windows.Forms.Label label2;
