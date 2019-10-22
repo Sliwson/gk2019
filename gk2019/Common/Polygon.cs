@@ -311,9 +311,10 @@ namespace Common
 
         public bool CorrectRelations(Vertex startingVertex)
         {
+            var vertexIndex = vertices.IndexOf(startingVertex);
             var polygonClone = Clone();
 
-            if (!Algorithm.CorrectRelation(polygonClone, startingVertex))
+            if (!Algorithm.CorrectRelation(polygonClone, polygonClone.GetVertices()[vertexIndex]))
                 return false; //couldn't compute relations
 
             for (int i = 0; i < vertices.Count; i++)

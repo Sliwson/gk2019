@@ -147,7 +147,7 @@ namespace Common
                     break;
                 else
                     if (!CorrectRelationForEdge(edges[i]))
-                        return false;
+                    return false;
 
                 i = (i - 1 + edges.Count) % edges.Count;
             }
