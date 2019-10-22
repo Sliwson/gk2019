@@ -78,8 +78,19 @@ namespace Common
 
         public override bool Move(Point offset)
         {
+            var previousPositions = (new Point(Begin.Position.X, Begin.Position.Y), new Point(End.Position.X, End.Position.Y));
             Begin.MoveIgnoringRelations(offset);
             End.MoveIgnoringRelations(offset);
+
+            if (UnderlyingPolygon != null)
+            {
+                if (!UnderlyingPolygon.CorrectRelations(Begin) || !UnderlyingPolygon.CorrectRelations(End))
+                {
+                    Begin.Position = previousPositions.Item1;
+                    End.Position = previousPositions.Item2;
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -100,7 +111,7 @@ namespace Common
 
         public Vector2 GetDirection()
         {
-            return new Vector2(Begin.Position.X - End.Position.X, Begin.Position.Y -End.Position.Y);
+            return new Vector2(End.Position.X - Begin.Position.X, End.Position.Y - Begin.Position.Y);
         }
     }
 }
