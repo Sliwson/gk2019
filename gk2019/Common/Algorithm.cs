@@ -131,20 +131,28 @@ namespace Common
             {
                 if (CheckRelationForEdge(edges[i]))
                     break;
+                else
+                    if (!CorrectRelationForEdge(edges[i]))
+                        return false;
 
                 i = (i + 1) % edges.Count;
             }
 
             //backward iteration
+            SwapEdges(edges);
             i = (GetStartingEdgeIndex(edges, startingVertex) - 1 + edges.Count) % edges.Count;
             for (int j = 0; j < edges.Count; j++)
             {
                 if (CheckRelationForEdge(edges[i]))
                     break;
+                else
+                    if (!CorrectRelationForEdge(edges[i]))
+                        return false;
 
                 i = (i - 1 + edges.Count) % edges.Count;
             }
 
+            SwapEdges(edges);
             return true;
         }
 
@@ -162,20 +170,53 @@ namespace Common
 
         private static bool CheckRelationForEdge(Edge edge)
         {
-            if (edge.RelationType == EdgeRelation.None)
+            switch (edge.RelationType)
+            {
+            case EdgeRelation.None:
                 return true;
-
-            if (edge.RelationType == EdgeRelation.EqualLength)
+            case EdgeRelation.EqualLength:
                 return Math.Abs(edge.Length - edge.RelationEdge.Length) < RelationConstants.EqualLengthEpsilon;
+            case EdgeRelation.Perpendicular:
+                return AreEdgesPerpendicular(edge, edge.RelationEdge);
+            }
+
+            return false;
         }
 
         private static bool AreEdgesPerpendicular(Edge e1, Edge e2)
         {
-            Vector2 dir1 = new Vector2(e1.Begin.Position.X - e1.End.Position.X, e1.Begin.Position.Y - e1.End.Position.Y);
-            Vector2 dir2 = new Vector2(e2.Begin.Position.X - e2.End.Position.X, e2.Begin.Position.Y - e2.End.Position.Y);
+            Vector2 dir1 = e1.GetDirection();
+            Vector2 dir2 = e2.GetDirection();
            
             //normalizing in order to have length independent epsilon
             return Vector2.Dot(Vector2.Normalize(dir1), Vector2.Normalize(dir2)) < RelationConstants.PerpendicularDotEpsilon;
+        }
+
+        private static bool CorrectRelationForEdge(Edge edge)
+        {
+            if (edge.RelationType == EdgeRelation.EqualLength)
+                StretchEdge(edge, edge.RelationEdge.Length);
+
+            return true;
+        }
+
+        private static void StretchEdge(Edge edge, double length)
+        {
+            Vector2 directionNormalized = Vector2.Normalize(edge.GetDirection());
+            double lengthMultiplier = length - edge.Length;
+            Vector2 offset = directionNormalized * (float)lengthMultiplier;
+
+            edge.End.Position = edge.End.Position.Add(new Point((int)offset.X, (int)offset.Y));
+        }
+
+        private static void SwapEdges(List<Edge> edges)
+        {
+            foreach (var edge in edges)
+            {
+                var temp = edge.Begin;
+                edge.Begin = edge.End;
+                edge.End = temp;      
+            }
         }
 
         #endregion
