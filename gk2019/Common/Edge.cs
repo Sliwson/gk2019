@@ -113,5 +113,17 @@ namespace Common
         {
             return new Vector2(End.Position.X - Begin.Position.X, End.Position.Y - Begin.Position.Y);
         }
+
+        public void Rotate(double radians)
+        {
+            float sin = (float)Math.Sin(radians);
+            float cos = (float)Math.Cos(radians);
+
+            Vector2 direction = GetDirection();
+            Vector2 rotated = new Vector2(cos * direction.X - sin * direction.Y, sin * direction.X + cos * direction.Y);
+            Vector2 offset = rotated - direction;
+
+            End.Position = End.Position.Add(new Point((int)offset.X, (int)offset.Y));
+        }
     }
 }
