@@ -97,5 +97,10 @@ namespace Common
             RelationEdge = edge;
             RelationId = id;
         }
+
+        public Vector2 GetDirection()
+        {
+            return new Vector2(Begin.Position.X - End.Position.X, Begin.Position.Y -End.Position.Y);
+        }
     }
 }
