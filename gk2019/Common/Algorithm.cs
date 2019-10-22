@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Numerics;
 
 namespace Common
 {
     public class Algorithm
     {
-        //////////////////////////////////////////////////////////////////////
-        /// Bresenham
-        //////////////////////////////////////////////////////////////////////
+        #region Bresenham
+
         public static void BresenhamLine(Point p1, Point p2, Color c, Graphics graphics)
         {
             Brush brush = new SolidBrush(c);
@@ -118,12 +118,66 @@ namespace Common
             r = temporary;
         }
 
-        //////////////////////////////////////////////////////////////////////
-        /// Relations
-        //////////////////////////////////////////////////////////////////////
-        public static bool CorrectRelation(Polygon clonedPolygon, int startingIndex)
+        #endregion
+        #region Relations
+
+        public static bool CorrectRelation(Polygon clonedPolygon, Vertex startingVertex)
         {
+            var edges = clonedPolygon.GetEdges();
+            var i = GetStartingEdgeIndex(edges, startingVertex);
+            
+            //forward iteration
+            for (int j = 0; j < edges.Count; j++)
+            {
+                if (CheckRelationForEdge(edges[i]))
+                    break;
+
+                i = (i + 1) % edges.Count;
+            }
+
+            //backward iteration
+            i = (GetStartingEdgeIndex(edges, startingVertex) - 1 + edges.Count) % edges.Count;
+            for (int j = 0; j < edges.Count; j++)
+            {
+                if (CheckRelationForEdge(edges[i]))
+                    break;
+
+                i = (i - 1 + edges.Count) % edges.Count;
+            }
+
             return true;
         }
+
+        private static int GetStartingEdgeIndex(List<Edge> edges, Vertex startingVertex)
+        {
+            int i = 0;
+            for (; i < edges.Count; i++)
+            {
+                if (edges[i].Begin == startingVertex)
+                    break;
+            }
+
+            return i;
+        }
+
+        private static bool CheckRelationForEdge(Edge edge)
+        {
+            if (edge.RelationType == EdgeRelation.None)
+                return true;
+
+            if (edge.RelationType == EdgeRelation.EqualLength)
+                return Math.Abs(edge.Length - edge.RelationEdge.Length) < RelationConstants.EqualLengthEpsilon;
+        }
+
+        private static bool AreEdgesPerpendicular(Edge e1, Edge e2)
+        {
+            Vector2 dir1 = new Vector2(e1.Begin.Position.X - e1.End.Position.X, e1.Begin.Position.Y - e1.End.Position.Y);
+            Vector2 dir2 = new Vector2(e2.Begin.Position.X - e2.End.Position.X, e2.Begin.Position.Y - e2.End.Position.Y);
+           
+            //normalizing in order to have length independent epsilon
+            return Vector2.Dot(Vector2.Normalize(dir1), Vector2.Normalize(dir2)) < RelationConstants.PerpendicularDotEpsilon;
+        }
+
+        #endregion
     }
 }
