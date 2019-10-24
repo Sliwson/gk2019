@@ -239,7 +239,7 @@ namespace Common
             var positionFirst = first.End.Position.Add(new Point(-(int)Math.Round(direction.Y), (int)Math.Round(direction.X)));
             var positionSecond = first.End.Position.Add(new Point((int)Math.Round(direction.Y), -(int)Math.Round(direction.X)));
 
-            first.End.Position = positionFirst.DistanceTo(oldPos) > positionSecond.DistanceTo(oldPos) ? positionSecond : positionFirst;
+            first.End.Position = positionFirst.DistanceSquaredTo(oldPos) > positionSecond.DistanceSquaredTo(oldPos) ? positionSecond : positionFirst;
         }
 
         private static void RotateToPerpendicular(Edge edge, Vector2 direction)
@@ -253,7 +253,7 @@ namespace Common
             var posFirst = edge.Begin.Position.Add(new Point((int)Math.Round(perpFirst.X), (int)Math.Round(perpFirst.Y)));
             var posSecond = edge.Begin.Position.Add(new Point((int)Math.Round(perpSecond.X), (int)Math.Round(perpSecond.Y)));
 
-            edge.End.Position = posFirst.DistanceTo(edge.End.Position) > posSecond.DistanceTo(edge.End.Position) ? posSecond : posFirst;
+            edge.End.Position = posFirst.DistanceSquaredTo(edge.End.Position) > posSecond.DistanceSquaredTo(edge.End.Position) ? posSecond : posFirst;
         }
 
         private static double GetCosine(Vector2 first, Vector2 second)
