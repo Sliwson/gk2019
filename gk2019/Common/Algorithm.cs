@@ -189,13 +189,22 @@ namespace Common
             Vector2 dir2 = e2.GetDirection();
            
             //normalizing in order to have length independent epsilon
-            return Vector2.Dot(Vector2.Normalize(dir1), Vector2.Normalize(dir2)) < RelationConstants.PerpendicularDotEpsilon;
+            return Math.Abs(Vector2.Dot(Vector2.Normalize(dir1), Vector2.Normalize(dir2))) < RelationConstants.PerpendicularDotEpsilon;
         }
 
         private static bool CorrectRelationForEdge(Edge edge)
         {
             if (edge.RelationType == EdgeRelation.EqualLength)
+            {
                 StretchEdge(edge, edge.RelationEdge.Length);
+            }
+            else if (edge.RelationType == EdgeRelation.Perpendicular)
+            {
+                if (edge.End == edge.RelationEdge.Begin)
+                    RotateNeighboursToPerpendicular(edge, edge.RelationEdge);
+                else
+                    RotateToPerpendicular(edge, edge.RelationEdge.GetDirection());
+            }
 
             return true;
         }
@@ -217,6 +226,30 @@ namespace Common
                 edge.Begin = edge.End;
                 edge.End = temp;      
             }
+        }
+
+        private static void RotateNeighboursToPerpendicular(Edge first, Edge second)
+        {
+            var temp = new Edge(first.Begin, second.End);
+            var middle =  temp.GetSplitVertex();
+            var oldPos = first.End.Position;
+
+            first.End.Position = middle.Position;
+            var direction = first.GetDirection();
+            var positionFirst = first.End.Position.Add(new Point(-(int)direction.Y, (int)direction.X));
+            var positionSecond = first.End.Position.Add(new Point((int)direction.Y, -(int)direction.X));
+
+            first.End.Position = positionFirst.DistanceTo(oldPos) > positionSecond.DistanceTo(oldPos) ? positionSecond : positionFirst;
+        }
+
+        private static void RotateToPerpendicular(Edge edge, Vector2 direction)
+        {
+            
+        }
+
+        private static double GetCosine(Vector2 first, Vector2 second)
+        {
+            return Vector2.Dot(first, second) / (first.Length() * second.Length());
         }
 
         #endregion
