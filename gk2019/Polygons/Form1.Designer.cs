@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.canvasPanel = new System.Windows.Forms.TableLayoutPanel();
             this.canvas = new System.Windows.Forms.PictureBox();
             this.rightPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -253,6 +254,7 @@
             this.ClientSize = new System.Drawing.Size(1008, 725);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.canvasPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu;
             this.Name = "Form1";
             this.Text = "Polygons Editor";
