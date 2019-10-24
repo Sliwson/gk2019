@@ -140,7 +140,7 @@ namespace Common
 
             //backward iteration
             SwapEdges(edges);
-            i = GetStartingEdgeIndex(edges, startingVertex);// - 1 + edges.Count) % edges.Count;
+            i = GetStartingEdgeIndex(edges, startingVertex);
             for (int j = 0; j < edges.Count; j++)
             {
                 if (CheckRelationForEdge(edges[i]))
