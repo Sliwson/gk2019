@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Numerics;
 
 namespace Common
 {
     public class Algorithm
     {
+        #region Bresenham
+
         public static void BresenhamLine(Point p1, Point p2, Color c, Graphics graphics)
         {
             Brush brush = new SolidBrush(c);
@@ -114,5 +117,150 @@ namespace Common
             l = r;
             r = temporary;
         }
+
+        #endregion
+        #region Relations
+
+        public static bool CorrectRelation(Polygon clonedPolygon, Vertex startingVertex)
+        {
+            var edges = clonedPolygon.GetEdges();
+            var i = GetStartingEdgeIndex(edges, startingVertex);
+            
+            //forward iteration
+            for (int j = 0; j < edges.Count; j++)
+            {
+                if (CheckRelationForEdge(edges[i]))
+                    break;
+                else
+                    if (!CorrectRelationForEdge(edges[i]))
+                        return false;
+
+                i = (i + 1) % edges.Count;
+            }
+
+            //backward iteration
+            SwapEdges(edges);
+            i = GetStartingEdgeIndex(edges, startingVertex);
+            for (int j = 0; j < edges.Count; j++)
+            {
+                if (CheckRelationForEdge(edges[i]))
+                    break;
+                else
+                    if (!CorrectRelationForEdge(edges[i]))
+                    return false;
+
+                i = (i - 1 + edges.Count) % edges.Count;
+            }
+
+            SwapEdges(edges);
+            return true;
+        }
+
+        private static int GetStartingEdgeIndex(List<Edge> edges, Vertex startingVertex)
+        {
+            int i = 0;
+            for (; i < edges.Count; i++)
+            {
+                if (edges[i].Begin == startingVertex)
+                    break;
+            }
+
+            return i;
+        }
+
+        private static bool CheckRelationForEdge(Edge edge)
+        {
+            switch (edge.RelationType)
+            {
+            case EdgeRelation.None:
+                return true;
+            case EdgeRelation.EqualLength:
+                return Math.Abs(edge.Length - edge.RelationEdge.Length) < RelationConstants.EqualLengthEpsilon;
+            case EdgeRelation.Perpendicular:
+                return AreEdgesPerpendicular(edge, edge.RelationEdge);
+            }
+
+            return false;
+        }
+
+        private static bool AreEdgesPerpendicular(Edge e1, Edge e2)
+        {
+            Vector2 dir1 = e1.GetDirection();
+            Vector2 dir2 = e2.GetDirection();
+           
+            //normalizing in order to have length independent epsilon
+            return Math.Abs(Vector2.Dot(Vector2.Normalize(dir1), Vector2.Normalize(dir2))) < RelationConstants.PerpendicularDotEpsilon;
+        }
+
+        private static bool CorrectRelationForEdge(Edge edge)
+        {
+            if (edge.RelationType == EdgeRelation.EqualLength)
+            {
+                StretchEdge(edge, edge.RelationEdge.Length);
+            }
+            else if (edge.RelationType == EdgeRelation.Perpendicular)
+            {
+                if (edge.End == edge.RelationEdge.Begin)
+                    RotateNeighboursToPerpendicular(edge, edge.RelationEdge);
+                else
+                    RotateToPerpendicular(edge, edge.RelationEdge.GetDirection());
+            }
+
+            return true;
+        }
+
+        private static void StretchEdge(Edge edge, double length)
+        {
+            Vector2 directionNormalized = Vector2.Normalize(edge.GetDirection());
+            double lengthMultiplier = length - edge.Length;
+            Vector2 offset = directionNormalized * (float)lengthMultiplier;
+
+            edge.End.Position = edge.End.Position.Add(new Point((int)offset.X, (int)offset.Y));
+        }
+
+        private static void SwapEdges(List<Edge> edges)
+        {
+            foreach (var edge in edges)
+            {
+                var temp = edge.Begin;
+                edge.Begin = edge.End;
+                edge.End = temp;      
+            }
+        }
+
+        private static void RotateNeighboursToPerpendicular(Edge first, Edge second)
+        {
+            var temp = new Edge(first.Begin, second.End);
+            var middle =  temp.GetSplitVertex();
+            var oldPos = first.End.Position;
+
+            first.End.Position = middle.Position;
+            var direction = first.GetDirection();
+            var positionFirst = first.End.Position.Add(new Point(-(int)Math.Round(direction.Y), (int)Math.Round(direction.X)));
+            var positionSecond = first.End.Position.Add(new Point((int)Math.Round(direction.Y), -(int)Math.Round(direction.X)));
+
+            first.End.Position = positionFirst.DistanceSquaredTo(oldPos) > positionSecond.DistanceSquaredTo(oldPos) ? positionSecond : positionFirst;
+        }
+
+        private static void RotateToPerpendicular(Edge edge, Vector2 direction)
+        {
+            var perpFirst = new Vector2(-direction.Y, direction.X);
+            var perpSecond = new Vector2(direction.Y, -direction.X);
+            
+            perpFirst = Vector2.Normalize(perpFirst) * (float)edge.Length;
+            perpSecond = Vector2.Normalize(perpSecond) * (float)edge.Length;
+
+            var posFirst = edge.Begin.Position.Add(new Point((int)Math.Round(perpFirst.X), (int)Math.Round(perpFirst.Y)));
+            var posSecond = edge.Begin.Position.Add(new Point((int)Math.Round(perpSecond.X), (int)Math.Round(perpSecond.Y)));
+
+            edge.End.Position = posFirst.DistanceSquaredTo(edge.End.Position) > posSecond.DistanceSquaredTo(edge.End.Position) ? posSecond : posFirst;
+        }
+
+        private static double GetCosine(Vector2 first, Vector2 second)
+        {
+            return Vector2.Dot(first, second) / (first.Length() * second.Length());
+        }
+
+        #endregion
     }
 }

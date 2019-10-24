@@ -15,7 +15,8 @@ namespace Polygons
         {
             Normal,
             Dragging,
-            Drawing
+            Drawing,
+            PutingSample
         }
 
         private PictureBox canvas;
@@ -82,14 +83,9 @@ namespace Polygons
 
         public void InitPolygonAdd()
         {
-            if (mouseState == MouseState.Drawing)
-            {
-                if (currentStructure is Polygon)
-                    TryClosePolygon(currentStructure as Polygon);
-                else
-                    return;
-            }
-
+            if (mouseState == MouseState.Drawing && currentStructure is Polygon)
+                TryClosePolygon(currentStructure as Polygon);
+            
             if (mouseState != MouseState.Normal)
                 return;
 
@@ -99,6 +95,17 @@ namespace Polygons
             polygons.Add(polygon);
             Update();
             OnStructureChanged?.Invoke(this, polygon);
+        }
+
+        public void InitSamplePolygonAdd()
+        {
+            if (mouseState == MouseState.Drawing && currentStructure is Polygon)
+                TryClosePolygon(currentStructure as Polygon);
+
+            mouseState = MouseState.PutingSample;
+            Update();
+            if (currentStructure is Polygon)
+                OnStructureChanged?.Invoke(this, currentStructure as Polygon);
         }
 
         private void TryClosePolygon(Polygon polygon)
@@ -133,6 +140,14 @@ namespace Polygons
             }
         }
 
+        public string GetPolygonString(Polygon polygon)
+        {
+            if (!polygons.Contains(polygon))
+                return "Unidentified polygon";
+            else
+                return $"Polygon{polygons.IndexOf(polygon)}";
+        }
+
         public void UpdateSelectedStructure(PlaneStructure structure)
         {
             currentStructure = structure;
@@ -155,6 +170,18 @@ namespace Polygons
 
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
+            //handle add sample
+            if (mouseState == MouseState.PutingSample)
+            {
+                var polygon = Polygon.GetSampleSquare();
+                polygon.Move(e.Location);
+                polygons.Add(polygon);
+                OnStructureChanged?.Invoke(this, polygon);
+                Update();
+                mouseState = MouseState.Normal;
+                return;
+            }
+
             if (currentStructure == null)
                 return;
 
@@ -191,7 +218,9 @@ namespace Polygons
             var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
             previousMousePosition = e.Location;
 
-            currentStructure.Move(delta);
+            if(!currentStructure.Move(delta))
+                MessageBox.Show("Failure during relations computation");
+
             Update();
         }
 
@@ -219,6 +248,10 @@ namespace Polygons
                 case MouseState.Normal:
                     cursor = Cursors.Default;
                     state += "Normal";
+                    break;
+                case MouseState.PutingSample:
+                    cursor = Cursors.Hand;
+                    state += "Ready to put sample";
                     break;
             }
 

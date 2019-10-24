@@ -9,8 +9,13 @@ namespace Common
     {
         public static double DistanceTo(this Point p1, Point p2)
         {
+            return Math.Sqrt(p1.DistanceSquaredTo(p2));
+        }
+
+        public static double DistanceSquaredTo(this Point p1, Point p2)
+        {
             Point p3 = new Point(p1.X - p2.X, p1.Y - p2.Y);
-            return Math.Sqrt(Math.Pow(p3.X, 2) + Math.Pow(p3.Y, 2));
+            return Math.Pow(p3.X, 2) + Math.Pow(p3.Y, 2);
         }
 
         public static Point Add(this Point p1, Point p2)

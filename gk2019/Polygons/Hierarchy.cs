@@ -34,13 +34,15 @@ namespace Polygons
     {
         private TreeView treeView;
         private PolygonManager polygonManager;
+        private RelationCreator relationCreator;
 
         private PlaneStructure structureSelected = null;
 
-        public Hierarchy(TreeView treeView, PolygonManager polygonManager)
+        public Hierarchy(TreeView treeView, PolygonManager polygonManager, RelationCreator relationCreator)
         {
             this.treeView = treeView;
             this.polygonManager = polygonManager;
+            this.relationCreator = relationCreator;
 
             treeView.AfterSelect += ItemSelected;
             treeView.MouseClick += HierarchyClick;
@@ -106,7 +108,9 @@ namespace Polygons
 
             var edges = polygon.GetEdges();
             for (int j = 0; j < edges.Count; j++)
-                edgesNode.Nodes.Add(new GeometricNode($"Edge{j}", NodeType.Edge, edges[j]));
+                edgesNode.Nodes.Add(new GeometricNode("", NodeType.Edge, edges[j]));
+
+            UpdateEdgesLabels(edgesNode.Nodes);
 
             var vertices = polygon.GetVertices();
             for (int j = 0; j < vertices.Count; j++)
@@ -116,6 +120,21 @@ namespace Polygons
             polygonNode.Nodes.Add(verticesNode);
 
             return polygonNode;
+        }
+
+        private void UpdateEdgesLabels(TreeNodeCollection edgeNodes)
+        {
+            for (int i = 0; i < edgeNodes.Count; i++)
+            {
+                var geometricNode = edgeNodes[i] as GeometricNode;
+                var edge = geometricNode.Structure as Edge;
+                var label = $"Edge{i}";
+
+                if (edge.RelationType != EdgeRelation.None)
+                    label += $" [{edge.GetRelationString()}]";
+
+                geometricNode.Text = label;
+            }
         }
 
         private void RemoveMissingNode()
@@ -159,7 +178,9 @@ namespace Polygons
                 edgesList.RemoveAt(i);
 
             for (; i < polygonEdgesList.Count; i++)
-                edgesList.Add(new GeometricNode($"Edge{i}", NodeType.Edge, polygonEdgesList[i]));
+                edgesList.Add(new GeometricNode("", NodeType.Edge, polygonEdgesList[i]));
+
+            UpdateEdgesLabels(edgesList);
         }
 
         private void UpdateVertices(TreeNodeCollection verticesList, List<Vertex> polygonVertexList)
@@ -247,6 +268,19 @@ namespace Polygons
                 {
                     var split = contextMenu.Items.Add("Split");
                     split.Click += SplitClick;
+
+                    var edge = node.Structure as Edge;
+                    if (edge.RelationType != EdgeRelation.None)
+                    {
+                        var removeRelation = contextMenu.Items.Add("Remove relation");
+                        removeRelation.Click += RemoveRelationClick;
+                    }
+
+                    if (relationCreator.CanAddEdge(edge))
+                    {
+                        var addToCreator = contextMenu.Items.Add("Add to relation creator");
+                        addToCreator.Click += AddToCreator;
+                    }
                 }
 
                 if (node.Type == NodeType.Edge || node.Type == NodeType.Vertex || node.Type == NodeType.Polygon)
@@ -261,6 +295,9 @@ namespace Polygons
 
             var addPolygon = contextMenu.Items.Add("Add polygon");
             addPolygon.Click += AddPolygonContextMenu;
+
+            var addSamplePolygon = contextMenu.Items.Add("Add sample polygon");
+            addSamplePolygon.Click += AddSamplePolygonContextMenu;
 
             return contextMenu;
         }
@@ -285,7 +322,6 @@ namespace Polygons
 
             polygonManager.DeleteStructure(structureSelected);
             Update();
-            ExpandNode(structureSelected.UnderlyingPolygon);
             StructureSelected(null);
         }
 
@@ -306,10 +342,42 @@ namespace Polygons
             }
         }
 
+        private void RemoveRelationClick(object sender, EventArgs e)
+        {
+            if (!(structureSelected is Edge))
+                return;
+
+            var edge = structureSelected as Edge;
+            if (edge.UnderlyingPolygon == null)
+                return;
+
+            edge.UnderlyingPolygon.RemoveRelation(edge);
+            Update();
+            polygonManager.Update();
+        }
+
+        private void AddToCreator(object sender, EventArgs e)
+        {
+            if (!(structureSelected is Edge))
+                return;
+
+            var edge = structureSelected as Edge;
+            var edgeId = treeView.SelectedNode.Text;
+            var polygonId = polygonManager.GetPolygonString(edge.UnderlyingPolygon);
+            relationCreator.AddEdge(edge, polygonId + ": " + edgeId);
+        }
+
         private void AddPolygonContextMenu(object sender, EventArgs e)
         {
             treeView.SelectedNode = null;
             polygonManager.InitPolygonAdd();
         }
+
+        private void AddSamplePolygonContextMenu(object sender, EventArgs e)
+        {
+            treeView.SelectedNode = null;
+            polygonManager.InitSamplePolygonAdd();
+        }
+
     }
 }

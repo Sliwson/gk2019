@@ -26,7 +26,7 @@ namespace Common
 
         public abstract void Draw(Graphics graphics);
 
-        public abstract void Move(Point offset);
+        public abstract bool Move(Point offset);
 
         public abstract bool HitTest(Point position);
     }
@@ -75,10 +75,43 @@ namespace Common
         private List<Vertex> vertices = new List<Vertex>();
 
         private Vertex lastProcessedVertex = null;
+        private int relationCounter = 0;
 
         public Polygon() : base(null)
         {
 
+        }
+
+        public List<Vertex> GetVertices()
+        {
+            return vertices;
+        }
+
+        public List<Edge> GetEdges()
+        {
+            return edges;
+        }
+
+        public override bool HitTest(Point position)
+        {
+            return HitTestPolygon(position).Item1 != HitTestResult.Empty;
+        }
+
+        public override void Draw(Graphics graphics)
+        {
+            foreach (var edge in edges)
+                edge.Draw(graphics);
+
+            foreach (var vertex in vertices)
+                vertex.Draw(graphics);
+        }
+
+        public override bool Move(Point offset)
+        {
+            foreach (var vertex in vertices)
+                vertex.MoveIgnoringRelations(offset);
+
+            return true;
         }
 
         public AddVertexResult AddVertex(Point position)
@@ -118,29 +151,27 @@ namespace Common
             lastProcessedVertex = newVertex;
             return AddVertexResult.Added;
         }
+
         public bool SplitEdge(Edge edge)
         {
             if (edge.Length < DrawingConstants.MinimumSplitLength)
                 return false;
 
-            var splitVertex = GetSplitVertex(edge);
+            if (!edges.Contains(edge))
+                return false;
+
+            RemoveRelation(edge);
+
+            var splitVertex = edge.GetSplitVertex();
 
             lastProcessedVertex = edge.End;
             var secondEdge = new Edge(splitVertex, edge.End, this);
             edge.End = splitVertex;
 
-            edges.Add(secondEdge);
-            vertices.Add(splitVertex);
+            edges.Insert(edges.IndexOf(edge) + 1, secondEdge);
+            vertices.Insert(vertices.IndexOf(edge.Begin) + 1, splitVertex);
 
             return true;
-        }
-
-        private Vertex GetSplitVertex(Edge edge)
-        {
-            var begin = edge.Begin.Position;
-            var end = edge.End.Position;
-            Point splitPoint = new Point((begin.X + end.X) / 2, (begin.Y + end.Y) / 2);
-            return new Vertex(splitPoint, DrawingConstants.PointRadius, this);
         }
 
         public void DeleteVertex(Vertex vertex)
@@ -158,13 +189,21 @@ namespace Common
             if (leftEdge == null && rightEdge == null)
                 return;
 
+            RemoveRelation(leftEdge);
+            RemoveRelation(rightEdge);
+
             leftEdge.End = rightEdge.End;
             edges.Remove(rightEdge);
         }
 
         public void DeleteEdge(Edge edge)
         {
-            var splitVertex = GetSplitVertex(edge);
+            if (!edges.Contains(edge))
+                return;
+
+            RemoveRelation(edge);
+
+            var splitVertex = edge.GetSplitVertex();
             
             foreach (var e in edges)
             {
@@ -209,16 +248,6 @@ namespace Common
             return ForceCloseResult.Closed;
         }
 
-        public List<Vertex> GetVertices()
-        {
-            return vertices;
-        }
-
-        public List<Edge> GetEdges()
-        {
-            return edges;
-        }
-
         public (HitTestResult, PlaneStructure)  HitTestPolygon(Point position)
         {
             foreach (var vertex in vertices)
@@ -232,34 +261,88 @@ namespace Common
             return (HitTestResult.Empty, null);
         }
 
-        public override bool HitTest(Point position)
+        public bool AddRelation(RelationInfo relation)
         {
-            return HitTestPolygon(position).Item1 != HitTestResult.Empty;
+            if (!ValidateIncomingRelation(relation))
+                return false;
+
+            var e1 = relation.E1;
+            var e2 = relation.E2;
+
+            e1.SetRelationData(relation.Type, e2, relationCounter);
+            e2.SetRelationData(relation.Type, e1, relationCounter);
+            
+            if (!CorrectRelations(e1.Begin))
+            {
+                //rollback relation add
+                e1.SetRelationData(EdgeRelation.None, null, 0);
+                e2.SetRelationData(EdgeRelation.None, null, 0);
+                return false;
+            }
+
+            relationCounter++;
+            return true;
         }
 
-        public override void Draw(Graphics graphics)
+        public void RemoveRelation(Edge edge)
         {
-            foreach (var edge in edges)
-                edge.Draw(graphics);
+            if (!edges.Contains(edge) || edge.RelationType == EdgeRelation.None)
+                return;
 
-            foreach (var vertex in vertices)
-                vertex.Draw(graphics);
+            var pair = edge.RelationEdge;
+            edge.SetRelationData(EdgeRelation.None, null, 0);
+            if (pair != null)
+                pair.SetRelationData(EdgeRelation.None, null, 0);
         }
-        
-        public override void Move(Point offset)
+
+        private bool ValidateIncomingRelation(RelationInfo relation)
         {
-            foreach (var vertex in vertices)
-                vertex.Move(offset);
+            var e1 = relation.E1;
+            var e2 = relation.E2;
+
+            if (!edges.Contains(e1) || !edges.Contains(e2))
+                return false;
+
+            if (e1.RelationType != EdgeRelation.None || e2.RelationType != EdgeRelation.None || relation.Type == EdgeRelation.None)
+                return false;
+
+            return true;
+        }
+
+        public bool CorrectRelations(Vertex startingVertex)
+        {
+            var vertexIndex = vertices.IndexOf(startingVertex);
+            var polygonClone = Clone();
+
+            if (!Algorithm.CorrectRelation(polygonClone, polygonClone.GetVertices()[vertexIndex]))
+                return false; //couldn't compute relations
+
+            for (int i = 0; i < vertices.Count; i++)
+                vertices[i].Position = polygonClone.GetVertices()[i].Position;
+
+            return true;
+        }
+
+        public bool IsEdgeInPolygon(Edge e)
+        {
+            return edges.Contains(e);
         }
 
         public static Polygon GetSampleSquare()
         {
             Polygon p = new Polygon();
-            p.AddVertex(new Point(10, 10));
-            p.AddVertex(new Point(10, 100));
-            p.AddVertex(new Point(100, 100));
-            p.AddVertex(new Point(100, 10));
-            p.AddVertex(new Point(10, 10));
+            p.AddVertex(new Point(0, 0));
+            p.AddVertex(new Point(0, 150));
+            p.AddVertex(new Point(150, 150));
+            p.AddVertex(new Point(150, 0));
+            p.AddVertex(new Point(0, 0));
+
+            var edges = p.GetEdges();
+            var r1 = new RelationInfo(edges[0], edges[1], EdgeRelation.EqualLength);
+            var r2 = new RelationInfo(edges[2], edges[3], EdgeRelation.Perpendicular);
+            p.AddRelation(r1);
+            p.AddRelation(r2);
+
             return p;
         }
 
@@ -276,6 +359,33 @@ namespace Common
 
             //we can close rectangle if given vertex has one neighbour and we have at least 2 edges
             return neighbours == 1 && edges.Count > 1;
+        }
+
+        private Polygon Clone()
+        {
+            var polygon = new Polygon();
+            var newVertices = polygon.GetVertices();
+            var newEdges = polygon.GetEdges();
+
+            foreach (var vertex in vertices)
+                newVertices.Add(new Vertex(vertex.Position, vertex.Radius, polygon));
+
+            for (int i = 0; i < newVertices.Count; i++)
+                newEdges.Add(new Edge(newVertices[i], newVertices[(i + 1) % newVertices.Count], polygon));
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                if (edges[i].RelationType == EdgeRelation.None)
+                    continue;
+
+                var newEdge = newEdges[i];
+                newEdge.RelationType = edges[i].RelationType;
+
+                var pairIndex = edges.IndexOf(edges[i].RelationEdge);
+                newEdge.RelationEdge = newEdges[pairIndex];
+            }
+
+            return polygon;
         }
     }
 }
