@@ -69,7 +69,7 @@
             this.canvasPanel.RowCount = 1;
             this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.canvasPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 725F));
-            this.canvasPanel.Size = new System.Drawing.Size(1008, 725);
+            this.canvasPanel.Size = new System.Drawing.Size(1408, 985);
             this.canvasPanel.TabIndex = 0;
             // 
             // canvas
@@ -80,7 +80,7 @@
             this.canvas.Location = new System.Drawing.Point(10, 10);
             this.canvas.Margin = new System.Windows.Forms.Padding(10, 10, 10, 30);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(649, 685);
+            this.canvas.Size = new System.Drawing.Size(914, 945);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             // 
@@ -91,13 +91,13 @@
             this.rightPanel.Controls.Add(this.hierarchyGroupbox, 0, 0);
             this.rightPanel.Controls.Add(this.relationCreator, 0, 1);
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightPanel.Location = new System.Drawing.Point(672, 3);
+            this.rightPanel.Location = new System.Drawing.Point(937, 3);
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.RowCount = 3;
             this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 71.7765F));
             this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.2235F));
             this.rightPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.rightPanel.Size = new System.Drawing.Size(333, 719);
+            this.rightPanel.Size = new System.Drawing.Size(468, 979);
             this.rightPanel.TabIndex = 1;
             // 
             // hierarchyGroupbox
@@ -108,7 +108,7 @@
             this.hierarchyGroupbox.Location = new System.Drawing.Point(10, 10);
             this.hierarchyGroupbox.Margin = new System.Windows.Forms.Padding(10);
             this.hierarchyGroupbox.Name = "hierarchyGroupbox";
-            this.hierarchyGroupbox.Size = new System.Drawing.Size(313, 481);
+            this.hierarchyGroupbox.Size = new System.Drawing.Size(448, 668);
             this.hierarchyGroupbox.TabIndex = 0;
             this.hierarchyGroupbox.TabStop = false;
             this.hierarchyGroupbox.Text = "Hierarchy";
@@ -120,7 +120,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hierarchy.Location = new System.Drawing.Point(6, 19);
             this.hierarchy.Name = "hierarchy";
-            this.hierarchy.Size = new System.Drawing.Size(301, 456);
+            this.hierarchy.Size = new System.Drawing.Size(436, 643);
             this.hierarchy.TabIndex = 0;
             // 
             // relationCreator
@@ -137,10 +137,10 @@
             this.relationCreator.Dock = System.Windows.Forms.DockStyle.Fill;
             this.relationCreator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.relationCreator.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.relationCreator.Location = new System.Drawing.Point(10, 511);
+            this.relationCreator.Location = new System.Drawing.Point(10, 698);
             this.relationCreator.Margin = new System.Windows.Forms.Padding(10, 10, 10, 6);
             this.relationCreator.Name = "relationCreator";
-            this.relationCreator.Size = new System.Drawing.Size(313, 181);
+            this.relationCreator.Size = new System.Drawing.Size(448, 254);
             this.relationCreator.TabIndex = 1;
             this.relationCreator.TabStop = false;
             this.relationCreator.Text = "Relation Creator";
@@ -234,9 +234,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 703);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 963);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1008, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1408, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
@@ -251,7 +251,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1008, 725);
+            this.ClientSize = new System.Drawing.Size(1408, 985);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.canvasPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
