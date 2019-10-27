@@ -317,6 +317,10 @@ namespace Common
             if (!Algorithm.CorrectRelation(polygonClone, polygonClone.GetVertices()[vertexIndex]))
                 return false; //couldn't compute relations
 
+            foreach (var vertex in vertices)
+                if (vertex.IsOutOfBounds())
+                    return false;
+
             for (int i = 0; i < vertices.Count; i++)
                 vertices[i].Position = polygonClone.GetVertices()[i].Position;
 

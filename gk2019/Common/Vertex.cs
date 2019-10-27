@@ -50,5 +50,14 @@ namespace Common
 
             return true;
         }
+
+        public bool IsOutOfBounds()
+        {
+            if (Position.X < RelationConstants.MinLeftTop || Position.X > RelationConstants.MaxRightBottom ||
+                Position.Y < RelationConstants.MinLeftTop || Position.Y > RelationConstants.MaxRightBottom)
+                return true;
+
+            return false;
+        }
     }
 }
