@@ -339,9 +339,33 @@ namespace Common
 
             var edges = p.GetEdges();
             var r1 = new RelationInfo(edges[0], edges[1], EdgeRelation.EqualLength);
-            var r2 = new RelationInfo(edges[2], edges[3], EdgeRelation.Perpendicular);
             p.AddRelation(r1);
-            p.AddRelation(r2);
+
+            return p;
+        }
+
+        public static Polygon GetBigSample()
+        {
+            Polygon p = new Polygon();
+            p.AddVertex(new Point(0, 0));
+            p.AddVertex(new Point(150, 0));
+            p.AddVertex(new Point(350, 150));
+            p.AddVertex(new Point(570, 440));
+            p.AddVertex(new Point(550, 620));
+            p.AddVertex(new Point(450, 540));
+            p.AddVertex(new Point(370, 490));
+            p.AddVertex(new Point(100, 200));
+            p.AddVertex(new Point(0, 0));
+            p.Move(new Point(150, 50));
+
+            var edges = p.GetEdges();
+            var relations = new List<RelationInfo> {
+                new RelationInfo(edges[0], edges[3], EdgeRelation.EqualLength),
+                new RelationInfo(edges[2], edges[4], EdgeRelation.Perpendicular),
+                new RelationInfo(edges[5], edges[7], EdgeRelation.EqualLength) };
+
+            foreach (var relation in relations)
+                p.AddRelation(relation);
 
             return p;
         }

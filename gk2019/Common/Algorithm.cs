@@ -215,7 +215,7 @@ namespace Common
             double lengthMultiplier = length - edge.Length;
             Vector2 offset = directionNormalized * (float)lengthMultiplier;
 
-            edge.End.Position = edge.End.Position.Add(new Point((int)offset.X, (int)offset.Y));
+            edge.End.Position = edge.End.Position.Add(new Point((int)Math.Round(offset.X), (int)Math.Round(offset.Y)));
         }
 
         private static void SwapEdges(List<Edge> edges)

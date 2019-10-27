@@ -33,6 +33,9 @@ namespace Polygons
 
             addEqualButton.Click += UpdateAll;
             addPerpendicularButton.Click += UpdateAll;
+
+            polygonManager.GetPolygons().Add(Polygon.GetBigSample());
+            UpdateAll(this, null);
         }
 
         private void ChangeCursor(Cursor cursor)
