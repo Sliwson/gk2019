@@ -119,6 +119,9 @@ namespace Polygons
 
         public void HandleMouseDown()
         {
+            if (mouseState == MouseState.Dragging)
+                Canvas_MouseUp(this, null);
+
             if (!(currentStructure is Polygon))
                 return;
 
