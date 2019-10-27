@@ -256,6 +256,7 @@
             this.Controls.Add(this.canvasPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu;
+            this.MinimumSize = new System.Drawing.Size(1024, 764);
             this.Name = "Form1";
             this.Text = "Polygons Editor";
             this.canvasPanel.ResumeLayout(false);
