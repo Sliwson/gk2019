@@ -1,0 +1,30 @@
+Klawiszologia:
+* Dodanie polygona:
+	- Prawy przycisk w hierarchii -> Add new Polygon
+	- Kliknięcie na canvas stawia nowy wierzchołek
+* Dodatnie prostego polygona:
+	- Prawy przycisk w hierarchii -> Add sample Polygon
+* Usunięcie dowolnej struktury:
+	- Prawy przycisk na strukturę w hierarchii -> Remove
+* Przesunięcie struktury:
+	- Zaznaczenie strutkury w hierarchii -> Przesunięcie na canvasie
+* Podzielenie krawędzi:
+	- Prawy przycisk na krawędź w hierarchii -> Split edge
+* Dodanie relacji
+	- Prawy przycisk na krawędź -> Add to relation creator
+	- Po dodaniu dwóch krawędzi -> button w Relation Creator
+
+Algorytm relacji
+* Założenia:
+	- Wielokąt przedstawiony w postaci posortowanej listy krawędzi
+	- Informacja, który wierzchołek jest przesuwany
+* Opis:
+	1. Od przesuwanego wierzchołka przechodzimy po kolejnych krawędziach, maksymalnie jedno przejście po wszystkich krawędziach
+	2. Jeżeli na krawędzi nie ma relacji lub relacja jest zachowana przerywamy
+	3. Jeżeli na krawędzi jest relacja, poprawiamy ją, przesuwając jedynie jej końcowy wierzchołek
+	
+	- algorytm powtarzamy w dwóch kierunkach rozpoczynając od poruszanego wierzchołka
+	- w przypadku przesuwania krawędzi najpierw przesuwamy dwa wierzchołki bez sprawdzania relacji, a następnie wykonujemy algorytm kolejno dla początku i końca krawędzi
+	- dla krawędzi równej długości przedłuzamy/skracamy przetwarzaną krawędź, aby była równej długości co jej para
+	- dla krawędzi prostopadłych niesąsiadujących obracamy pierwszą krawędź, aby była prostopadła do drugiej
+	- dla krawędzi prostopadłych sąsiadujących przesuwamy punkt wspólny tak, aby były one prostopadłe
