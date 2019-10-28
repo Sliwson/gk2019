@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common;
+using Newtonsoft.Json;
 
 namespace Polygons
 {
@@ -15,6 +17,7 @@ namespace Polygons
     {
         private PolygonManager polygonManager;
         private Hierarchy hierarchyController;
+        private RelationCreator relationC;
 
         public Form1()
         {
@@ -22,10 +25,10 @@ namespace Polygons
 
             polygonManager = new PolygonManager(canvas, ChangeCursor, ChangeStatusStrip);
 
-            var relationCreator = new RelationCreator(errorLabel, (selectedEdge1, selectedEdge2));
-            relationCreator.InitEvents(remove1, remove2, addEqualButton, addPerpendicularButton);            
+            relationC = new RelationCreator(errorLabel, (selectedEdge1, selectedEdge2));
+            relationC.InitEvents(remove1, remove2, addEqualButton, addPerpendicularButton);            
 
-            hierarchyController = new Hierarchy(hierarchy, polygonManager, relationCreator);
+            hierarchyController = new Hierarchy(hierarchy, polygonManager, relationC);
             hierarchyController.Update();
 
             polygonManager.OnStructureChanged += hierarchyController.HandleHierarchyChange;
@@ -67,7 +70,7 @@ namespace Polygons
         {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.Filter = "Json files(*.json) | *.json | Text files(*.txt) | *.txt";
+                dialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
@@ -75,6 +78,34 @@ namespace Polygons
                     {
                         var bytes = Encoding.UTF8.GetBytes(polygonManager.ToJson());
                         stream.Write(bytes, 0, bytes.Length);
+                    }
+                }
+            }
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Json files (*.json)|*.json|Text files (*.txt)|*.txt";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (var stream = dialog.OpenFile())
+                    {
+                        var streamReader = new StreamReader(stream);
+                        string json = streamReader.ReadToEnd();
+
+                        dynamic encoded = JsonConvert.DeserializeObject(json);
+
+                        var count = polygonManager.GetPolygons().Count();
+
+                        hierarchy.Nodes.Clear();
+                        hierarchyController = new Hierarchy(hierarchy, polygonManager, relationC);
+
+                        polygonManager.GetPolygons().Clear();
+                        polygonManager.LoadJson(encoded);
+                        UpdateAll(this, null);
                     }
                 }
             }

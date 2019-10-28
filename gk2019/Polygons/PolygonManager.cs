@@ -285,5 +285,42 @@ namespace Polygons
             json += "]\n}\n";
             return json;
         }
+
+        public void LoadJson(dynamic encoded)
+        {
+            polygons.Clear();
+
+            foreach (var polygon in encoded.polygons)
+            {
+                var p = new Polygon();
+
+                foreach (var vertex in polygon.points)
+                {
+                    p.GetVertices().Add(new Vertex(new Point((int)vertex.x, (int)vertex.y), 1, p));
+                }
+
+                var vertices = p.GetVertices();
+                var edges = p.GetEdges();
+                for (int i = 0; i < vertices.Count; i++)
+                    edges.Add(new Edge(vertices[i], vertices[(i + 1) % vertices.Count], p));
+
+                foreach (var relation in polygon.relations)
+                {
+                    var relationInfo = new RelationInfo(edges[(int)relation.e1], edges[(int)relation.e2], EdgeRelation.None);
+
+                    if ((int)relation.type == 0)
+                        relationInfo.Type = EdgeRelation.EqualLength;
+                    else if ((int)relation.type == 2)
+                        relationInfo.Type = EdgeRelation.Perpendicular;
+                    else
+                        continue;
+
+                    p.AddRelation(relationInfo);
+                }
+
+                polygons.Add(p);
+                OnStructureChanged(this, p);
+            }
+        }
     }
 }
