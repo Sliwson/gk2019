@@ -9,6 +9,7 @@ namespace Common
     public class Algorithm
     {
         #region Bresenham
+        public static int LineWeight { get; set; }
 
         public static void BresenhamLine(Point p1, Point p2, Color c, Graphics graphics)
         {

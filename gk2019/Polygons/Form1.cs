@@ -53,5 +53,12 @@ namespace Polygons
             hierarchyController.Update();
             polygonManager.Update();
         }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            var value = lineSizeSlider.Value;
+            lineSizeLabel.Text = $"Line size: {value}";
+            Algorithm.LineWeight = value;
+        }
     }
 }
