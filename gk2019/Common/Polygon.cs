@@ -415,5 +415,47 @@ namespace Common
 
             return polygon;
         }
+
+        public string GetJson()
+        {
+            var json = "{\npoints: [";
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                json += vertices[i].GetJson();
+                if (i != vertices.Count - 1)
+                    json += ",";
+            }
+            json += "],\nrelations: [";
+
+            var madeRelations = new List<int>();
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                if (edges[i].RelationType == EdgeRelation.None)
+                    continue;
+
+                if (madeRelations.Contains(i))
+                    continue;
+
+                var relationId = 0;
+                if (edges[i].RelationType == EdgeRelation.Perpendicular)
+                    relationId = 2;
+
+                var secondEdgeId = edges.IndexOf(edges[i].RelationEdge);
+                madeRelations.Add(i);
+                madeRelations.Add(secondEdgeId);
+
+                json += "{";
+                json += $"e1: {i}, e2: {secondEdgeId}, type: {relationId}";
+                json += "},";
+            }
+
+            if (madeRelations.Count > 0)
+                json.TrimEnd(',');
+
+            json += "]\n}";
+            return json;
+        }
     }
 }

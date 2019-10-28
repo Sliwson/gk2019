@@ -269,5 +269,21 @@ namespace Polygons
         {
             return canvas.ClientRectangle.Contains(canvas.PointToClient(Cursor.Position));
         }
+
+        public string ToJson()
+        {
+            var json = "{\npolygons: [\n";
+
+            for (int i = 0; i < polygons.Count; i++)
+            {
+                json += polygons[i].GetJson();
+                if (i != polygons.Count - 1)
+                    json += ",";
+                json += "\n";
+            }
+
+            json += "]\n}\n";
+            return json;
+        }
     }
 }

@@ -60,5 +60,14 @@ namespace Common
 
             return false;
         }
+
+        public string GetJson()
+        {
+            var json = "{";
+            json += $"x: {Position.X}, y: {Position.Y}";
+            json += "}";
+
+            return json;
+        }
     }
 }

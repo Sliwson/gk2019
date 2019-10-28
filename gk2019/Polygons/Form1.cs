@@ -62,5 +62,22 @@ namespace Polygons
             Algorithm.LineWeight = value;
             UpdateAll(this, null);
         }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Json files(*.json) | *.json | Text files(*.txt) | *.txt";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (var stream = dialog.OpenFile())
+                    {
+                        var bytes = Encoding.UTF8.GetBytes(polygonManager.ToJson());
+                        stream.Write(bytes, 0, bytes.Length);
+                    }
+                }
+            }
+        }
     }
 }
