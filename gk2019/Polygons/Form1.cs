@@ -35,6 +35,7 @@ namespace Polygons
             addPerpendicularButton.Click += UpdateAll;
 
             polygonManager.GetPolygons().Add(Polygon.GetBigSample());
+            Algorithm.LineWeight = 1;
             UpdateAll(this, null);
         }
 
@@ -59,6 +60,7 @@ namespace Polygons
             var value = lineSizeSlider.Value;
             lineSizeLabel.Text = $"Line size: {value}";
             Algorithm.LineWeight = value;
+            UpdateAll(this, null);
         }
     }
 }

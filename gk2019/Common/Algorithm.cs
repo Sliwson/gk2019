@@ -62,7 +62,13 @@ namespace Common
                     y1 += yStep;
                 }
 
-                SetPixel(x1, y1, brush, graphics);
+                int bottom = y1 - LineWeight / 2;
+                int top = y1 + LineWeight / 2;
+                if (LineWeight % 2 == 0)
+                    top--;
+
+                for (int yPaint = bottom; yPaint <= top; yPaint++)
+                    SetPixel(x1, yPaint, brush, graphics);
             }
         }
         
@@ -101,8 +107,14 @@ namespace Common
                     d += incrNotE;
                     x1 += xStep;
                 }
+                
+                int bottom = x1 - LineWeight / 2;
+                int top = x1 + LineWeight / 2;
+                if (LineWeight % 2 == 0)
+                    top--;
 
-                SetPixel(x1, y1, brush, graphics);
+                for (int xPaint = bottom; xPaint <= top; xPaint++)
+                    SetPixel(xPaint, y1, brush, graphics);
             }
         }
 

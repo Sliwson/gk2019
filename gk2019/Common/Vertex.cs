@@ -26,7 +26,8 @@ namespace Common
 
         public override void Draw(Graphics graphics)
         {
-            graphics.FillEllipse(new SolidBrush(DrawingColor),  (float)(Position.X - Radius), (float)(Position.Y - Radius), (float)Radius * 2, (float)Radius * 2);
+            var DrawRadius = Algorithm.LineWeight + 2;
+            graphics.FillEllipse(new SolidBrush(DrawingColor),  (float)(Position.X - DrawRadius), (float)(Position.Y - DrawRadius), (float)DrawRadius * 2, (float)DrawRadius * 2);
         }
 
         public void MoveIgnoringRelations(Point offset)
