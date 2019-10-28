@@ -203,7 +203,7 @@ namespace Common
                 if (edge.End == edge.RelationEdge.Begin)
                     RotateNeighboursToPerpendicular(edge, edge.RelationEdge);
                 else
-                    RotateToPerpendicular(edge, edge.RelationEdge.GetDirection());
+                    RotateToPerpendicular(edge, edge.RelationEdge);
             }
 
             return true;
@@ -242,8 +242,13 @@ namespace Common
             first.End.Position = positionFirst.DistanceSquaredTo(oldPos) > positionSecond.DistanceSquaredTo(oldPos) ? positionSecond : positionFirst;
         }
 
-        private static void RotateToPerpendicular(Edge edge, Vector2 direction)
+        private static void RotateToPerpendicular(Edge edge, Edge relationEdge)
         {
+            var direction = relationEdge.GetDirection();
+
+            if (edge.Length < 3)
+                StretchEdge(edge, 4);
+
             var perpFirst = new Vector2(-direction.Y, direction.X);
             var perpSecond = new Vector2(direction.Y, -direction.X);
             

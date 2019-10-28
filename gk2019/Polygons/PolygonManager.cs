@@ -221,8 +221,11 @@ namespace Polygons
             var delta = new Point(e.Location.X - previousMousePosition.X, e.Location.Y - previousMousePosition.Y);
             previousMousePosition = e.Location;
 
-            if(!currentStructure.Move(delta))
+            if (!currentStructure.Move(delta))
+            {
                 MessageBox.Show("Failure during relations computation");
+                mouseState = MouseState.Normal;
+            }
 
             Update();
         }
