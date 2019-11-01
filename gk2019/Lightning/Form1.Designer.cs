@@ -102,6 +102,7 @@
             // contColorRadio
             // 
             this.contColorRadio.AutoSize = true;
+            this.contColorRadio.Checked = true;
             this.contColorRadio.Location = new System.Drawing.Point(7, 20);
             this.contColorRadio.Name = "contColorRadio";
             this.contColorRadio.Size = new System.Drawing.Size(52, 17);
@@ -117,7 +118,6 @@
             this.textureColorRadio.Name = "textureColorRadio";
             this.textureColorRadio.Size = new System.Drawing.Size(61, 17);
             this.textureColorRadio.TabIndex = 1;
-            this.textureColorRadio.TabStop = true;
             this.textureColorRadio.Text = "Texture";
             this.textureColorRadio.UseVisualStyleBackColor = true;
             // 
@@ -142,13 +142,13 @@
             this.normalMapRadio.Name = "normalMapRadio";
             this.normalMapRadio.Size = new System.Drawing.Size(82, 17);
             this.normalMapRadio.TabIndex = 1;
-            this.normalMapRadio.TabStop = true;
             this.normalMapRadio.Text = "Normal Map";
             this.normalMapRadio.UseVisualStyleBackColor = true;
             // 
             // constNormalRadio
             // 
             this.constNormalRadio.AutoSize = true;
+            this.constNormalRadio.Checked = true;
             this.constNormalRadio.Location = new System.Drawing.Point(7, 20);
             this.constNormalRadio.Name = "constNormalRadio";
             this.constNormalRadio.Size = new System.Drawing.Size(91, 17);
@@ -179,13 +179,13 @@
             this.interpolatedFillColorRadio.Name = "interpolatedFillColorRadio";
             this.interpolatedFillColorRadio.Size = new System.Drawing.Size(81, 17);
             this.interpolatedFillColorRadio.TabIndex = 1;
-            this.interpolatedFillColorRadio.TabStop = true;
             this.interpolatedFillColorRadio.Text = "Interpolated";
             this.interpolatedFillColorRadio.UseVisualStyleBackColor = true;
             // 
             // preciseFillColorRadio
             // 
             this.preciseFillColorRadio.AutoSize = true;
+            this.preciseFillColorRadio.Checked = true;
             this.preciseFillColorRadio.Location = new System.Drawing.Point(7, 20);
             this.preciseFillColorRadio.Name = "preciseFillColorRadio";
             this.preciseFillColorRadio.Size = new System.Drawing.Size(60, 17);
@@ -201,7 +201,6 @@
             this.hybridFillColorRadio.Name = "hybridFillColorRadio";
             this.hybridFillColorRadio.Size = new System.Drawing.Size(55, 17);
             this.hybridFillColorRadio.TabIndex = 2;
-            this.hybridFillColorRadio.TabStop = true;
             this.hybridFillColorRadio.Text = "Hybrid";
             this.hybridFillColorRadio.UseVisualStyleBackColor = true;
             // 
@@ -235,13 +234,13 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(65, 17);
             this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Random";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // userDefinedCoefficientsRadio
             // 
             this.userDefinedCoefficientsRadio.AutoSize = true;
+            this.userDefinedCoefficientsRadio.Checked = true;
             this.userDefinedCoefficientsRadio.Location = new System.Drawing.Point(7, 44);
             this.userDefinedCoefficientsRadio.Name = "userDefinedCoefficientsRadio";
             this.userDefinedCoefficientsRadio.Size = new System.Drawing.Size(85, 17);
