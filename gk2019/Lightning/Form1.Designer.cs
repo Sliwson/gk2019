@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.objectColorGroupbox = new System.Windows.Forms.GroupBox();
             this.contColorRadio = new System.Windows.Forms.RadioButton();
@@ -351,9 +352,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 451);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(820, 490);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Lightning";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.objectColorGroupbox.ResumeLayout(false);
             this.objectColorGroupbox.PerformLayout();
