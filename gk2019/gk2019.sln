@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polygons", "Polygons\Polygo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lightning", "Lightning\Lightning.csproj", "{10050C89-70A9-4146-8884-93EC2FC8B9DA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2555CFFA-4DC6-442D-BAB3-B33194CCF7F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10050C89-70A9-4146-8884-93EC2FC8B9DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10050C89-70A9-4146-8884-93EC2FC8B9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10050C89-70A9-4146-8884-93EC2FC8B9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10050C89-70A9-4146-8884-93EC2FC8B9DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
