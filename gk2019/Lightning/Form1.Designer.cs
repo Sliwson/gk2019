@@ -82,7 +82,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(804, 451);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 661);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // objectColorGroupbox
@@ -91,7 +91,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objectColorGroupbox.Controls.Add(this.textureColorRadio);
             this.objectColorGroupbox.Controls.Add(this.contColorRadio);
-            this.objectColorGroupbox.Location = new System.Drawing.Point(549, 5);
+            this.objectColorGroupbox.Location = new System.Drawing.Point(929, 5);
             this.objectColorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.objectColorGroupbox.Name = "objectColorGroupbox";
             this.objectColorGroupbox.Size = new System.Drawing.Size(250, 67);
@@ -127,7 +127,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.normalVectorGroupbox.Controls.Add(this.normalMapRadio);
             this.normalVectorGroupbox.Controls.Add(this.constNormalRadio);
-            this.normalVectorGroupbox.Location = new System.Drawing.Point(549, 82);
+            this.normalVectorGroupbox.Location = new System.Drawing.Point(929, 82);
             this.normalVectorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.normalVectorGroupbox.Name = "normalVectorGroupbox";
             this.normalVectorGroupbox.Size = new System.Drawing.Size(250, 67);
@@ -164,7 +164,7 @@
             this.fillColorGroupbox.Controls.Add(this.hybridFillColorRadio);
             this.fillColorGroupbox.Controls.Add(this.interpolatedFillColorRadio);
             this.fillColorGroupbox.Controls.Add(this.preciseFillColorRadio);
-            this.fillColorGroupbox.Location = new System.Drawing.Point(549, 159);
+            this.fillColorGroupbox.Location = new System.Drawing.Point(929, 159);
             this.fillColorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.fillColorGroupbox.Name = "fillColorGroupbox";
             this.fillColorGroupbox.Size = new System.Drawing.Size(250, 92);
@@ -220,7 +220,7 @@
             this.coefficientsGroupBox.Controls.Add(this.kdSlider);
             this.coefficientsGroupBox.Controls.Add(this.radioButton2);
             this.coefficientsGroupBox.Controls.Add(this.userDefinedCoefficientsRadio);
-            this.coefficientsGroupBox.Location = new System.Drawing.Point(549, 261);
+            this.coefficientsGroupBox.Location = new System.Drawing.Point(929, 261);
             this.coefficientsGroupBox.Margin = new System.Windows.Forms.Padding(5);
             this.coefficientsGroupBox.Name = "coefficientsGroupBox";
             this.coefficientsGroupBox.Size = new System.Drawing.Size(250, 179);
@@ -342,7 +342,7 @@
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(10);
             this.pictureBox1.Name = "pictureBox1";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 4);
-            this.pictureBox1.Size = new System.Drawing.Size(524, 431);
+            this.pictureBox1.Size = new System.Drawing.Size(904, 641);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
@@ -350,7 +350,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 451);
+            this.ClientSize = new System.Drawing.Size(1184, 661);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(820, 490);
