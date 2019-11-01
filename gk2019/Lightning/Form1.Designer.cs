@@ -39,10 +39,26 @@
             this.interpolatedFillColorRadio = new System.Windows.Forms.RadioButton();
             this.preciseFillColorRadio = new System.Windows.Forms.RadioButton();
             this.hybridFillColorRadio = new System.Windows.Forms.RadioButton();
+            this.coefficientsGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.userDefinedCoefficientsRadio = new System.Windows.Forms.RadioButton();
+            this.kdSlider = new System.Windows.Forms.TrackBar();
+            this.kdLabel = new System.Windows.Forms.Label();
+            this.ksLabel = new System.Windows.Forms.Label();
+            this.ksSlider = new System.Windows.Forms.TrackBar();
+            this.mSlider = new System.Windows.Forms.TrackBar();
+            this.mLabel = new System.Windows.Forms.Label();
+            this.kdTextbox = new System.Windows.Forms.TextBox();
+            this.ksTextbox = new System.Windows.Forms.TextBox();
+            this.mTextbox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.objectColorGroupbox.SuspendLayout();
             this.normalVectorGroupbox.SuspendLayout();
             this.fillColorGroupbox.SuspendLayout();
+            this.coefficientsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -53,10 +69,12 @@
             this.tableLayoutPanel1.Controls.Add(this.objectColorGroupbox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.coefficientsGroupBox, 1, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -69,9 +87,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objectColorGroupbox.Controls.Add(this.textureColorRadio);
             this.objectColorGroupbox.Controls.Add(this.contColorRadio);
-            this.objectColorGroupbox.Location = new System.Drawing.Point(503, 3);
+            this.objectColorGroupbox.Location = new System.Drawing.Point(505, 5);
+            this.objectColorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.objectColorGroupbox.Name = "objectColorGroupbox";
-            this.objectColorGroupbox.Size = new System.Drawing.Size(294, 67);
+            this.objectColorGroupbox.Size = new System.Drawing.Size(290, 67);
             this.objectColorGroupbox.TabIndex = 0;
             this.objectColorGroupbox.TabStop = false;
             this.objectColorGroupbox.Text = "Object color";
@@ -104,9 +123,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.normalVectorGroupbox.Controls.Add(this.normalMapRadio);
             this.normalVectorGroupbox.Controls.Add(this.constNormalRadio);
-            this.normalVectorGroupbox.Location = new System.Drawing.Point(503, 76);
+            this.normalVectorGroupbox.Location = new System.Drawing.Point(505, 82);
+            this.normalVectorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.normalVectorGroupbox.Name = "normalVectorGroupbox";
-            this.normalVectorGroupbox.Size = new System.Drawing.Size(294, 67);
+            this.normalVectorGroupbox.Size = new System.Drawing.Size(290, 67);
             this.normalVectorGroupbox.TabIndex = 1;
             this.normalVectorGroupbox.TabStop = false;
             this.normalVectorGroupbox.Text = "Normal vectors";
@@ -140,9 +160,10 @@
             this.fillColorGroupbox.Controls.Add(this.hybridFillColorRadio);
             this.fillColorGroupbox.Controls.Add(this.interpolatedFillColorRadio);
             this.fillColorGroupbox.Controls.Add(this.preciseFillColorRadio);
-            this.fillColorGroupbox.Location = new System.Drawing.Point(503, 149);
+            this.fillColorGroupbox.Location = new System.Drawing.Point(505, 159);
+            this.fillColorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.fillColorGroupbox.Name = "fillColorGroupbox";
-            this.fillColorGroupbox.Size = new System.Drawing.Size(294, 92);
+            this.fillColorGroupbox.Size = new System.Drawing.Size(290, 92);
             this.fillColorGroupbox.TabIndex = 2;
             this.fillColorGroupbox.TabStop = false;
             this.fillColorGroupbox.Text = "Fill color";
@@ -180,6 +201,136 @@
             this.hybridFillColorRadio.Text = "Hybrid";
             this.hybridFillColorRadio.UseVisualStyleBackColor = true;
             // 
+            // coefficientsGroupBox
+            // 
+            this.coefficientsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.coefficientsGroupBox.Controls.Add(this.mTextbox);
+            this.coefficientsGroupBox.Controls.Add(this.ksTextbox);
+            this.coefficientsGroupBox.Controls.Add(this.kdTextbox);
+            this.coefficientsGroupBox.Controls.Add(this.mLabel);
+            this.coefficientsGroupBox.Controls.Add(this.mSlider);
+            this.coefficientsGroupBox.Controls.Add(this.ksSlider);
+            this.coefficientsGroupBox.Controls.Add(this.ksLabel);
+            this.coefficientsGroupBox.Controls.Add(this.kdLabel);
+            this.coefficientsGroupBox.Controls.Add(this.kdSlider);
+            this.coefficientsGroupBox.Controls.Add(this.radioButton2);
+            this.coefficientsGroupBox.Controls.Add(this.userDefinedCoefficientsRadio);
+            this.coefficientsGroupBox.Location = new System.Drawing.Point(505, 261);
+            this.coefficientsGroupBox.Margin = new System.Windows.Forms.Padding(5);
+            this.coefficientsGroupBox.Name = "coefficientsGroupBox";
+            this.coefficientsGroupBox.Size = new System.Drawing.Size(290, 175);
+            this.coefficientsGroupBox.TabIndex = 3;
+            this.coefficientsGroupBox.TabStop = false;
+            this.coefficientsGroupBox.Text = "Coefficients";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(7, 21);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(65, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Random";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // userDefinedCoefficientsRadio
+            // 
+            this.userDefinedCoefficientsRadio.AutoSize = true;
+            this.userDefinedCoefficientsRadio.Location = new System.Drawing.Point(7, 44);
+            this.userDefinedCoefficientsRadio.Name = "userDefinedCoefficientsRadio";
+            this.userDefinedCoefficientsRadio.Size = new System.Drawing.Size(85, 17);
+            this.userDefinedCoefficientsRadio.TabIndex = 0;
+            this.userDefinedCoefficientsRadio.TabStop = true;
+            this.userDefinedCoefficientsRadio.Text = "User defined";
+            this.userDefinedCoefficientsRadio.UseVisualStyleBackColor = true;
+            // 
+            // kdSlider
+            // 
+            this.kdSlider.Location = new System.Drawing.Point(32, 67);
+            this.kdSlider.Maximum = 100;
+            this.kdSlider.Minimum = -100;
+            this.kdSlider.Name = "kdSlider";
+            this.kdSlider.Size = new System.Drawing.Size(138, 45);
+            this.kdSlider.TabIndex = 1;
+            this.kdSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // kdLabel
+            // 
+            this.kdLabel.AutoSize = true;
+            this.kdLabel.Location = new System.Drawing.Point(7, 67);
+            this.kdLabel.Name = "kdLabel";
+            this.kdLabel.Size = new System.Drawing.Size(19, 13);
+            this.kdLabel.TabIndex = 2;
+            this.kdLabel.Text = "kd";
+            // 
+            // ksLabel
+            // 
+            this.ksLabel.AutoSize = true;
+            this.ksLabel.Location = new System.Drawing.Point(7, 99);
+            this.ksLabel.Name = "ksLabel";
+            this.ksLabel.Size = new System.Drawing.Size(18, 13);
+            this.ksLabel.TabIndex = 3;
+            this.ksLabel.Text = "ks";
+            // 
+            // ksSlider
+            // 
+            this.ksSlider.Location = new System.Drawing.Point(31, 100);
+            this.ksSlider.Maximum = 100;
+            this.ksSlider.Minimum = -100;
+            this.ksSlider.Name = "ksSlider";
+            this.ksSlider.Size = new System.Drawing.Size(138, 45);
+            this.ksSlider.TabIndex = 4;
+            this.ksSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // mSlider
+            // 
+            this.mSlider.Location = new System.Drawing.Point(32, 132);
+            this.mSlider.Maximum = 14;
+            this.mSlider.Minimum = 1;
+            this.mSlider.Name = "mSlider";
+            this.mSlider.Size = new System.Drawing.Size(138, 45);
+            this.mSlider.TabIndex = 5;
+            this.mSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.mSlider.Value = 1;
+            // 
+            // mLabel
+            // 
+            this.mLabel.AutoSize = true;
+            this.mLabel.Location = new System.Drawing.Point(7, 132);
+            this.mLabel.Name = "mLabel";
+            this.mLabel.Size = new System.Drawing.Size(15, 13);
+            this.mLabel.TabIndex = 6;
+            this.mLabel.Text = "m";
+            // 
+            // kdTextbox
+            // 
+            this.kdTextbox.Enabled = false;
+            this.kdTextbox.Location = new System.Drawing.Point(177, 67);
+            this.kdTextbox.Name = "kdTextbox";
+            this.kdTextbox.Size = new System.Drawing.Size(63, 20);
+            this.kdTextbox.TabIndex = 7;
+            this.kdTextbox.Text = "0";
+            // 
+            // ksTextbox
+            // 
+            this.ksTextbox.Enabled = false;
+            this.ksTextbox.Location = new System.Drawing.Point(177, 100);
+            this.ksTextbox.Name = "ksTextbox";
+            this.ksTextbox.Size = new System.Drawing.Size(63, 20);
+            this.ksTextbox.TabIndex = 8;
+            this.ksTextbox.Text = "0";
+            // 
+            // mTextbox
+            // 
+            this.mTextbox.Enabled = false;
+            this.mTextbox.Location = new System.Drawing.Point(177, 132);
+            this.mTextbox.Name = "mTextbox";
+            this.mTextbox.Size = new System.Drawing.Size(63, 20);
+            this.mTextbox.TabIndex = 9;
+            this.mTextbox.Text = "1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,6 +346,11 @@
             this.normalVectorGroupbox.PerformLayout();
             this.fillColorGroupbox.ResumeLayout(false);
             this.fillColorGroupbox.PerformLayout();
+            this.coefficientsGroupBox.ResumeLayout(false);
+            this.coefficientsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mSlider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -212,6 +368,18 @@
         private System.Windows.Forms.RadioButton hybridFillColorRadio;
         private System.Windows.Forms.RadioButton interpolatedFillColorRadio;
         private System.Windows.Forms.RadioButton preciseFillColorRadio;
+        private System.Windows.Forms.GroupBox coefficientsGroupBox;
+        private System.Windows.Forms.TextBox mTextbox;
+        private System.Windows.Forms.TextBox ksTextbox;
+        private System.Windows.Forms.TextBox kdTextbox;
+        private System.Windows.Forms.Label mLabel;
+        private System.Windows.Forms.TrackBar mSlider;
+        private System.Windows.Forms.TrackBar ksSlider;
+        private System.Windows.Forms.Label ksLabel;
+        private System.Windows.Forms.Label kdLabel;
+        private System.Windows.Forms.TrackBar kdSlider;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton userDefinedCoefficientsRadio;
     }
 }
 
