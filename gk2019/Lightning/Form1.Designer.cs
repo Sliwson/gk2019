@@ -51,6 +51,7 @@
             this.kdTextbox = new System.Windows.Forms.TextBox();
             this.ksTextbox = new System.Windows.Forms.TextBox();
             this.mTextbox = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.objectColorGroupbox.SuspendLayout();
             this.normalVectorGroupbox.SuspendLayout();
@@ -59,6 +60,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -70,6 +72,7 @@
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.coefficientsGroupBox, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -331,6 +334,17 @@
             this.mTextbox.TabIndex = 9;
             this.mTextbox.Text = "1";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(10, 10);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(10);
+            this.pictureBox1.Name = "pictureBox1";
+            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 4);
+            this.pictureBox1.Size = new System.Drawing.Size(480, 430);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,6 +365,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -380,6 +395,7 @@
         private System.Windows.Forms.TrackBar kdSlider;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton userDefinedCoefficientsRadio;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
