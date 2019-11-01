@@ -35,9 +35,14 @@
             this.normalVectorGroupbox = new System.Windows.Forms.GroupBox();
             this.normalMapRadio = new System.Windows.Forms.RadioButton();
             this.constNormalRadio = new System.Windows.Forms.RadioButton();
+            this.fillColorGroupbox = new System.Windows.Forms.GroupBox();
+            this.interpolatedFillColorRadio = new System.Windows.Forms.RadioButton();
+            this.preciseFillColorRadio = new System.Windows.Forms.RadioButton();
+            this.hybridFillColorRadio = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.objectColorGroupbox.SuspendLayout();
             this.normalVectorGroupbox.SuspendLayout();
+            this.fillColorGroupbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -47,10 +52,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel1.Controls.Add(this.objectColorGroupbox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
@@ -126,6 +133,53 @@
             this.constNormalRadio.Text = "Const [0, 0, 1]";
             this.constNormalRadio.UseVisualStyleBackColor = true;
             // 
+            // fillColorGroupbox
+            // 
+            this.fillColorGroupbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fillColorGroupbox.Controls.Add(this.hybridFillColorRadio);
+            this.fillColorGroupbox.Controls.Add(this.interpolatedFillColorRadio);
+            this.fillColorGroupbox.Controls.Add(this.preciseFillColorRadio);
+            this.fillColorGroupbox.Location = new System.Drawing.Point(503, 149);
+            this.fillColorGroupbox.Name = "fillColorGroupbox";
+            this.fillColorGroupbox.Size = new System.Drawing.Size(294, 92);
+            this.fillColorGroupbox.TabIndex = 2;
+            this.fillColorGroupbox.TabStop = false;
+            this.fillColorGroupbox.Text = "Fill color";
+            // 
+            // interpolatedFillColorRadio
+            // 
+            this.interpolatedFillColorRadio.AutoSize = true;
+            this.interpolatedFillColorRadio.Location = new System.Drawing.Point(7, 44);
+            this.interpolatedFillColorRadio.Name = "interpolatedFillColorRadio";
+            this.interpolatedFillColorRadio.Size = new System.Drawing.Size(81, 17);
+            this.interpolatedFillColorRadio.TabIndex = 1;
+            this.interpolatedFillColorRadio.TabStop = true;
+            this.interpolatedFillColorRadio.Text = "Interpolated";
+            this.interpolatedFillColorRadio.UseVisualStyleBackColor = true;
+            // 
+            // preciseFillColorRadio
+            // 
+            this.preciseFillColorRadio.AutoSize = true;
+            this.preciseFillColorRadio.Location = new System.Drawing.Point(7, 20);
+            this.preciseFillColorRadio.Name = "preciseFillColorRadio";
+            this.preciseFillColorRadio.Size = new System.Drawing.Size(60, 17);
+            this.preciseFillColorRadio.TabIndex = 0;
+            this.preciseFillColorRadio.TabStop = true;
+            this.preciseFillColorRadio.Text = "Precise";
+            this.preciseFillColorRadio.UseVisualStyleBackColor = true;
+            // 
+            // hybridFillColorRadio
+            // 
+            this.hybridFillColorRadio.AutoSize = true;
+            this.hybridFillColorRadio.Location = new System.Drawing.Point(7, 67);
+            this.hybridFillColorRadio.Name = "hybridFillColorRadio";
+            this.hybridFillColorRadio.Size = new System.Drawing.Size(55, 17);
+            this.hybridFillColorRadio.TabIndex = 2;
+            this.hybridFillColorRadio.TabStop = true;
+            this.hybridFillColorRadio.Text = "Hybrid";
+            this.hybridFillColorRadio.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,6 +193,8 @@
             this.objectColorGroupbox.PerformLayout();
             this.normalVectorGroupbox.ResumeLayout(false);
             this.normalVectorGroupbox.PerformLayout();
+            this.fillColorGroupbox.ResumeLayout(false);
+            this.fillColorGroupbox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -152,6 +208,10 @@
         private System.Windows.Forms.GroupBox normalVectorGroupbox;
         private System.Windows.Forms.RadioButton normalMapRadio;
         private System.Windows.Forms.RadioButton constNormalRadio;
+        private System.Windows.Forms.GroupBox fillColorGroupbox;
+        private System.Windows.Forms.RadioButton hybridFillColorRadio;
+        private System.Windows.Forms.RadioButton interpolatedFillColorRadio;
+        private System.Windows.Forms.RadioButton preciseFillColorRadio;
     }
 }
 
