@@ -32,8 +32,12 @@
             this.objectColorGroupbox = new System.Windows.Forms.GroupBox();
             this.contColorRadio = new System.Windows.Forms.RadioButton();
             this.textureColorRadio = new System.Windows.Forms.RadioButton();
+            this.normalVectorGroupbox = new System.Windows.Forms.GroupBox();
+            this.normalMapRadio = new System.Windows.Forms.RadioButton();
+            this.constNormalRadio = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.objectColorGroupbox.SuspendLayout();
+            this.normalVectorGroupbox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -42,11 +46,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel1.Controls.Add(this.objectColorGroupbox, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -85,6 +91,41 @@
             this.textureColorRadio.Text = "Texture";
             this.textureColorRadio.UseVisualStyleBackColor = true;
             // 
+            // normalVectorGroupbox
+            // 
+            this.normalVectorGroupbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.normalVectorGroupbox.Controls.Add(this.normalMapRadio);
+            this.normalVectorGroupbox.Controls.Add(this.constNormalRadio);
+            this.normalVectorGroupbox.Location = new System.Drawing.Point(503, 76);
+            this.normalVectorGroupbox.Name = "normalVectorGroupbox";
+            this.normalVectorGroupbox.Size = new System.Drawing.Size(294, 67);
+            this.normalVectorGroupbox.TabIndex = 1;
+            this.normalVectorGroupbox.TabStop = false;
+            this.normalVectorGroupbox.Text = "Normal vectors";
+            // 
+            // normalMapRadio
+            // 
+            this.normalMapRadio.AutoSize = true;
+            this.normalMapRadio.Location = new System.Drawing.Point(7, 44);
+            this.normalMapRadio.Name = "normalMapRadio";
+            this.normalMapRadio.Size = new System.Drawing.Size(82, 17);
+            this.normalMapRadio.TabIndex = 1;
+            this.normalMapRadio.TabStop = true;
+            this.normalMapRadio.Text = "Normal Map";
+            this.normalMapRadio.UseVisualStyleBackColor = true;
+            // 
+            // constNormalRadio
+            // 
+            this.constNormalRadio.AutoSize = true;
+            this.constNormalRadio.Location = new System.Drawing.Point(7, 20);
+            this.constNormalRadio.Name = "constNormalRadio";
+            this.constNormalRadio.Size = new System.Drawing.Size(91, 17);
+            this.constNormalRadio.TabIndex = 0;
+            this.constNormalRadio.TabStop = true;
+            this.constNormalRadio.Text = "Const [0, 0, 1]";
+            this.constNormalRadio.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -96,6 +137,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.objectColorGroupbox.ResumeLayout(false);
             this.objectColorGroupbox.PerformLayout();
+            this.normalVectorGroupbox.ResumeLayout(false);
+            this.normalVectorGroupbox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -106,6 +149,9 @@
         private System.Windows.Forms.GroupBox objectColorGroupbox;
         private System.Windows.Forms.RadioButton textureColorRadio;
         private System.Windows.Forms.RadioButton contColorRadio;
+        private System.Windows.Forms.GroupBox normalVectorGroupbox;
+        private System.Windows.Forms.RadioButton normalMapRadio;
+        private System.Windows.Forms.RadioButton constNormalRadio;
     }
 }
 
