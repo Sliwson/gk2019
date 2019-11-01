@@ -67,7 +67,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260F));
             this.tableLayoutPanel1.Controls.Add(this.objectColorGroupbox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
@@ -81,7 +81,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(804, 451);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // objectColorGroupbox
@@ -90,10 +90,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objectColorGroupbox.Controls.Add(this.textureColorRadio);
             this.objectColorGroupbox.Controls.Add(this.contColorRadio);
-            this.objectColorGroupbox.Location = new System.Drawing.Point(505, 5);
+            this.objectColorGroupbox.Location = new System.Drawing.Point(549, 5);
             this.objectColorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.objectColorGroupbox.Name = "objectColorGroupbox";
-            this.objectColorGroupbox.Size = new System.Drawing.Size(290, 67);
+            this.objectColorGroupbox.Size = new System.Drawing.Size(250, 67);
             this.objectColorGroupbox.TabIndex = 0;
             this.objectColorGroupbox.TabStop = false;
             this.objectColorGroupbox.Text = "Object color";
@@ -126,10 +126,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.normalVectorGroupbox.Controls.Add(this.normalMapRadio);
             this.normalVectorGroupbox.Controls.Add(this.constNormalRadio);
-            this.normalVectorGroupbox.Location = new System.Drawing.Point(505, 82);
+            this.normalVectorGroupbox.Location = new System.Drawing.Point(549, 82);
             this.normalVectorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.normalVectorGroupbox.Name = "normalVectorGroupbox";
-            this.normalVectorGroupbox.Size = new System.Drawing.Size(290, 67);
+            this.normalVectorGroupbox.Size = new System.Drawing.Size(250, 67);
             this.normalVectorGroupbox.TabIndex = 1;
             this.normalVectorGroupbox.TabStop = false;
             this.normalVectorGroupbox.Text = "Normal vectors";
@@ -163,10 +163,10 @@
             this.fillColorGroupbox.Controls.Add(this.hybridFillColorRadio);
             this.fillColorGroupbox.Controls.Add(this.interpolatedFillColorRadio);
             this.fillColorGroupbox.Controls.Add(this.preciseFillColorRadio);
-            this.fillColorGroupbox.Location = new System.Drawing.Point(505, 159);
+            this.fillColorGroupbox.Location = new System.Drawing.Point(549, 159);
             this.fillColorGroupbox.Margin = new System.Windows.Forms.Padding(5);
             this.fillColorGroupbox.Name = "fillColorGroupbox";
-            this.fillColorGroupbox.Size = new System.Drawing.Size(290, 92);
+            this.fillColorGroupbox.Size = new System.Drawing.Size(250, 92);
             this.fillColorGroupbox.TabIndex = 2;
             this.fillColorGroupbox.TabStop = false;
             this.fillColorGroupbox.Text = "Fill color";
@@ -219,10 +219,10 @@
             this.coefficientsGroupBox.Controls.Add(this.kdSlider);
             this.coefficientsGroupBox.Controls.Add(this.radioButton2);
             this.coefficientsGroupBox.Controls.Add(this.userDefinedCoefficientsRadio);
-            this.coefficientsGroupBox.Location = new System.Drawing.Point(505, 261);
+            this.coefficientsGroupBox.Location = new System.Drawing.Point(549, 261);
             this.coefficientsGroupBox.Margin = new System.Windows.Forms.Padding(5);
             this.coefficientsGroupBox.Name = "coefficientsGroupBox";
-            this.coefficientsGroupBox.Size = new System.Drawing.Size(290, 175);
+            this.coefficientsGroupBox.Size = new System.Drawing.Size(250, 179);
             this.coefficientsGroupBox.TabIndex = 3;
             this.coefficientsGroupBox.TabStop = false;
             this.coefficientsGroupBox.Text = "Coefficients";
@@ -341,7 +341,7 @@
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(10);
             this.pictureBox1.Name = "pictureBox1";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 4);
-            this.pictureBox1.Size = new System.Drawing.Size(480, 430);
+            this.pictureBox1.Size = new System.Drawing.Size(524, 431);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
@@ -349,8 +349,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(804, 451);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MinimumSize = new System.Drawing.Size(820, 490);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
