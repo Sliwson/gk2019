@@ -16,5 +16,17 @@ namespace Lightning
         {
             InitializeComponent();
         }
+
+        private void objectColorPictureBox_Click(object sender, EventArgs e)
+        {
+            if (objectColorDialog.ShowDialog() == DialogResult.OK)
+                objectColorPictureBox.BackColor = objectColorDialog.Color;
+        }
+
+        private void lightColorPicturebox_Click(object sender, EventArgs e)
+        {
+            if (lightColorDialog.ShowDialog() == DialogResult.OK)
+                lightColorPictureBox.BackColor = lightColorDialog.Color;
+        }
     }
 }

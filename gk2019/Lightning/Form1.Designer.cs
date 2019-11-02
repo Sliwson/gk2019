@@ -53,13 +53,14 @@
             this.kdSlider = new System.Windows.Forms.TrackBar();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.userDefinedCoefficientsRadio = new System.Windows.Forms.RadioButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cavnas = new System.Windows.Forms.PictureBox();
             this.objectColorDialog = new System.Windows.Forms.ColorDialog();
             this.lightGroupbox = new System.Windows.Forms.GroupBox();
-            this.lightColorPicturebox = new System.Windows.Forms.PictureBox();
+            this.lightColorPictureBox = new System.Windows.Forms.PictureBox();
             this.constLightRadio = new System.Windows.Forms.RadioButton();
             this.lightColorLabel = new System.Windows.Forms.Label();
             this.circulatingLightRadio = new System.Windows.Forms.RadioButton();
+            this.lightColorDialog = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.objectColorGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.objectColorPictureBox)).BeginInit();
@@ -69,9 +70,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cavnas)).BeginInit();
             this.lightGroupbox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lightColorPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lightColorPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -84,7 +85,7 @@
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.coefficientsGroupBox, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cavnas, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -121,6 +122,7 @@
             this.objectColorPictureBox.Size = new System.Drawing.Size(52, 17);
             this.objectColorPictureBox.TabIndex = 2;
             this.objectColorPictureBox.TabStop = false;
+            this.objectColorPictureBox.Click += new System.EventHandler(this.objectColorPictureBox_Click);
             // 
             // textureColorRadio
             // 
@@ -289,7 +291,7 @@
             // mSlider
             // 
             this.mSlider.Location = new System.Drawing.Point(32, 132);
-            this.mSlider.Maximum = 14;
+            this.mSlider.Maximum = 100;
             this.mSlider.Minimum = 1;
             this.mSlider.Name = "mSlider";
             this.mSlider.Size = new System.Drawing.Size(138, 45);
@@ -357,17 +359,21 @@
             this.userDefinedCoefficientsRadio.Text = "User defined";
             this.userDefinedCoefficientsRadio.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // cavnas
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(10, 10);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(10);
-            this.pictureBox1.Name = "pictureBox1";
-            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 5);
-            this.pictureBox1.Size = new System.Drawing.Size(904, 741);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.cavnas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.cavnas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cavnas.Location = new System.Drawing.Point(10, 10);
+            this.cavnas.Margin = new System.Windows.Forms.Padding(10);
+            this.cavnas.Name = "cavnas";
+            this.tableLayoutPanel1.SetRowSpan(this.cavnas, 5);
+            this.cavnas.Size = new System.Drawing.Size(904, 741);
+            this.cavnas.TabIndex = 4;
+            this.cavnas.TabStop = false;
+            // 
+            // objectColorDialog
+            // 
+            this.objectColorDialog.Color = System.Drawing.Color.White;
             // 
             // lightGroupbox
             // 
@@ -375,7 +381,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lightGroupbox.Controls.Add(this.circulatingLightRadio);
             this.lightGroupbox.Controls.Add(this.lightColorLabel);
-            this.lightGroupbox.Controls.Add(this.lightColorPicturebox);
+            this.lightGroupbox.Controls.Add(this.lightColorPictureBox);
             this.lightGroupbox.Controls.Add(this.constLightRadio);
             this.lightGroupbox.Location = new System.Drawing.Point(929, 450);
             this.lightGroupbox.Margin = new System.Windows.Forms.Padding(5);
@@ -385,23 +391,26 @@
             this.lightGroupbox.TabStop = false;
             this.lightGroupbox.Text = "Light";
             // 
-            // lightColorPicturebox
+            // lightColorPictureBox
             // 
-            this.lightColorPicturebox.BackColor = System.Drawing.Color.White;
-            this.lightColorPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lightColorPicturebox.Location = new System.Drawing.Point(65, 16);
-            this.lightColorPicturebox.Name = "lightColorPicturebox";
-            this.lightColorPicturebox.Size = new System.Drawing.Size(52, 17);
-            this.lightColorPicturebox.TabIndex = 2;
-            this.lightColorPicturebox.TabStop = false;
+            this.lightColorPictureBox.BackColor = System.Drawing.Color.White;
+            this.lightColorPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lightColorPictureBox.Location = new System.Drawing.Point(65, 16);
+            this.lightColorPictureBox.Name = "lightColorPictureBox";
+            this.lightColorPictureBox.Size = new System.Drawing.Size(52, 17);
+            this.lightColorPictureBox.TabIndex = 2;
+            this.lightColorPictureBox.TabStop = false;
+            this.lightColorPictureBox.Click += new System.EventHandler(this.lightColorPicturebox_Click);
             // 
             // constLightRadio
             // 
             this.constLightRadio.AutoSize = true;
+            this.constLightRadio.Checked = true;
             this.constLightRadio.Location = new System.Drawing.Point(7, 44);
             this.constLightRadio.Name = "constLightRadio";
             this.constLightRadio.Size = new System.Drawing.Size(52, 17);
             this.constLightRadio.TabIndex = 1;
+            this.constLightRadio.TabStop = true;
             this.constLightRadio.Text = "Const";
             this.constLightRadio.UseVisualStyleBackColor = true;
             // 
@@ -423,6 +432,10 @@
             this.circulatingLightRadio.TabIndex = 4;
             this.circulatingLightRadio.Text = "Circulating";
             this.circulatingLightRadio.UseVisualStyleBackColor = true;
+            // 
+            // lightColorDialog
+            // 
+            this.lightColorDialog.Color = System.Drawing.Color.White;
             // 
             // Form1
             // 
@@ -447,10 +460,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cavnas)).EndInit();
             this.lightGroupbox.ResumeLayout(false);
             this.lightGroupbox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lightColorPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lightColorPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -480,14 +493,15 @@
         private System.Windows.Forms.TrackBar kdSlider;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton userDefinedCoefficientsRadio;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox cavnas;
         private System.Windows.Forms.PictureBox objectColorPictureBox;
         private System.Windows.Forms.ColorDialog objectColorDialog;
         private System.Windows.Forms.GroupBox lightGroupbox;
         private System.Windows.Forms.RadioButton circulatingLightRadio;
         private System.Windows.Forms.Label lightColorLabel;
-        private System.Windows.Forms.PictureBox lightColorPicturebox;
+        private System.Windows.Forms.PictureBox lightColorPictureBox;
         private System.Windows.Forms.RadioButton constLightRadio;
+        private System.Windows.Forms.ColorDialog lightColorDialog;
     }
 }
 
