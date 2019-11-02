@@ -364,6 +364,7 @@
             // 
             // cavnas
             // 
+            this.cavnas.BackColor = System.Drawing.Color.White;
             this.cavnas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.cavnas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cavnas.Location = new System.Drawing.Point(10, 10);
