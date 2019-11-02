@@ -56,6 +56,44 @@ namespace Lightning
             ksTextbox.Text = value.ToString();
             Variables.Coefficients.Ks = value;
         }
+
+        private void constColorRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            Variables.ObjectColor.IsConst = constColorRadio.Checked;
+        }
+
+        private void constNormalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            Variables.NormalVectors.IsConst = constNormalRadio.Checked;
+        }
+
+        private void preciseFillColorRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (preciseFillColorRadio.Checked)
+                Variables.ColorMode = FillColorMode.Precise;
+        }
+
+        private void interpolatedFillColorRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (interpolatedFillColorRadio.Checked)
+                Variables.ColorMode = FillColorMode.Interpolated;
+        }
+
+        private void hybridFillColorRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (hybridFillColorRadio.Checked)
+                Variables.ColorMode = FillColorMode.Hybrid;
+        }
+
+        private void coefficientsRandomRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            Variables.Coefficients.IsRandom = coefficientsRandomRadio.Checked;
+        }
+
+        private void constLightRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            Variables.Light.IsConst = constLightRadio.Checked;
+        }
     }
 }
 
