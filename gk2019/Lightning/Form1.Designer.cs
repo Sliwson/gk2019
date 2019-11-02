@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.objectColorGroupbox = new System.Windows.Forms.GroupBox();
+            this.objectColorPictureBox = new System.Windows.Forms.PictureBox();
             this.textureColorRadio = new System.Windows.Forms.RadioButton();
             this.contColorRadio = new System.Windows.Forms.RadioButton();
             this.normalVectorGroupbox = new System.Windows.Forms.GroupBox();
@@ -54,9 +55,14 @@
             this.userDefinedCoefficientsRadio = new System.Windows.Forms.RadioButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.objectColorDialog = new System.Windows.Forms.ColorDialog();
-            this.objectColorPictureBox = new System.Windows.Forms.PictureBox();
+            this.lightGroupbox = new System.Windows.Forms.GroupBox();
+            this.lightColorPicturebox = new System.Windows.Forms.PictureBox();
+            this.constLightRadio = new System.Windows.Forms.RadioButton();
+            this.lightColorLabel = new System.Windows.Forms.Label();
+            this.circulatingLightRadio = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.objectColorGroupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectColorPictureBox)).BeginInit();
             this.normalVectorGroupbox.SuspendLayout();
             this.fillColorGroupbox.SuspendLayout();
             this.coefficientsGroupBox.SuspendLayout();
@@ -64,7 +70,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectColorPictureBox)).BeginInit();
+            this.lightGroupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lightColorPicturebox)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -72,6 +79,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260F));
+            this.tableLayoutPanel1.Controls.Add(this.lightGroupbox, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.objectColorGroupbox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
@@ -86,7 +94,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-	    this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 661);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 761);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // objectColorGroupbox
@@ -104,6 +112,16 @@
             this.objectColorGroupbox.TabStop = false;
             this.objectColorGroupbox.Text = "Object color";
             // 
+            // objectColorPictureBox
+            // 
+            this.objectColorPictureBox.BackColor = System.Drawing.Color.White;
+            this.objectColorPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.objectColorPictureBox.Location = new System.Drawing.Point(65, 20);
+            this.objectColorPictureBox.Name = "objectColorPictureBox";
+            this.objectColorPictureBox.Size = new System.Drawing.Size(52, 17);
+            this.objectColorPictureBox.TabIndex = 2;
+            this.objectColorPictureBox.TabStop = false;
+            // 
             // textureColorRadio
             // 
             this.textureColorRadio.AutoSize = true;
@@ -111,20 +129,13 @@
             this.textureColorRadio.Name = "textureColorRadio";
             this.textureColorRadio.Size = new System.Drawing.Size(61, 17);
             this.textureColorRadio.TabIndex = 1;
-<<<<<<< HEAD
-=======
-            this.textureColorRadio.TabStop = true;
->>>>>>> row-add
             this.textureColorRadio.Text = "Texture";
             this.textureColorRadio.UseVisualStyleBackColor = true;
             // 
             // contColorRadio
             // 
             this.contColorRadio.AutoSize = true;
-<<<<<<< HEAD
             this.contColorRadio.Checked = true;
-=======
->>>>>>> row-add
             this.contColorRadio.Location = new System.Drawing.Point(7, 20);
             this.contColorRadio.Name = "contColorRadio";
             this.contColorRadio.Size = new System.Drawing.Size(52, 17);
@@ -191,10 +202,6 @@
             this.hybridFillColorRadio.Name = "hybridFillColorRadio";
             this.hybridFillColorRadio.Size = new System.Drawing.Size(55, 17);
             this.hybridFillColorRadio.TabIndex = 2;
-<<<<<<< HEAD
-=======
-            this.hybridFillColorRadio.TabStop = true;
->>>>>>> row-add
             this.hybridFillColorRadio.Text = "Hybrid";
             this.hybridFillColorRadio.UseVisualStyleBackColor = true;
             // 
@@ -335,20 +342,13 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(65, 17);
             this.radioButton2.TabIndex = 1;
-<<<<<<< HEAD
-=======
-            this.radioButton2.TabStop = true;
->>>>>>> row-add
             this.radioButton2.Text = "Random";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // userDefinedCoefficientsRadio
             // 
             this.userDefinedCoefficientsRadio.AutoSize = true;
-<<<<<<< HEAD
             this.userDefinedCoefficientsRadio.Checked = true;
-=======
->>>>>>> row-add
             this.userDefinedCoefficientsRadio.Location = new System.Drawing.Point(7, 44);
             this.userDefinedCoefficientsRadio.Name = "userDefinedCoefficientsRadio";
             this.userDefinedCoefficientsRadio.Size = new System.Drawing.Size(85, 17);
@@ -356,7 +356,6 @@
             this.userDefinedCoefficientsRadio.TabStop = true;
             this.userDefinedCoefficientsRadio.Text = "User defined";
             this.userDefinedCoefficientsRadio.UseVisualStyleBackColor = true;
-<<<<<<< HEAD
             // 
             // pictureBox1
             // 
@@ -365,32 +364,71 @@
             this.pictureBox1.Location = new System.Drawing.Point(10, 10);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(10);
             this.pictureBox1.Name = "pictureBox1";
-            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 4);
-            this.pictureBox1.Size = new System.Drawing.Size(904, 641);
+            this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 5);
+            this.pictureBox1.Size = new System.Drawing.Size(904, 741);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
-            // objectColorPictureBox
+            // lightGroupbox
             // 
-            this.objectColorPictureBox.BackColor = System.Drawing.Color.White;
-            this.objectColorPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.objectColorPictureBox.Location = new System.Drawing.Point(65, 20);
-            this.objectColorPictureBox.Name = "objectColorPictureBox";
-            this.objectColorPictureBox.Size = new System.Drawing.Size(52, 17);
-            this.objectColorPictureBox.TabIndex = 2;
-            this.objectColorPictureBox.TabStop = false;
-=======
->>>>>>> row-add
+            this.lightGroupbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lightGroupbox.Controls.Add(this.circulatingLightRadio);
+            this.lightGroupbox.Controls.Add(this.lightColorLabel);
+            this.lightGroupbox.Controls.Add(this.lightColorPicturebox);
+            this.lightGroupbox.Controls.Add(this.constLightRadio);
+            this.lightGroupbox.Location = new System.Drawing.Point(929, 450);
+            this.lightGroupbox.Margin = new System.Windows.Forms.Padding(5);
+            this.lightGroupbox.Name = "lightGroupbox";
+            this.lightGroupbox.Size = new System.Drawing.Size(250, 93);
+            this.lightGroupbox.TabIndex = 5;
+            this.lightGroupbox.TabStop = false;
+            this.lightGroupbox.Text = "Light";
+            // 
+            // lightColorPicturebox
+            // 
+            this.lightColorPicturebox.BackColor = System.Drawing.Color.White;
+            this.lightColorPicturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lightColorPicturebox.Location = new System.Drawing.Point(65, 16);
+            this.lightColorPicturebox.Name = "lightColorPicturebox";
+            this.lightColorPicturebox.Size = new System.Drawing.Size(52, 17);
+            this.lightColorPicturebox.TabIndex = 2;
+            this.lightColorPicturebox.TabStop = false;
+            // 
+            // constLightRadio
+            // 
+            this.constLightRadio.AutoSize = true;
+            this.constLightRadio.Location = new System.Drawing.Point(7, 44);
+            this.constLightRadio.Name = "constLightRadio";
+            this.constLightRadio.Size = new System.Drawing.Size(52, 17);
+            this.constLightRadio.TabIndex = 1;
+            this.constLightRadio.Text = "Const";
+            this.constLightRadio.UseVisualStyleBackColor = true;
+            // 
+            // lightColorLabel
+            // 
+            this.lightColorLabel.AutoSize = true;
+            this.lightColorLabel.Location = new System.Drawing.Point(6, 20);
+            this.lightColorLabel.Name = "lightColorLabel";
+            this.lightColorLabel.Size = new System.Drawing.Size(31, 13);
+            this.lightColorLabel.TabIndex = 3;
+            this.lightColorLabel.Text = "Color";
+            // 
+            // circulatingLightRadio
+            // 
+            this.circulatingLightRadio.AutoSize = true;
+            this.circulatingLightRadio.Location = new System.Drawing.Point(6, 70);
+            this.circulatingLightRadio.Name = "circulatingLightRadio";
+            this.circulatingLightRadio.Size = new System.Drawing.Size(74, 17);
+            this.circulatingLightRadio.TabIndex = 4;
+            this.circulatingLightRadio.Text = "Circulating";
+            this.circulatingLightRadio.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
-            this.ClientSize = new System.Drawing.Size(1184, 661);
-=======
-            this.ClientSize = new System.Drawing.Size(800, 698);
->>>>>>> row-add
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(820, 490);
@@ -399,6 +437,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.objectColorGroupbox.ResumeLayout(false);
             this.objectColorGroupbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectColorPictureBox)).EndInit();
             this.normalVectorGroupbox.ResumeLayout(false);
             this.normalVectorGroupbox.PerformLayout();
             this.fillColorGroupbox.ResumeLayout(false);
@@ -408,11 +447,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).EndInit();
-<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectColorPictureBox)).EndInit();
-=======
->>>>>>> row-add
+            this.lightGroupbox.ResumeLayout(false);
+            this.lightGroupbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lightColorPicturebox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -445,6 +483,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox objectColorPictureBox;
         private System.Windows.Forms.ColorDialog objectColorDialog;
+        private System.Windows.Forms.GroupBox lightGroupbox;
+        private System.Windows.Forms.RadioButton circulatingLightRadio;
+        private System.Windows.Forms.Label lightColorLabel;
+        private System.Windows.Forms.PictureBox lightColorPicturebox;
+        private System.Windows.Forms.RadioButton constLightRadio;
     }
 }
 
