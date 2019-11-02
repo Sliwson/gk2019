@@ -103,7 +103,7 @@ namespace Lightning
             }
             catch
             {
-                MessageBox.Show("Error", "Values must be in [1, 100] range", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Values must be in [1, 100] range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
