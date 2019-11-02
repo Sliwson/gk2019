@@ -28,16 +28,27 @@ namespace Lightning
             pictureBox.Resize += PictureBox_Resize;
         }
 
+        public void Paint(Graphics g)
+        {
+            foreach (var edge in edges)
+                edge.Draw(g);
+
+            foreach (var vertexList in vertices)
+                foreach (var vertex in vertexList)
+                    vertex.Draw(g);
+        }
+
         private void PictureBox_Resize(object sender, EventArgs e)
         {
             RecalculateVertices();
+            pictureBox.Invalidate();
         }
 
         private void InitGrid()
         {
             vertices = new List<List<Vertex>>();
-            int xStep = pictureBox.Width / width;
-            int yStep = pictureBox.Height / height;
+            float xStep = (float)pictureBox.Width / width;
+            float yStep = (float)pictureBox.Height / height;
 
             int y = 0;
             for (; y <= height; y++)
@@ -45,7 +56,7 @@ namespace Lightning
                 var row = new List<Vertex>();
                 for (int x = 0; x <= width; x++)
                 {
-                    row.Add(new Vertex(new Point(x * xStep, y * yStep), 3));
+                    row.Add(new Vertex(new Point((int)Math.Round(x * xStep), (int)Math.Round(y * yStep)), 3));
                 }
                 vertices.Add(row);
             }
@@ -59,20 +70,15 @@ namespace Lightning
                 for (; x < width; x++)
                 {
                     //vertical
-                    edges.Add(new Edge(vertices[y][x], vertices[y + 1][x]));
+                    if (x > 0)
+                        edges.Add(new Edge(vertices[y][x], vertices[y + 1][x]));
                     //horizontal
-                    edges.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
+                    if (y > 0)
+                        edges.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
                     //diagonal
                     edges.Add(new Edge(vertices[y][x], vertices[y + 1][x + 1]));
                 }
-
-                //last column vertical
-                edges.Add(new Edge(vertices[y][x], vertices[y + 1][x]));
             }
-
-            //last row horizontal
-            for (int x = 0; x < width; x++)
-                edges.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
         }
 
         private void RecalculateVertices()

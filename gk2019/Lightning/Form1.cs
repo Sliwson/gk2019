@@ -12,9 +12,16 @@ namespace Lightning
 {
     public partial class Form1 : Form
     {
+        private Grid grid;
         public Form1()
         {
             InitializeComponent();
+            grid = new Grid(10, 10, canvas);
+        }
+        
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+            grid.Paint(e.Graphics);
         }
     }
 }

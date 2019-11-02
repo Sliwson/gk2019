@@ -58,7 +58,7 @@
             this.kdSlider = new System.Windows.Forms.TrackBar();
             this.coefficientsRandomRadio = new System.Windows.Forms.RadioButton();
             this.userDefinedCoefficientsRadio = new System.Windows.Forms.RadioButton();
-            this.cavnas = new System.Windows.Forms.PictureBox();
+            this.canvas = new System.Windows.Forms.PictureBox();
             this.objectColorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
@@ -72,7 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cavnas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -85,7 +85,7 @@
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.fillColorGroupbox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.coefficientsGroupBox, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.cavnas, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.canvas, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -427,18 +427,19 @@
             this.userDefinedCoefficientsRadio.Text = "User defined";
             this.userDefinedCoefficientsRadio.UseVisualStyleBackColor = true;
             // 
-            // cavnas
+            // canvas
             // 
-            this.cavnas.BackColor = System.Drawing.Color.White;
-            this.cavnas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cavnas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cavnas.Location = new System.Drawing.Point(10, 10);
-            this.cavnas.Margin = new System.Windows.Forms.Padding(10);
-            this.cavnas.Name = "cavnas";
-            this.tableLayoutPanel1.SetRowSpan(this.cavnas, 5);
-            this.cavnas.Size = new System.Drawing.Size(904, 741);
-            this.cavnas.TabIndex = 4;
-            this.cavnas.TabStop = false;
+            this.canvas.BackColor = System.Drawing.Color.White;
+            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point(10, 10);
+            this.canvas.Margin = new System.Windows.Forms.Padding(10);
+            this.canvas.Name = "canvas";
+            this.tableLayoutPanel1.SetRowSpan(this.canvas, 5);
+            this.canvas.Size = new System.Drawing.Size(904, 741);
+            this.canvas.TabIndex = 4;
+            this.canvas.TabStop = false;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
             // objectColorDialog
             // 
@@ -474,7 +475,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cavnas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -504,7 +505,7 @@
         private System.Windows.Forms.TrackBar kdSlider;
         private System.Windows.Forms.RadioButton coefficientsRandomRadio;
         private System.Windows.Forms.RadioButton userDefinedCoefficientsRadio;
-        private System.Windows.Forms.PictureBox cavnas;
+        private System.Windows.Forms.PictureBox canvas;
         private System.Windows.Forms.PictureBox objectColorPictureBox;
         private System.Windows.Forms.ColorDialog objectColorDialog;
         private System.Windows.Forms.GroupBox lightGroupbox;
