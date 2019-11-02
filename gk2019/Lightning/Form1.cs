@@ -16,13 +16,13 @@ namespace Lightning
         public Form1()
         {
             InitializeComponent();
-            grid = new Grid(10, 10, canvas);
+            grid = new Grid(5, 5, canvas);
         }
         
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
             grid.Paint(e.Graphics);
         }
-    }
+   }
 }
 

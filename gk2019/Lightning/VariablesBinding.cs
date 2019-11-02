@@ -86,6 +86,25 @@ namespace Lightning
         {
             Variables.Light.IsConst = constLightRadio.Checked;
         }
+        private void saveSizeButton_Click(object sender, EventArgs e)
+        {
+            var xString = xTextBox.Text;
+            var yString = yTextBox.Text;
 
+            try
+            {
+                var x = int.Parse(xString);
+                var y = int.Parse(yString);
+
+                if (x < 1 || x > 100 || y < 1 || y > 100)
+                    throw new Exception();
+
+                grid.Resize(x, y);
+            }
+            catch
+            {
+                MessageBox.Show("Error", "Values must be in [1, 100] range", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

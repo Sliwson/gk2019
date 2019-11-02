@@ -30,6 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gridGroupBox = new System.Windows.Forms.GroupBox();
+            this.saveSizeButton = new System.Windows.Forms.Button();
+            this.yTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.xTextBox = new System.Windows.Forms.TextBox();
+            this.gridSizeLabel = new System.Windows.Forms.Label();
             this.lightGroupbox = new System.Windows.Forms.GroupBox();
             this.circulatingLightRadio = new System.Windows.Forms.RadioButton();
             this.lightColorLabel = new System.Windows.Forms.Label();
@@ -62,6 +68,7 @@
             this.objectColorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
+            this.gridGroupBox.SuspendLayout();
             this.lightGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lightColorPictureBox)).BeginInit();
             this.objectColorGroupbox.SuspendLayout();
@@ -80,6 +87,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260F));
+            this.tableLayoutPanel1.Controls.Add(this.gridGroupBox, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lightGroupbox, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.objectColorGroupbox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.normalVectorGroupbox, 1, 1);
@@ -89,14 +97,77 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 761);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 801);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // gridGroupBox
+            // 
+            this.gridGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridGroupBox.Controls.Add(this.saveSizeButton);
+            this.gridGroupBox.Controls.Add(this.yTextBox);
+            this.gridGroupBox.Controls.Add(this.label1);
+            this.gridGroupBox.Controls.Add(this.xTextBox);
+            this.gridGroupBox.Controls.Add(this.gridSizeLabel);
+            this.gridGroupBox.Location = new System.Drawing.Point(929, 553);
+            this.gridGroupBox.Margin = new System.Windows.Forms.Padding(5);
+            this.gridGroupBox.Name = "gridGroupBox";
+            this.gridGroupBox.Size = new System.Drawing.Size(250, 49);
+            this.gridGroupBox.TabIndex = 6;
+            this.gridGroupBox.TabStop = false;
+            this.gridGroupBox.Text = "Grid";
+            // 
+            // saveSizeButton
+            // 
+            this.saveSizeButton.Location = new System.Drawing.Point(191, 16);
+            this.saveSizeButton.Name = "saveSizeButton";
+            this.saveSizeButton.Size = new System.Drawing.Size(49, 20);
+            this.saveSizeButton.TabIndex = 7;
+            this.saveSizeButton.Text = "Save";
+            this.saveSizeButton.UseVisualStyleBackColor = true;
+            this.saveSizeButton.Click += new System.EventHandler(this.saveSizeButton_Click);
+            // 
+            // yTextBox
+            // 
+            this.yTextBox.Location = new System.Drawing.Point(126, 16);
+            this.yTextBox.Name = "yTextBox";
+            this.yTextBox.Size = new System.Drawing.Size(58, 20);
+            this.yTextBox.TabIndex = 6;
+            this.yTextBox.Text = "5";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(104, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(16, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "x";
+            // 
+            // xTextBox
+            // 
+            this.xTextBox.Location = new System.Drawing.Point(40, 17);
+            this.xTextBox.Name = "xTextBox";
+            this.xTextBox.Size = new System.Drawing.Size(58, 20);
+            this.xTextBox.TabIndex = 4;
+            this.xTextBox.Text = "5";
+            // 
+            // gridSizeLabel
+            // 
+            this.gridSizeLabel.AutoSize = true;
+            this.gridSizeLabel.Location = new System.Drawing.Point(6, 20);
+            this.gridSizeLabel.Name = "gridSizeLabel";
+            this.gridSizeLabel.Size = new System.Drawing.Size(27, 13);
+            this.gridSizeLabel.TabIndex = 3;
+            this.gridSizeLabel.Text = "Size";
             // 
             // lightGroupbox
             // 
@@ -435,8 +506,8 @@
             this.canvas.Location = new System.Drawing.Point(10, 10);
             this.canvas.Margin = new System.Windows.Forms.Padding(10);
             this.canvas.Name = "canvas";
-            this.tableLayoutPanel1.SetRowSpan(this.canvas, 5);
-            this.canvas.Size = new System.Drawing.Size(904, 741);
+            this.tableLayoutPanel1.SetRowSpan(this.canvas, 6);
+            this.canvas.Size = new System.Drawing.Size(904, 781);
             this.canvas.TabIndex = 4;
             this.canvas.TabStop = false;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
@@ -453,13 +524,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.ClientSize = new System.Drawing.Size(1184, 801);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(820, 490);
+            this.MinimumSize = new System.Drawing.Size(840, 840);
             this.Name = "Form1";
             this.Text = "Lightning";
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.gridGroupBox.ResumeLayout(false);
+            this.gridGroupBox.PerformLayout();
             this.lightGroupbox.ResumeLayout(false);
             this.lightGroupbox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lightColorPictureBox)).EndInit();
@@ -514,6 +587,12 @@
         private System.Windows.Forms.PictureBox lightColorPictureBox;
         private System.Windows.Forms.RadioButton constLightRadio;
         private System.Windows.Forms.ColorDialog lightColorDialog;
+        private System.Windows.Forms.GroupBox gridGroupBox;
+        private System.Windows.Forms.Button saveSizeButton;
+        private System.Windows.Forms.TextBox yTextBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox xTextBox;
+        private System.Windows.Forms.Label gridSizeLabel;
     }
 }
 
