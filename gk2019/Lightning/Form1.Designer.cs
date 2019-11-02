@@ -254,27 +254,27 @@
             // 
             // mTextbox
             // 
-            this.mTextbox.Enabled = false;
             this.mTextbox.Location = new System.Drawing.Point(177, 132);
             this.mTextbox.Name = "mTextbox";
+            this.mTextbox.ReadOnly = true;
             this.mTextbox.Size = new System.Drawing.Size(63, 20);
             this.mTextbox.TabIndex = 9;
             this.mTextbox.Text = "1";
             // 
             // ksTextbox
             // 
-            this.ksTextbox.Enabled = false;
             this.ksTextbox.Location = new System.Drawing.Point(177, 100);
             this.ksTextbox.Name = "ksTextbox";
+            this.ksTextbox.ReadOnly = true;
             this.ksTextbox.Size = new System.Drawing.Size(63, 20);
             this.ksTextbox.TabIndex = 8;
             this.ksTextbox.Text = "0";
             // 
             // kdTextbox
             // 
-            this.kdTextbox.Enabled = false;
             this.kdTextbox.Location = new System.Drawing.Point(177, 67);
             this.kdTextbox.Name = "kdTextbox";
+            this.kdTextbox.ReadOnly = true;
             this.kdTextbox.Size = new System.Drawing.Size(63, 20);
             this.kdTextbox.TabIndex = 7;
             this.kdTextbox.Text = "0";
@@ -298,6 +298,7 @@
             this.mSlider.TabIndex = 5;
             this.mSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             this.mSlider.Value = 1;
+            this.mSlider.ValueChanged += new System.EventHandler(this.mSlider_ValueChanged);
             // 
             // ksSlider
             // 
@@ -308,6 +309,7 @@
             this.ksSlider.Size = new System.Drawing.Size(138, 45);
             this.ksSlider.TabIndex = 4;
             this.ksSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.ksSlider.ValueChanged += new System.EventHandler(this.ksSlider_ValueChanged);
             // 
             // ksLabel
             // 
@@ -336,6 +338,7 @@
             this.kdSlider.Size = new System.Drawing.Size(138, 45);
             this.kdSlider.TabIndex = 1;
             this.kdSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.kdSlider.ValueChanged += new System.EventHandler(this.kdSlider_ValueChanged);
             // 
             // radioButton2
             // 
