@@ -46,25 +46,39 @@ namespace Lightning
 
         private void InitGrid()
         {
-            vertices = new List<List<Vertex>>();
-            float xStep = (float)pictureBox.Width / width;
-            float yStep = (float)pictureBox.Height / height;
+            InitVerticesArray();
+            RecalculateVertices();
+            InitEdgesArray();
+        }
 
-            int y = 0;
-            for (; y <= height; y++)
+        private void InitVerticesArray()
+        {
+            vertices = new List<List<Vertex>>();
+            
+            for (int y = 0; y <= height; y++)
             {
                 var row = new List<Vertex>();
                 for (int x = 0; x <= width; x++)
-                {
-                    row.Add(new Vertex(new Point((int)Math.Round(x * xStep), (int)Math.Round(y * yStep)), 3));
-                }
+                    row.Add(new Vertex(new Point(-1, -1), 3));
                 vertices.Add(row);
             }
+        }
 
+        private void RecalculateVertices()
+        {
+            float xStep = (float)pictureBox.Width / width;
+            float yStep = (float)pictureBox.Height / height;
+
+            for (int y = 0; y <= height; y++)
+                for (int x = 0; x <= width; x++)
+                    vertices[y][x].Position = new Point((int)Math.Round(x * xStep), (int)Math.Round(y * yStep));
+        }
+
+        private void InitEdgesArray()
+        {
             edges = new List<Edge>();
 
-            y = 0;
-            for (; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
                 int x = 0;
                 for (; x < width; x++)
@@ -76,19 +90,9 @@ namespace Lightning
                     if (y > 0)
                         edges.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
                     //diagonal
-                    edges.Add(new Edge(vertices[y][x], vertices[y + 1][x + 1]));
+                    edges.Add(new Edge(vertices[y][x + 1], vertices[y + 1][x]));
                 }
             }
-        }
-
-        private void RecalculateVertices()
-        {
-            int xStep = pictureBox.Width / width;
-            int yStep = pictureBox.Height / height;
-
-            for (int y = 0; y <= height; y++)
-                for (int x = 0; x <= width; x++)
-                    vertices[y][x].Position = new Point(x * xStep, y * yStep); 
         }
     }
 }
