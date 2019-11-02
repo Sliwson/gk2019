@@ -80,12 +80,13 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 661);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+	    this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 661);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // objectColorGroupbox
@@ -110,13 +111,20 @@
             this.textureColorRadio.Name = "textureColorRadio";
             this.textureColorRadio.Size = new System.Drawing.Size(61, 17);
             this.textureColorRadio.TabIndex = 1;
+<<<<<<< HEAD
+=======
+            this.textureColorRadio.TabStop = true;
+>>>>>>> row-add
             this.textureColorRadio.Text = "Texture";
             this.textureColorRadio.UseVisualStyleBackColor = true;
             // 
             // contColorRadio
             // 
             this.contColorRadio.AutoSize = true;
+<<<<<<< HEAD
             this.contColorRadio.Checked = true;
+=======
+>>>>>>> row-add
             this.contColorRadio.Location = new System.Drawing.Point(7, 20);
             this.contColorRadio.Name = "contColorRadio";
             this.contColorRadio.Size = new System.Drawing.Size(52, 17);
@@ -183,6 +191,10 @@
             this.hybridFillColorRadio.Name = "hybridFillColorRadio";
             this.hybridFillColorRadio.Size = new System.Drawing.Size(55, 17);
             this.hybridFillColorRadio.TabIndex = 2;
+<<<<<<< HEAD
+=======
+            this.hybridFillColorRadio.TabStop = true;
+>>>>>>> row-add
             this.hybridFillColorRadio.Text = "Hybrid";
             this.hybridFillColorRadio.UseVisualStyleBackColor = true;
             // 
@@ -323,13 +335,20 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(65, 17);
             this.radioButton2.TabIndex = 1;
+<<<<<<< HEAD
+=======
+            this.radioButton2.TabStop = true;
+>>>>>>> row-add
             this.radioButton2.Text = "Random";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // userDefinedCoefficientsRadio
             // 
             this.userDefinedCoefficientsRadio.AutoSize = true;
+<<<<<<< HEAD
             this.userDefinedCoefficientsRadio.Checked = true;
+=======
+>>>>>>> row-add
             this.userDefinedCoefficientsRadio.Location = new System.Drawing.Point(7, 44);
             this.userDefinedCoefficientsRadio.Name = "userDefinedCoefficientsRadio";
             this.userDefinedCoefficientsRadio.Size = new System.Drawing.Size(85, 17);
@@ -337,6 +356,7 @@
             this.userDefinedCoefficientsRadio.TabStop = true;
             this.userDefinedCoefficientsRadio.Text = "User defined";
             this.userDefinedCoefficientsRadio.UseVisualStyleBackColor = true;
+<<<<<<< HEAD
             // 
             // pictureBox1
             // 
@@ -359,12 +379,18 @@
             this.objectColorPictureBox.Size = new System.Drawing.Size(52, 17);
             this.objectColorPictureBox.TabIndex = 2;
             this.objectColorPictureBox.TabStop = false;
+=======
+>>>>>>> row-add
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(1184, 661);
+=======
+            this.ClientSize = new System.Drawing.Size(800, 698);
+>>>>>>> row-add
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(820, 490);
@@ -382,8 +408,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.mSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kdSlider)).EndInit();
+<<<<<<< HEAD
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectColorPictureBox)).EndInit();
+=======
+>>>>>>> row-add
             this.ResumeLayout(false);
 
         }
