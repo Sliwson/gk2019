@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Lightning
 {
-    struct ObjectColorStruct
+    class ObjectColorClass
     {
-        public ObjectColorStruct(bool isConst, Color objectColor)
+        public ObjectColorClass(bool isConst, Color objectColor)
         {
             IsConst = isConst;
             ObjectColor = objectColor;
@@ -20,9 +20,9 @@ namespace Lightning
         public Color ObjectColor { get; set; }
     }
 
-    struct NormalVectorsStruct
+    class NormalVectorsClass
     {
-        public NormalVectorsStruct(bool isConst)
+        public NormalVectorsClass(bool isConst)
         {
             IsConst = isConst;
         }
@@ -49,15 +49,14 @@ namespace Lightning
         Hybrid
     }
 
-    struct CoefficientsStruct
+    class CoefficientsClass
     {
-        public CoefficientsStruct(bool isRandom, float kd, float ks, int m)
+        public CoefficientsClass(bool isRandom, float kd, float ks, int m)
         {
             IsRandom = isRandom;
             this.kd = kd;
             this.ks = ks;
             this.m = m;
-            random = new Random();
         }
         public bool IsRandom { get; set; }
 
@@ -78,7 +77,7 @@ namespace Lightning
         }
 
         private float ks;
-        float Ks
+        public float Ks
         {
             get
             {
@@ -94,7 +93,7 @@ namespace Lightning
         }
 
         private int m;
-        int M
+        public int M
         {
             get
             {
@@ -109,12 +108,12 @@ namespace Lightning
             }
         }
 
-        private Random random;
+        private Random random = new Random();
     }
 
-    struct LightStruct
+    class LightClass
     {
-        public LightStruct(Color lightColor, bool isConst)
+        public LightClass(Color lightColor, bool isConst)
         {
             LightColor = lightColor;
             IsConst = isConst;
@@ -128,17 +127,17 @@ namespace Lightning
     {
         static Variables()
         {
-            ObjectColor = new ObjectColorStruct(true, Color.White);
-            NormalVectors = new NormalVectorsStruct(true);
+            ObjectColor = new ObjectColorClass(true, Color.White);
+            NormalVectors = new NormalVectorsClass(true);
             ColorMode = FillColorMode.Precise;
-            Coefficients = new CoefficientsStruct(false, 0, 0, 1);
-            Light = new LightStruct(Color.White, true);
+            Coefficients = new CoefficientsClass(false, 0, 0, 1);
+            Light = new LightClass(Color.White, true);
         }
 
-        public static ObjectColorStruct ObjectColor { get; set; }
-        public static NormalVectorsStruct NormalVectors { get; set; }
+        public static ObjectColorClass ObjectColor { get; set; }
+        public static NormalVectorsClass NormalVectors { get; set; }
         public static FillColorMode ColorMode { get; set; }
-        public static CoefficientsStruct Coefficients { get; set; }
-        public static LightStruct Light { get; set; }
+        public static CoefficientsClass Coefficients { get; set; }
+        public static LightClass Light { get; set; }
     }
 }
