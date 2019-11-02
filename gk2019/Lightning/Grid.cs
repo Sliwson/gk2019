@@ -18,6 +18,8 @@ namespace Lightning
         private List<List<Vertex>> vertices;
         private List<Edge> edges;
 
+        private Vertex draggedVertex = null;
+
         public Grid(int width, int height, PictureBox pictureBox)
         {
             this.width = width;
@@ -26,6 +28,43 @@ namespace Lightning
 
             InitGrid();
             pictureBox.Resize += PictureBox_Resize;
+            pictureBox.MouseDown += PictureBox_MouseDown;
+            pictureBox.MouseMove += PictureBox_MouseMove;
+            pictureBox.MouseUp += PictureBox_MouseUp;
+        }
+
+        public void Resize(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+            InitGrid();
+            pictureBox.Invalidate();
+        }
+
+        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            draggedVertex = null;
+        }
+
+        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (draggedVertex != null)
+            {
+                draggedVertex.Position = e.Location;
+                pictureBox.Invalidate();
+
+            }
+        }
+
+        private void PictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int y = 1; y < height; y++)
+                for (int x = 1; x < width; x++)
+                    if (vertices[y][x].HitTest(e.Location))
+                    {
+                        draggedVertex = vertices[y][x];
+                        return;
+                    }
         }
 
         public void Paint(Graphics g)
@@ -59,7 +98,7 @@ namespace Lightning
             {
                 var row = new List<Vertex>();
                 for (int x = 0; x <= width; x++)
-                    row.Add(new Vertex(new Point(-1, -1), 3));
+                    row.Add(new Vertex(new Point(-1, -1), 1));
                 vertices.Add(row);
             }
         }
