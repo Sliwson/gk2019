@@ -65,6 +65,35 @@ namespace Lightning
                     vertex.Draw(g);
         }
 
+        public List<Edge> GetTriangleEdges(int x, int y)
+        {
+            if (y < 0 || y >= height || x < 0 || x >= width * 2)
+                return null;
+
+            var triangle = new List<Edge>();
+
+            if (x % 2 == 0)
+            {
+                //upper triangle
+                triangle.Add(edges[y][x / 2 * 3]);
+                triangle.Add(edges[y][x / 2 * 3 + 1]);
+                triangle.Add(edges[y][x / 2 * 3 + 2]);
+            }
+            else
+            {
+                //lower triangle
+                triangle.Add(edges[y][x / 2 * 3 + 2]);
+                triangle.Add(edges[y][x / 2 * 3 + 3]);
+
+                if (x == width * 2 - 1)
+                    triangle.Add(edges[y + 1][x / 2]);
+                else
+                    triangle.Add(edges[y + 1][x / 2 * 3 + 1]);
+            }
+
+            return triangle;
+        }
+
         private void PictureBox_Resize(object sender, EventArgs e)
         {
             RecalculateVertices();
