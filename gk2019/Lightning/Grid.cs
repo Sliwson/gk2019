@@ -13,7 +13,7 @@ namespace Lightning
     {
         private int width = 5;
         private int height = 5;
-        
+
         private PictureBox pictureBox;
         private List<List<Vertex>> vertices;
         private List<List<Edge>> edges;
@@ -39,32 +39,6 @@ namespace Lightning
             this.height = height;
             InitGrid();
             pictureBox.Invalidate();
-        }
-
-        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
-        {
-            draggedVertex = null;
-        }
-
-        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (draggedVertex != null)
-            {
-                draggedVertex.Position = e.Location;
-                pictureBox.Invalidate();
-
-            }
-        }
-
-        private void PictureBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            for (int y = 1; y < height; y++)
-                for (int x = 1; x < width; x++)
-                    if (vertices[y][x].HitTest(e.Location))
-                    {
-                        draggedVertex = vertices[y][x];
-                        return;
-                    }
         }
 
         public void Paint(Graphics g)
@@ -107,7 +81,7 @@ namespace Lightning
         private void InitVerticesArray()
         {
             vertices = new List<List<Vertex>>();
-            
+
             for (int y = 0; y <= height; y++)
             {
                 var row = new List<Vertex>();
@@ -157,6 +131,32 @@ namespace Lightning
             for (int x = 0; x < width; x++)
                 lastRow.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
             edges.Add(lastRow);
+        }
+
+        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            draggedVertex = null;
+        }
+
+        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (draggedVertex != null)
+            {
+                draggedVertex.Position = e.Location;
+                pictureBox.Invalidate();
+
+            }
+        }
+
+        private void PictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int y = 1; y < height; y++)
+                for (int x = 1; x < width; x++)
+                    if (vertices[y][x].HitTest(e.Location))
+                    {
+                        draggedVertex = vertices[y][x];
+                        return;
+                    }
         }
     }
 }
