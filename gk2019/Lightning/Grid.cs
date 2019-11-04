@@ -16,7 +16,7 @@ namespace Lightning
         
         private PictureBox pictureBox;
         private List<List<Vertex>> vertices;
-        private List<Edge> edges;
+        private List<List<Edge>> edges;
 
         private Vertex draggedVertex = null;
 
@@ -69,8 +69,22 @@ namespace Lightning
 
         public void Paint(Graphics g)
         {
-            foreach (var edge in edges)
-                edge.Draw(g);
+            int row = 0;
+            foreach (var edgesList in edges)
+            {
+                int x = -1;
+                foreach (var edge in edgesList)
+                {
+                    x++;
+                    if (row == height || (row == 0 && x % 3 == 1))
+                        continue;
+                    else if (x == 0 || x == edgesList.Count - 1)
+                        continue;
+
+                    edge.Draw(g);
+                }
+                row++;
+            }
 
             foreach (var vertexList in vertices)
                 foreach (var vertex in vertexList)
@@ -115,23 +129,34 @@ namespace Lightning
 
         private void InitEdgesArray()
         {
-            edges = new List<Edge>();
+            edges = new List<List<Edge>>();
 
-            for (int y = 0; y < height; y++)
+            int y = 0;
+            for (; y < height; y++)
             {
+                var row = new List<Edge>();
                 int x = 0;
                 for (; x < width; x++)
                 {
                     //vertical
-                    if (x > 0)
-                        edges.Add(new Edge(vertices[y][x], vertices[y + 1][x]));
+                    row.Add(new Edge(vertices[y][x], vertices[y + 1][x]));
                     //horizontal
-                    if (y > 0)
-                        edges.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
+                    row.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
                     //diagonal
-                    edges.Add(new Edge(vertices[y][x + 1], vertices[y + 1][x]));
+                    row.Add(new Edge(vertices[y][x + 1], vertices[y + 1][x]));
                 }
+
+                //last vertical
+                row.Add(new Edge(vertices[y][x], vertices[y + 1][x]));
+
+                edges.Add(row);
             }
+
+            //last row horizontal
+            var lastRow = new List<Edge>();
+            for (int x = 0; x < width; x++)
+                lastRow.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
+            edges.Add(lastRow);
         }
     }
 }
