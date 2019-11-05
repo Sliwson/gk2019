@@ -439,7 +439,6 @@
             // 
             this.ksSlider.Location = new System.Drawing.Point(31, 100);
             this.ksSlider.Maximum = 100;
-            this.ksSlider.Minimum = -100;
             this.ksSlider.Name = "ksSlider";
             this.ksSlider.Size = new System.Drawing.Size(138, 45);
             this.ksSlider.TabIndex = 4;
@@ -468,7 +467,6 @@
             // 
             this.kdSlider.Location = new System.Drawing.Point(32, 67);
             this.kdSlider.Maximum = 100;
-            this.kdSlider.Minimum = -100;
             this.kdSlider.Name = "kdSlider";
             this.kdSlider.Size = new System.Drawing.Size(138, 45);
             this.kdSlider.TabIndex = 1;

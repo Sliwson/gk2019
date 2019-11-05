@@ -23,6 +23,6 @@ namespace Lightning
         {
             grid.Paint(e.Graphics);
         }
-   }
+    }
 }
 
