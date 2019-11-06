@@ -9,24 +9,25 @@ using Common;
 
 namespace Lightning
 {
+    class ActiveEdge
+    {
+        public ActiveEdge(Edge edge)
+        {
+            YMax = edge.End.Position.Y;
+            X = edge.Begin.Position.X;
+
+            if (edge.Begin.Position.Y == edge.End.Position.Y)
+                MInverted = float.MaxValue;
+            else
+                MInverted = (edge.End.Position.X - edge.Begin.Position.X) / (float)(edge.End.Position.Y - edge.Begin.Position.Y);
+        }
+        public int YMax { get; set; }
+        public float X { get; set; }
+        public float MInverted { get; set; }
+    }
+
     class Drawer
     {
-        private class ActiveEdge
-        {
-            public ActiveEdge(Edge edge)
-            {
-                YMax = edge.End.Position.Y;
-                X = edge.Begin.Position.X;
-
-                if (edge.Begin.Position.Y == edge.End.Position.Y)
-                    MInverted = float.MaxValue;
-                else
-                    MInverted = (edge.End.Position.X - edge.Begin.Position.X) / (float)(edge.End.Position.Y - edge.Begin.Position.Y);
-            }
-            public int YMax { get; set; }
-            public float X { get; set; }
-            public float MInverted { get; set; }
-        }
         public void FillPolygon(List<Vertex> vertices, Color[,] colorsArray)
         {
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
