@@ -44,6 +44,11 @@ namespace Common
             if (RelationType != EdgeRelation.None)
                 DrawRelationInfo(graphics);
         }
+
+        public void DrawFast(Graphics graphics)
+        {
+            graphics.DrawLine(new Pen(DrawingColor), Begin.Position, End.Position);
+        }
         
         private void DrawRelationInfo(Graphics graphics)
         {

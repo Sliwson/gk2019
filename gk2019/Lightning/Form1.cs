@@ -32,12 +32,15 @@ namespace Lightning
             Parallel.ForEach(triangles, triangle => {
                 drawer.FillPolygon(triangle, colorArray);
             });
-            
-            var bitmap = new Bitmap(canvas.Width, canvas.Height, PixelFormat.Format24bppRgb);
-            ProcessUsingLockbitsAndUnsafeAndParallel(bitmap, colorArray);
-            var pixel = bitmap.GetPixel(10, 10);
 
-            e.Graphics.DrawImage(bitmap, 0, 0);
+            using (var bitmap = new Bitmap(canvas.Width, canvas.Height, PixelFormat.Format24bppRgb))
+            {
+                ProcessUsingLockbitsAndUnsafeAndParallel(bitmap, colorArray);
+                var pixel = bitmap.GetPixel(10, 10);
+
+                e.Graphics.DrawImage(bitmap, 0, 0);
+            }
+
             grid.Paint(e.Graphics);
 
             timer.Stop();

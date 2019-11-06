@@ -50,11 +50,7 @@ namespace Lightning
         {
             foreach (var edgesList in edges)
                 foreach (var edge in edgesList)
-                    edge.Draw(g);
-
-            foreach (var vertexList in vertices)
-                foreach (var vertex in vertexList)
-                    vertex.Draw(g);
+                    edge.DrawFast(g);
         }
 
         public List<Edge> GetTriangleEdges(int x, int y)
