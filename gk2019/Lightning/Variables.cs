@@ -28,17 +28,9 @@ namespace Lightning
         }
 
         public bool IsConst { get; set; }
-        public Vector3 GetNormalVector(int x, int y)
+        public Vector3 GetConstNormalVector(int x, int y)
         {
-            if (IsConst)
-            {
-                return Vector3.UnitZ;
-            }
-            else
-            {
-                //TODO: read from normalmap
-                return Vector3.UnitZ;
-            }
+            return Vector3.UnitZ;
         }
     }
 
