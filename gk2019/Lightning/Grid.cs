@@ -80,7 +80,29 @@ namespace Lightning
 
             return triangle;
         }
+        
+        public List<Vertex> GetTriangleVertices(int x, int y)
+        {
+            if (y < 0 || y >= height || x < 0 || x >= width * 2)
+                return null;
 
+            var triangle = new List<Vertex>();
+
+            if (x % 2 == 0)
+            {
+                triangle.Add(vertices[y][x / 2]);
+                triangle.Add(vertices[y][x / 2 + 1]);
+                triangle.Add(vertices[y + 1][x / 2]);
+            }
+            else
+            {
+                triangle.Add(vertices[y][x / 2 + 1]);
+                triangle.Add(vertices[y + 1][x / 2 + 1]);
+                triangle.Add(vertices[y + 1][x / 2]);
+            }
+
+            return triangle;
+        }
         private void PictureBox_Resize(object sender, EventArgs e)
         {
             RecalculateVertices();
