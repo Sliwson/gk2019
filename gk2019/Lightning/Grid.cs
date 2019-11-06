@@ -43,22 +43,9 @@ namespace Lightning
 
         public void Paint(Graphics g)
         {
-            int row = 0;
             foreach (var edgesList in edges)
-            {
-                int x = -1;
                 foreach (var edge in edgesList)
-                {
-                    x++;
-                    if (row == height || (row == 0 && x % 3 == 1))
-                        continue;
-                    else if (x == 0 || x == edgesList.Count - 1)
-                        continue;
-
                     edge.Draw(g);
-                }
-                row++;
-            }
 
             foreach (var vertexList in vertices)
                 foreach (var vertex in vertexList)
@@ -127,7 +114,7 @@ namespace Lightning
 
             for (int y = 0; y <= height; y++)
                 for (int x = 0; x <= width; x++)
-                    vertices[y][x].Position = new Point((int)Math.Round(x * xStep), (int)Math.Round(y * yStep));
+                    vertices[y][x].Position = new Point((int)Math.Round(x * xStep), (int)Math.Floor(y * yStep));
         }
 
         private void InitEdgesArray()
