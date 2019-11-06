@@ -38,25 +38,50 @@ namespace Lightning
                 }
             }
 
-            edges.Sort((e1, e2) =>
-            {
-                return e1.Begin.Position.Y.CompareTo(e2.Begin.Position.Y);
-            });
-            
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
-
             var min = vertices[sorted.First().Value].Position.Y;
             var max = vertices[sorted.Last().Value].Position.Y;
 
             var activeList = new List<ActiveEdge>();
+            var activeVertices = new List<int>();
             var pen = new Pen(Color.Black);
+
+            int activeIndex = 0;
 
             for (int y = min; y <= max; y++)
             {
-                activeList.RemoveAll(e => e.YMax == y);
+                while (activeIndex < sorted.Count && sorted[activeIndex].Key.Position.Y == y)
+                {
+                    var currentVertex = sorted[activeIndex].Key;
 
-                foreach (var edge in activeList)
-                    edge.X += edge.MInverted;
+                    int previousIndex = activeIndex > 0 ? activeIndex - 1 : vertices.Count - 1;
+                    int nextIndex = (activeIndex + 1) % vertices.Count;
+
+                    var previousVertex = vertices[previousIndex];
+                    var nextVertex = vertices[nextIndex];
+
+                    if (currentVertex.Position.Y < nextVertex.Position.Y)
+                    {
+                        var newEdge = new Edge(currentVertex, nextVertex);
+                        activeList.Add(new ActiveEdge(newEdge));
+                    }
+                    else
+                    {
+                        activeList.RemoveAll(x => x.YMax == currentVertex.Position.Y);
+                    }
+
+                    if (currentVertex.Position.Y < previousVertex.Position.Y)
+                    {
+                        var newEdge = new Edge(currentVertex, previousVertex);
+                        activeList.Add(new ActiveEdge(newEdge));
+                    }
+                    else
+                    {
+                        activeList.RemoveAll(x => x.YMax == currentVertex.Position.Y);
+                    }
+
+                    activeIndex++;
+                }
 
                 activeList.Sort((e1, e2) => e1.X.CompareTo(e2.X));
 
@@ -65,15 +90,8 @@ namespace Lightning
                     g.DrawLine(pen, activeList[i].X, y, activeList[i + 1].X, y);
                 }
 
-                foreach (var edge in edges)
-                {
-                    if (edge.Begin.Position.Y == y)
-                    {
-                        var activeEdge = new ActiveEdge(edge);
-                        if (activeEdge.MInverted != float.MaxValue)
-                            activeList.Add(activeEdge);
-                    }
-                }
+                foreach (var edge in activeList)
+                    edge.X += edge.MInverted;
             }
         }
     }
