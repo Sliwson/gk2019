@@ -32,6 +32,11 @@ namespace Lightning
             pictureBox.MouseMove += PictureBox_MouseMove;
             pictureBox.MouseUp += PictureBox_MouseUp;
         }
+        
+        public Size GetSize()
+        {
+            return new Size(width, height);
+        }
 
         public void Resize(int width, int height)
         {
