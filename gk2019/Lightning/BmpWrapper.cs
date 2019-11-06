@@ -11,8 +11,10 @@ namespace Lightning
     class BmpWrapper
     {
         private Color[,] colors;
+        private Size size;
         public BmpWrapper(Bitmap bmp)
         {
+            size = bmp.Size;
             colors = new Color[bmp.Height, bmp.Width];
 
             for (int y = 0; y < bmp.Height; y++)
@@ -22,12 +24,12 @@ namespace Lightning
 
         public Color GetPixel(int x, int y)
         {
-            return colors[y, x];
+            return colors[y % size.Height, x % size.Width];
         }
 
         public Vector3 GetPixelAsNormalVector(int x, int y)
         {
-            var color = colors[y, x];
+            var color = GetPixel(x, y);
             float r = ((float)color.R - 127) / 128;
             float g = ((float)color.G - 127) / 128;
             float b = ((float)color.B) / 255;
