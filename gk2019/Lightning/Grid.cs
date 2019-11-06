@@ -108,6 +108,17 @@ namespace Lightning
 
             return triangle;
         }
+
+        public List<List<Vertex>> GetAllTriangles()
+        {
+            var list = new List<List<Vertex>>();
+            for (int y = 0; y < height; y++)
+                for (int x = 0; x < width * 2; x++)
+                    list.Add(GetTriangleVertices(x, y));
+
+            return list;
+        }
+
         private void PictureBox_Resize(object sender, EventArgs e)
         {
             RecalculateVertices();
