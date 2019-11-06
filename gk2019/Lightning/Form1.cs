@@ -23,6 +23,8 @@ namespace Lightning
         
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
+            var colorArray = new Color[canvas.Height, canvas.Width];
+
             for (int y = 0; y < grid.GetSize().Height; y++)
             {
                 for (int x = 0; x < 2 * grid.GetSize().Width; x++)
@@ -30,6 +32,7 @@ namespace Lightning
                     drawer.FillPolygon(grid.GetTriangleVertices(x, y), e.Graphics);
                 }
             }
+
             grid.Paint(e.Graphics);
         }
     }

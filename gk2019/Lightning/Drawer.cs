@@ -34,7 +34,8 @@ namespace Lightning
 
             var activeList = new List<ActiveEdge>();
             var activeVertices = new List<int>();
-            var pen = new Pen(Color.Black);
+            
+            var brush = new SolidBrush(Color.Black);
 
             int activeIndex = 0;
 
@@ -60,7 +61,8 @@ namespace Lightning
 
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
-                    g.DrawLine(pen, activeList[i].X, y, activeList[i + 1].X, y);
+                    for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
+                        g.FillRectangle(brush, x, y, 1, 1);
                 }
 
                 foreach (var edge in activeList)
