@@ -28,6 +28,22 @@ namespace Lightning
 
     class Drawer
     {
+        private BmpWrapper image;
+        private BmpWrapper normalMap;
+        public Drawer(Bitmap imageBitmap, Bitmap normalMap)
+        {
+            this.image = new BmpWrapper(imageBitmap);
+            this.normalMap = new BmpWrapper(normalMap);
+        }
+
+        private Color GetPixelColor(int x, int y)
+        {
+            if (Variables.ObjectColor.IsConst)
+                return Variables.ObjectColor.ObjectColor;
+            else
+                return image.GetPixel(x, y);
+        }
+
         public void FillPolygon(List<Vertex> vertices, Color[,] colorsArray)
         {
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
@@ -62,8 +78,7 @@ namespace Lightning
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
                     for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
-                        colorsArray[y, x] = Color.FromArgb(100,100,100);
-                }
+                        colorsArray[y, x] = GetPixelColor(x, y);                }
 
                 foreach (var edge in activeList)
                     edge.X += edge.MInverted;
@@ -99,14 +114,10 @@ namespace Lightning
                     byte* currentLine = PtrFirstPixel + (y * bitmapData.Stride);
                     for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
                     {
-                        int oldBlue = currentLine[x];
-                        int oldGreen = currentLine[x + 1];
-                        int oldRed = currentLine[x + 2];
-
                         int colorX = x / bytesPerPixel;
-                        currentLine[x] = colorArray[y, colorX].R;
+                        currentLine[x] = colorArray[y, colorX].B;
                         currentLine[x + 1] = colorArray[y, colorX].G;
-                        currentLine[x + 2] = colorArray[y, colorX].B;
+                        currentLine[x + 2] = colorArray[y, colorX].R;
                     }
                 });
 

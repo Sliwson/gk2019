@@ -19,7 +19,7 @@ namespace Lightning
         {
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
-            drawer = new Drawer();
+            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_2);
         }
         
         private void canvas_Paint(object sender, PaintEventArgs e)
