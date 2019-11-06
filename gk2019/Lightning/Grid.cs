@@ -32,6 +32,11 @@ namespace Lightning
             pictureBox.MouseMove += PictureBox_MouseMove;
             pictureBox.MouseUp += PictureBox_MouseUp;
         }
+        
+        public Size GetSize()
+        {
+            return new Size(width, height);
+        }
 
         public void Resize(int width, int height)
         {
@@ -43,22 +48,9 @@ namespace Lightning
 
         public void Paint(Graphics g)
         {
-            int row = 0;
             foreach (var edgesList in edges)
-            {
-                int x = -1;
                 foreach (var edge in edgesList)
-                {
-                    x++;
-                    if (row == height || (row == 0 && x % 3 == 1))
-                        continue;
-                    else if (x == 0 || x == edgesList.Count - 1)
-                        continue;
-
                     edge.Draw(g);
-                }
-                row++;
-            }
 
             foreach (var vertexList in vertices)
                 foreach (var vertex in vertexList)
@@ -93,7 +85,29 @@ namespace Lightning
 
             return triangle;
         }
+        
+        public List<Vertex> GetTriangleVertices(int x, int y)
+        {
+            if (y < 0 || y >= height || x < 0 || x >= width * 2)
+                return null;
 
+            var triangle = new List<Vertex>();
+
+            if (x % 2 == 0)
+            {
+                triangle.Add(vertices[y][x / 2]);
+                triangle.Add(vertices[y][x / 2 + 1]);
+                triangle.Add(vertices[y + 1][x / 2]);
+            }
+            else
+            {
+                triangle.Add(vertices[y][x / 2 + 1]);
+                triangle.Add(vertices[y + 1][x / 2 + 1]);
+                triangle.Add(vertices[y + 1][x / 2]);
+            }
+
+            return triangle;
+        }
         private void PictureBox_Resize(object sender, EventArgs e)
         {
             RecalculateVertices();
@@ -127,7 +141,7 @@ namespace Lightning
 
             for (int y = 0; y <= height; y++)
                 for (int x = 0; x <= width; x++)
-                    vertices[y][x].Position = new Point((int)Math.Round(x * xStep), (int)Math.Round(y * yStep));
+                    vertices[y][x].Position = new Point((int)Math.Round(x * xStep), (int)Math.Floor(y * yStep));
         }
 
         private void InitEdgesArray()
