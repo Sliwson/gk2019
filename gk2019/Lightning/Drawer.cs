@@ -26,7 +26,7 @@ namespace Lightning
             public float X { get; set; }
             public float MInverted { get; set; }
         }
-        public void FillPolygon(List<Vertex> vertices, Graphics g)
+        public void FillPolygon(List<Vertex> vertices, Color[,] colorsArray)
         {
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
             var min = vertices[sorted.First().Value].Position.Y;
@@ -35,8 +35,6 @@ namespace Lightning
             var activeList = new List<ActiveEdge>();
             var activeVertices = new List<int>();
             
-            var brush = new SolidBrush(Color.Black);
-
             int activeIndex = 0;
 
             for (int y = min; y <= max; y++)
@@ -62,7 +60,7 @@ namespace Lightning
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
                     for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
-                        g.FillRectangle(brush, x, y, 1, 1);
+                        colorsArray[y, x] = Color.Black;
                 }
 
                 foreach (var edge in activeList)
