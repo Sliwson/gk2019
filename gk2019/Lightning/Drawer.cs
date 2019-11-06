@@ -60,7 +60,7 @@ namespace Lightning
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
                     for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
-                        colorsArray[y, x] = Color.Black;
+                        colorsArray[y, x] = Color.FromArgb(100,100,100);
                 }
 
                 foreach (var edge in activeList)

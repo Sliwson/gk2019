@@ -24,6 +24,8 @@ namespace Lightning
         
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
+            var timer = System.Diagnostics.Stopwatch.StartNew();
+
             Color[,] colorArray = new Color[canvas.Height, canvas.Width];
             var triangles = grid.GetAllTriangles();
 
@@ -37,6 +39,10 @@ namespace Lightning
 
             e.Graphics.DrawImage(bitmap, 0, 0);
             grid.Paint(e.Graphics);
+
+            timer.Stop();
+            var fps = 1000 / timer.ElapsedMilliseconds;
+            this.Text = $"Lightning (Last draw: {fps} fps)";
         }
         private void ProcessUsingLockbitsAndUnsafeAndParallel(Bitmap processedBitmap, Color[,] colorArray)
         {
