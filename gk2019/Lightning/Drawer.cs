@@ -26,18 +26,8 @@ namespace Lightning
             public float X { get; set; }
             public float MInverted { get; set; }
         }
-        public void FillPolygon(List<Vertex> vertices, List<Edge> edges, Graphics g)
+        public void FillPolygon(List<Vertex> vertices, Graphics g)
         {
-            foreach (var edge in edges)
-            {
-                if (edge.Begin.Position.Y > edge.End.Position.Y)
-                {
-                    var tmp = edge.Begin;
-                    edge.Begin = edge.End;
-                    edge.End = tmp;
-                }
-            }
-
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
             var min = vertices[sorted.First().Value].Position.Y;
             var max = vertices[sorted.Last().Value].Position.Y;
@@ -60,26 +50,9 @@ namespace Lightning
                     var previousVertex = vertices[previousIndex];
                     var nextVertex = vertices[nextIndex];
 
-                    if (currentVertex.Position.Y < nextVertex.Position.Y)
-                    {
-                        var newEdge = new Edge(currentVertex, nextVertex);
-                        activeList.Add(new ActiveEdge(newEdge));
-                    }
-                    else
-                    {
-                        activeList.RemoveAll(x => x.YMax == currentVertex.Position.Y);
-                    }
-
-                    if (currentVertex.Position.Y < previousVertex.Position.Y)
-                    {
-                        var newEdge = new Edge(currentVertex, previousVertex);
-                        activeList.Add(new ActiveEdge(newEdge));
-                    }
-                    else
-                    {
-                        activeList.RemoveAll(x => x.YMax == currentVertex.Position.Y);
-                    }
-
+                    UpdateAET(currentVertex, previousVertex, activeList);
+                    UpdateAET(currentVertex, nextVertex, activeList);
+                    
                     activeIndex++;
                 }
 
@@ -92,6 +65,19 @@ namespace Lightning
 
                 foreach (var edge in activeList)
                     edge.X += edge.MInverted;
+            }
+        }
+
+        private void UpdateAET(Vertex current, Vertex next, List<ActiveEdge> activeList)
+        {
+            if (current.Position.Y < next.Position.Y)
+            {
+                var newEdge = new Edge(current, next);
+                activeList.Add(new ActiveEdge(newEdge));
+            }
+            else
+            {
+                activeList.RemoveAll(x => x.YMax == current.Position.Y);
             }
         }
     }

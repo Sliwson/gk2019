@@ -23,7 +23,13 @@ namespace Lightning
         
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
-            drawer.FillPolygon(grid.GetTriangleVertices(0, 0), grid.GetTriangleEdges(0, 0),  e.Graphics);
+            for (int y = 0; y < grid.GetSize().Height; y++)
+            {
+                for (int x = 0; x < 2 * grid.GetSize().Width; x++)
+                {
+                    drawer.FillPolygon(grid.GetTriangleVertices(x, y), e.Graphics);
+                }
+            }
             grid.Paint(e.Graphics);
         }
     }
