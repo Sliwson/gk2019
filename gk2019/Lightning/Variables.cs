@@ -28,7 +28,7 @@ namespace Lightning
         }
 
         public bool IsConst { get; set; }
-        public Vector3 GetConstNormalVector(int x, int y)
+        public Vector3 GetConstNormalVector()
         {
             return Vector3.UnitZ;
         }
@@ -113,6 +113,11 @@ namespace Lightning
 
         public Color LightColor { get; set; }
         public bool IsConst { get; set; }
+
+        public Vector3 GetConstLightVector()
+        {
+            return Vector3.UnitZ;
+        }
     }
 
     class Variables
