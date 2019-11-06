@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
@@ -35,8 +36,42 @@ namespace Lightning
             this.image = new BmpWrapper(imageBitmap);
             this.normalMap = new BmpWrapper(normalMap);
         }
-
+        
         private Color GetPixelColor(int x, int y)
+        {
+            var lambert = GetLambertColor(x, y);
+            var reflection = GetReflectionColor(x, y);
+            return (lambert + reflection).ToColor();
+        }
+
+        private ColorHelper GetLambertColor(int x, int y)
+        {
+            var kd = Variables.Coefficients.Kd;
+            var lightColor = new ColorHelper(Variables.Light.LightColor);
+            var objectColor = new ColorHelper(GetObjectColor(x, y));
+            
+            var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
+            var lightVector = Variables.Light.IsConst ? Variables.Light.GetConstLightVector() : Variables.Light.GetConstLightVector();
+
+            return lightColor * objectColor * kd * Vector3.Dot(normalVector, lightVector);
+        }
+
+        private ColorHelper GetReflectionColor(int x, int y)
+        {
+            var m = Variables.Coefficients.M;
+            var ks = Variables.Coefficients.Ks;
+            var lightColor = new ColorHelper(Variables.Light.LightColor);
+            var objectColor = new ColorHelper(GetObjectColor(x, y));
+
+            var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
+            var lightVector = Variables.Light.IsConst ? Variables.Light.GetConstLightVector() : Variables.Light.GetConstLightVector();
+            var R = 2f * Vector3.Dot(normalVector, lightVector) * normalVector + (lightVector * -1);
+
+            var cosM = (float)Math.Pow(Vector3.Dot(Vector3.UnitZ, R), m);
+            return lightColor * objectColor * cosM * ks;
+        }
+
+        private Color GetObjectColor(int x, int y)
         {
             if (Variables.ObjectColor.IsConst)
                 return Variables.ObjectColor.ObjectColor;
@@ -44,6 +79,7 @@ namespace Lightning
                 return image.GetPixel(x, y);
         }
 
+        #region PolygonFill
         public void FillPolygon(List<Vertex> vertices, Color[,] colorsArray)
         {
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
@@ -78,7 +114,8 @@ namespace Lightning
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
                     for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
-                        colorsArray[y, x] = GetPixelColor(x, y);                }
+                        colorsArray[y, x] = GetPixelColor(x, y);
+                }
 
                 foreach (var edge in activeList)
                     edge.X += edge.MInverted;
@@ -124,5 +161,6 @@ namespace Lightning
                 processedBitmap.UnlockBits(bitmapData);
             }
         }
+        #endregion
     }
 }
