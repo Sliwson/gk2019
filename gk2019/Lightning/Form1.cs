@@ -19,7 +19,7 @@ namespace Lightning
         {
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
-            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_2);
+            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_3);
         }
         
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -28,7 +28,7 @@ namespace Lightning
 
             Color[,] colorArray = new Color[canvas.Height, canvas.Width];
             var triangles = grid.GetAllTriangles();
-
+            
             Parallel.ForEach(triangles, triangle => {
                 drawer.FillPolygon(triangle, colorArray);
             });
