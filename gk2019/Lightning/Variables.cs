@@ -46,61 +46,17 @@ namespace Lightning
         public CoefficientsClass(bool isRandom, float kd, float ks, int m)
         {
             IsRandom = isRandom;
-            this.kd = kd;
-            this.ks = ks;
-            this.m = m;
+            Kd = kd;
+            Ks = ks;
+            M = m;
         }
         public bool IsRandom { get; set; }
 
-        private float kd;
-        public float Kd
-        {
-            get
-            {
-                if (IsRandom)
-                    return (float)random.NextDouble() * 2 - 1;
-                else
-                    return kd;
-            }
-            set
-            {
-                kd = value;
-            }
-        }
+        public float Kd { get; set; }
 
-        private float ks;
-        public float Ks
-        {
-            get
-            {
-                if (IsRandom)
-                    return (float)random.NextDouble() * 2 - 1;
-                else
-                    return ks;
-            }
-            set
-            {
-                ks = value;
-            }
-        }
+        public float Ks { get; set; }
 
-        private int m;
-        public int M
-        {
-            get
-            {
-                if (IsRandom)
-                    return random.Next(1, 100);
-                else
-                    return m;
-            }
-            set
-            {
-                m = value;
-            }
-        }
-
-        private Random random = new Random();
+        public int M { get; set; }
     }
 
     class LightClass
