@@ -31,22 +31,25 @@ namespace Lightning
     {
         private BmpWrapper image;
         private BmpWrapper normalMap;
-        public Drawer(Bitmap imageBitmap, Bitmap normalMap)
+        private Grid grid;
+        public Drawer(Bitmap imageBitmap, Bitmap normalMap, Grid grid)
         {
             this.image = new BmpWrapper(imageBitmap);
             this.normalMap = new BmpWrapper(normalMap);
+            this.grid = grid;
         }
         
-        private Color GetPixelColor(int x, int y)
+        private Color GetPixelColor(int x, int y, Point triangle)
         {
-            var lambert = GetLambertColor(x, y);
-            var reflection = GetReflectionColor(x, y);
+            var coefficients = Variables.Coefficients.IsRandom ? grid.GetRandomCoefficientsForTriangle(triangle.X, triangle.Y) : Variables.Coefficients;
+            var lambert = GetLambertColor(x, y, coefficients);
+            var reflection = GetReflectionColor(x, y, coefficients);
             return (lambert + reflection).ToColor();
         }
 
-        private ColorHelper GetLambertColor(int x, int y)
+        private ColorHelper GetLambertColor(int x, int y, CoefficientsClass coefficients)
         {
-            var kd = Variables.Coefficients.Kd;
+            var kd = coefficients.Kd;
             var lightColor = new ColorHelper(Variables.Light.LightColor);
             var objectColor = new ColorHelper(GetObjectColor(x, y));
             
@@ -56,10 +59,10 @@ namespace Lightning
             return lightColor * objectColor * kd * Vector3.Dot(normalVector, lightVector);
         }
 
-        private ColorHelper GetReflectionColor(int x, int y)
+        private ColorHelper GetReflectionColor(int x, int y, CoefficientsClass coefficients)
         {
-            var m = Variables.Coefficients.M;
-            var ks = Variables.Coefficients.Ks;
+            var m = coefficients.M;
+            var ks = coefficients.Ks;
             var lightColor = new ColorHelper(Variables.Light.LightColor);
             var objectColor = new ColorHelper(GetObjectColor(x, y));
 
@@ -80,7 +83,7 @@ namespace Lightning
         }
 
         #region PolygonFill
-        public void FillPolygon(List<Vertex> vertices, Color[,] colorsArray)
+        public void FillPolygon(List<Vertex> vertices, Color[,] colorsArray, Point triangle)
         {
             var sorted = vertices.Select((x, i) => new KeyValuePair<Vertex, int>(x, i)).OrderBy(x => x.Key.Position.Y).ToList();
             var min = vertices[sorted.First().Value].Position.Y;
@@ -114,7 +117,7 @@ namespace Lightning
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
                     for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
-                        colorsArray[y, x] = GetPixelColor(x, y);
+                        colorsArray[y, x] = GetPixelColor(x, y, triangle);
                 }
 
                 foreach (var edge in activeList)

@@ -19,7 +19,7 @@ namespace Lightning
         {
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
-            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_3);
+            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_1, grid);
         }
         
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -27,10 +27,15 @@ namespace Lightning
             var timer = System.Diagnostics.Stopwatch.StartNew();
 
             Color[,] colorArray = new Color[canvas.Height, canvas.Width];
-            var triangles = grid.GetAllTriangles();
-            
-            Parallel.ForEach(triangles, triangle => {
-                drawer.FillPolygon(triangle, colorArray);
+            var size = grid.GetSize();
+
+            Parallel.For(0, size.Height, y =>
+            {
+                for (int x = 0; x < size.Width * 2; x++)
+                {
+                    var triangle = grid.GetTriangleVertices(x, y);
+                    drawer.FillPolygon(triangle, colorArray, new Point(x, y));
+                }
             });
 
             using (var bitmap = new Bitmap(canvas.Width, canvas.Height, PixelFormat.Format24bppRgb))
