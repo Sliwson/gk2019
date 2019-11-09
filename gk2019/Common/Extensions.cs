@@ -23,4 +23,12 @@ namespace Common
             return new Point(p1.X + p2.X, p1.Y + p2.Y);
         }
     }
+
+    public static class ColorExtensions
+    {
+        public static float[] ToArray(this Color c)
+        {
+            return new float[] { c.R / 255f, c.G / 255f, c.B / 255f };
+        }
+    }
 }

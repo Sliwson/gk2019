@@ -44,42 +44,60 @@ namespace Lightning
             var coefficients = Variables.Coefficients.IsRandom ? grid.GetRandomCoefficientsForTriangle(triangle.X, triangle.Y) : Variables.Coefficients;
             var lambert = GetLambertColor(x, y, coefficients);
             var reflection = GetReflectionColor(x, y, coefficients);
-            return (lambert + reflection).ToColor();
+
+            for (int i = 0; i < 3; i++)
+            {
+                lambert[i] += reflection[i];
+                if (lambert[i] < 0) lambert[i] = 0;
+                if (lambert[i] > 1) lambert[i] = 1;
+            }
+
+            return Color.FromArgb((int)(lambert[0] * 255f), (int)(lambert[1] * 255f), (int)(lambert[2] * 255f));
         }
 
-        private ColorHelper GetLambertColor(int x, int y, CoefficientsClass coefficients)
+        private float[] GetLambertColor(int x, int y, CoefficientsClass coefficients)
         {
             var kd = coefficients.Kd;
-            var lightColor = new ColorHelper(Variables.Light.LightColor);
-            var objectColor = new ColorHelper(GetObjectColor(x, y));
+            var lightColor = Variables.Light.LightColor.ToArray();
+            var objectColor = GetObjectColor(x, y);
             
             var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
             var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector() : Variables.Light.GetLightVector();
+            var multiplier = kd * Vector3.Dot(normalVector, lightVector);
 
-            return lightColor * objectColor * kd * Vector3.Dot(normalVector, lightVector);
+            for (int i = 0; i < 3; i++)
+                objectColor[i] *= lightColor[i] * multiplier;
+
+            return objectColor;
         }
 
-        private ColorHelper GetReflectionColor(int x, int y, CoefficientsClass coefficients)
+        private  float[] GetReflectionColor(int x, int y, CoefficientsClass coefficients)
         {
             var m = coefficients.M;
             var ks = coefficients.Ks;
-            var lightColor = new ColorHelper(Variables.Light.LightColor);
-            var objectColor = new ColorHelper(GetObjectColor(x, y));
+            var lightColor = Variables.Light.LightColor.ToArray();
+            var objectColor = GetObjectColor(x, y);
 
             var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
             var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector() : Variables.Light.GetLightVector();
             var R = 2f * Vector3.Dot(normalVector, lightVector) * normalVector - lightVector;
 
-            var cosM = (float)Math.Pow(Vector3.Dot(Vector3.UnitZ, R), m);
-            return lightColor * objectColor * cosM * ks;
+            var cosM = (float)Vector3.Dot(Vector3.UnitZ, R);
+            if (cosM < 0) cosM = 0;
+            cosM = (float)Math.Pow(cosM, m);
+
+            for (int i = 0; i < 3; i++)
+                objectColor[i] *= lightColor[i] * cosM * ks;
+
+            return objectColor;
         }
 
-        private Color GetObjectColor(int x, int y)
+        private float[] GetObjectColor(int x, int y)
         {
             if (Variables.ObjectColor.IsConst)
-                return Variables.ObjectColor.ObjectColor;
+                return Variables.ObjectColor.ObjectColor.ToArray();
             else
-                return image.GetPixel(x, y);
+                return image.GetPixel(x, y).ToArray();
         }
 
         #region PolygonFill
