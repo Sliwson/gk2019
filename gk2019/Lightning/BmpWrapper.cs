@@ -32,7 +32,7 @@ namespace Lightning
             var color = GetPixel(x, y);
             float r = ((float)color.R - 127) / 128;
             float g = (127 - (float)color.G) / 128;
-            float b = ((float)color.B) / 255;
+            float b = ((float)color.B - 127) / 128;
 
             return Vector3.Normalize(new Vector3(r, g, b));
         }
