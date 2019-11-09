@@ -99,9 +99,10 @@ namespace Lightning
                 while (activeIndex < sorted.Count && sorted[activeIndex].Key.Position.Y == y)
                 {
                     var currentVertex = sorted[activeIndex].Key;
+                    var currentIndex = sorted[activeIndex].Value;
 
-                    int previousIndex = activeIndex > 0 ? activeIndex - 1 : vertices.Count - 1;
-                    int nextIndex = (activeIndex + 1) % vertices.Count;
+                    int previousIndex = currentIndex > 0 ? currentIndex - 1 : vertices.Count - 1;
+                    int nextIndex = (currentIndex + 1) % vertices.Count;
 
                     var previousVertex = vertices[previousIndex];
                     var nextVertex = vertices[nextIndex];
