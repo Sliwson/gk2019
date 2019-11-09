@@ -20,6 +20,8 @@ namespace Lightning
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
             drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_1, grid);
+
+            lightTimer.Start();
         }
         
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -51,6 +53,15 @@ namespace Lightning
             timer.Stop();
             var fps = 1000 / timer.ElapsedMilliseconds;
             this.Text = $"Lightning (Last draw: {fps} fps)";
+        }
+
+        private void lightTimer_Tick(object sender, EventArgs e)
+        {
+            if (Variables.Light.IsConst)
+                return;
+
+            Variables.Light.Update(0.5f, 1f, 1f);
+            canvas.Invalidate();
         }
     }
 }

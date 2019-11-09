@@ -70,9 +70,21 @@ namespace Lightning
         public Color LightColor { get; set; }
         public bool IsConst { get; set; }
 
-        public Vector3 GetConstLightVector()
+        private Vector3 normalVector = Vector3.UnitZ;
+        private float time = 0f;
+
+        public void Update(float dt, float width, float height)
         {
-            return Vector3.UnitZ;
+            time += dt;
+            normalVector = Vector3.Normalize(new Vector3(dt, dt, 30));
+        }
+
+        public Vector3 GetLightVector()
+        {
+            if (IsConst)
+                return Vector3.UnitZ;
+            else
+                return normalVector;
         }
     }
 
@@ -81,9 +93,9 @@ namespace Lightning
         static Variables()
         {
             ObjectColor = new ObjectColorClass(true, Color.White);
-            NormalVectors = new NormalVectorsClass(true);
+            NormalVectors = new NormalVectorsClass(false);
             ColorMode = FillColorMode.Precise;
-            Coefficients = new CoefficientsClass(false, 0, 0, 1);
+            Coefficients = new CoefficientsClass(false, 0.5f, 0.5f, 32);
             Light = new LightClass(Color.White, true);
         }
 
