@@ -17,6 +17,7 @@ namespace Lightning
         private PictureBox pictureBox;
         private List<List<Vertex>> vertices;
         private List<List<Edge>> edges;
+        private List<List<CoefficientsClass>> randomCoefficients;
 
         private Vertex draggedVertex = null;
 
@@ -32,7 +33,7 @@ namespace Lightning
             pictureBox.MouseMove += PictureBox_MouseMove;
             pictureBox.MouseUp += PictureBox_MouseUp;
         }
-        
+
         public Size GetSize()
         {
             return new Size(width, height);
@@ -50,11 +51,7 @@ namespace Lightning
         {
             foreach (var edgesList in edges)
                 foreach (var edge in edgesList)
-                    edge.Draw(g);
-
-            foreach (var vertexList in vertices)
-                foreach (var vertex in vertexList)
-                    vertex.Draw(g);
+                    edge.DrawFast(g);
         }
 
         public List<Edge> GetTriangleEdges(int x, int y)
@@ -85,7 +82,7 @@ namespace Lightning
 
             return triangle;
         }
-        
+
         public List<Vertex> GetTriangleVertices(int x, int y)
         {
             if (y < 0 || y >= height || x < 0 || x >= width * 2)
@@ -108,6 +105,25 @@ namespace Lightning
 
             return triangle;
         }
+
+        public CoefficientsClass GetRandomCoefficientsForTriangle(int x, int y)
+        {
+            if (y < 0 || y >= height || x < 0 || x >= 2 * width)
+                return new CoefficientsClass(false, 0.5f, 0.5f, 32);
+
+            return randomCoefficients[y][x];
+        }
+
+        public List<List<Vertex>> GetAllTriangles()
+        {
+            var list = new List<List<Vertex>>();
+            for (int y = 0; y < height; y++)
+                for (int x = 0; x < width * 2; x++)
+                    list.Add(GetTriangleVertices(x, y));
+
+            return list;
+        }
+
         private void PictureBox_Resize(object sender, EventArgs e)
         {
             RecalculateVertices();
@@ -119,6 +135,7 @@ namespace Lightning
             InitVerticesArray();
             RecalculateVertices();
             InitEdgesArray();
+            InitRandomCoefficients();
         }
 
         private void InitVerticesArray()
@@ -174,6 +191,31 @@ namespace Lightning
             for (int x = 0; x < width; x++)
                 lastRow.Add(new Edge(vertices[y][x], vertices[y][x + 1]));
             edges.Add(lastRow);
+        }
+
+        private void InitRandomCoefficients()
+        {
+            var random = new Random();
+            randomCoefficients = new List<List<CoefficientsClass>>();
+
+            for (int y = 0; y < height; y++)
+            {
+                var row = new List<CoefficientsClass>();
+
+                for (int x = 0; x < width * 2; x++)
+                {
+                    var coefficients = new CoefficientsClass(
+                        true,
+                        (float)random.NextDouble(),
+                        (float)random.NextDouble(),
+                        random.Next(1, 100)
+                        );
+
+                    row.Add(coefficients);
+                }
+
+                randomCoefficients.Add(row);
+            }
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)

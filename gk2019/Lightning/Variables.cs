@@ -28,17 +28,9 @@ namespace Lightning
         }
 
         public bool IsConst { get; set; }
-        public Vector3 GetNormalVector(int x, int y)
+        public Vector3 GetConstNormalVector()
         {
-            if (IsConst)
-            {
-                return Vector3.UnitZ;
-            }
-            else
-            {
-                //TODO: read from normalmap
-                return Vector3.UnitZ;
-            }
+            return Vector3.UnitZ;
         }
     }
 
@@ -54,61 +46,17 @@ namespace Lightning
         public CoefficientsClass(bool isRandom, float kd, float ks, int m)
         {
             IsRandom = isRandom;
-            this.kd = kd;
-            this.ks = ks;
-            this.m = m;
+            Kd = kd;
+            Ks = ks;
+            M = m;
         }
         public bool IsRandom { get; set; }
 
-        private float kd;
-        public float Kd
-        {
-            get
-            {
-                if (IsRandom)
-                    return (float)random.NextDouble() * 2 - 1;
-                else
-                    return kd;
-            }
-            set
-            {
-                kd = value;
-            }
-        }
+        public float Kd { get; set; }
 
-        private float ks;
-        public float Ks
-        {
-            get
-            {
-                if (IsRandom)
-                    return (float)random.NextDouble() * 2 - 1;
-                else
-                    return ks;
-            }
-            set
-            {
-                ks = value;
-            }
-        }
+        public float Ks { get; set; }
 
-        private int m;
-        public int M
-        {
-            get
-            {
-                if (IsRandom)
-                    return random.Next(1, 100);
-                else
-                    return m;
-            }
-            set
-            {
-                m = value;
-            }
-        }
-
-        private Random random = new Random();
+        public int M { get; set; }
     }
 
     class LightClass
@@ -121,6 +69,23 @@ namespace Lightning
 
         public Color LightColor { get; set; }
         public bool IsConst { get; set; }
+
+        private Vector3 normalVector = Vector3.UnitZ;
+        private float time = 0f;
+
+        public void Update(float dt, float width, float height)
+        {
+            time += dt / 5;
+            normalVector = Vector3.Normalize(new Vector3((float)Math.Sin(time), (float)Math.Cos(time), 0.5f));
+        }
+
+        public Vector3 GetLightVector()
+        {
+            if (IsConst)
+                return Vector3.UnitZ;
+            else
+                return normalVector;
+        }
     }
 
     class Variables
@@ -128,9 +93,9 @@ namespace Lightning
         static Variables()
         {
             ObjectColor = new ObjectColorClass(true, Color.White);
-            NormalVectors = new NormalVectorsClass(true);
+            NormalVectors = new NormalVectorsClass(false);
             ColorMode = FillColorMode.Precise;
-            Coefficients = new CoefficientsClass(false, 0, 0, 1);
+            Coefficients = new CoefficientsClass(false, 0.5f, 0.5f, 32);
             Light = new LightClass(Color.White, true);
         }
 

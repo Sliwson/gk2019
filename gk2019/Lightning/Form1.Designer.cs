@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gridGroupBox = new System.Windows.Forms.GroupBox();
@@ -67,6 +68,8 @@
             this.canvas = new System.Windows.Forms.PictureBox();
             this.objectColorDialog = new System.Windows.Forms.ColorDialog();
             this.lightColorDialog = new System.Windows.Forms.ColorDialog();
+            this.lightTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.gridGroupBox.SuspendLayout();
             this.lightGroupbox.SuspendLayout();
@@ -294,22 +297,22 @@
             // normalMapRadio
             // 
             this.normalMapRadio.AutoSize = true;
+            this.normalMapRadio.Checked = true;
             this.normalMapRadio.Location = new System.Drawing.Point(7, 44);
             this.normalMapRadio.Name = "normalMapRadio";
             this.normalMapRadio.Size = new System.Drawing.Size(82, 17);
             this.normalMapRadio.TabIndex = 1;
+            this.normalMapRadio.TabStop = true;
             this.normalMapRadio.Text = "Normal Map";
             this.normalMapRadio.UseVisualStyleBackColor = true;
             // 
             // constNormalRadio
             // 
             this.constNormalRadio.AutoSize = true;
-            this.constNormalRadio.Checked = true;
             this.constNormalRadio.Location = new System.Drawing.Point(7, 20);
             this.constNormalRadio.Name = "constNormalRadio";
             this.constNormalRadio.Size = new System.Drawing.Size(91, 17);
             this.constNormalRadio.TabIndex = 0;
-            this.constNormalRadio.TabStop = true;
             this.constNormalRadio.Text = "Const [0, 0, 1]";
             this.constNormalRadio.UseVisualStyleBackColor = true;
             this.constNormalRadio.CheckedChanged += new System.EventHandler(this.constNormalRadio_CheckedChanged);
@@ -394,7 +397,7 @@
             this.mTextbox.ReadOnly = true;
             this.mTextbox.Size = new System.Drawing.Size(63, 20);
             this.mTextbox.TabIndex = 9;
-            this.mTextbox.Text = "1";
+            this.mTextbox.Text = "32";
             // 
             // ksTextbox
             // 
@@ -403,7 +406,7 @@
             this.ksTextbox.ReadOnly = true;
             this.ksTextbox.Size = new System.Drawing.Size(63, 20);
             this.ksTextbox.TabIndex = 8;
-            this.ksTextbox.Text = "0";
+            this.ksTextbox.Text = "0.5";
             // 
             // kdTextbox
             // 
@@ -412,7 +415,7 @@
             this.kdTextbox.ReadOnly = true;
             this.kdTextbox.Size = new System.Drawing.Size(63, 20);
             this.kdTextbox.TabIndex = 7;
-            this.kdTextbox.Text = "0";
+            this.kdTextbox.Text = "0.5";
             // 
             // mLabel
             // 
@@ -432,7 +435,7 @@
             this.mSlider.Size = new System.Drawing.Size(138, 45);
             this.mSlider.TabIndex = 5;
             this.mSlider.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.mSlider.Value = 1;
+            this.mSlider.Value = 32;
             this.mSlider.ValueChanged += new System.EventHandler(this.mSlider_ValueChanged);
             // 
             // ksSlider
@@ -443,6 +446,7 @@
             this.ksSlider.Size = new System.Drawing.Size(138, 45);
             this.ksSlider.TabIndex = 4;
             this.ksSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.ksSlider.Value = 50;
             this.ksSlider.ValueChanged += new System.EventHandler(this.ksSlider_ValueChanged);
             // 
             // ksLabel
@@ -471,6 +475,7 @@
             this.kdSlider.Size = new System.Drawing.Size(138, 45);
             this.kdSlider.TabIndex = 1;
             this.kdSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.kdSlider.Value = 50;
             this.kdSlider.ValueChanged += new System.EventHandler(this.kdSlider_ValueChanged);
             // 
             // coefficientsRandomRadio
@@ -517,6 +522,11 @@
             // lightColorDialog
             // 
             this.lightColorDialog.Color = System.Drawing.Color.White;
+            // 
+            // lightTimer
+            // 
+            this.lightTimer.Interval = 500;
+            this.lightTimer.Tick += new System.EventHandler(this.lightTimer_Tick);
             // 
             // Form1
             // 
@@ -591,6 +601,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox xTextBox;
         private System.Windows.Forms.Label gridSizeLabel;
+        private System.Windows.Forms.Timer lightTimer;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

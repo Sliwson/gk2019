@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -50,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BmpWrapper.cs" />
+    <Compile Include="ColorHelper.cs" />
     <Compile Include="Drawer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -75,8 +79,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -95,6 +99,24 @@
       <Project>{2555cffa-4dc6-442d-bab3-b33194ccf7f2}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gods.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal_1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal_2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal_3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\normal_5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
