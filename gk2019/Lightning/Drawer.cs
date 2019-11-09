@@ -68,7 +68,7 @@ namespace Lightning
 
             var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
             var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector() : Variables.Light.GetLightVector();
-            var R = 2f * Vector3.Dot(normalVector, lightVector) * normalVector + (lightVector * -1);
+            var R = 2f * Vector3.Dot(normalVector, lightVector) * normalVector - lightVector;
 
             var cosM = (float)Math.Pow(Vector3.Dot(Vector3.UnitZ, R), m);
             return lightColor * objectColor * cosM * ks;
