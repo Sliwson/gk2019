@@ -43,8 +43,6 @@ namespace Lightning
             using (var bitmap = new Bitmap(canvas.Width, canvas.Height, PixelFormat.Format24bppRgb))
             {
                 Drawer.WriteColormapToBitmap(bitmap, colorArray);
-                var pixel = bitmap.GetPixel(10, 10);
-
                 e.Graphics.DrawImage(bitmap, 0, 0);
             }
 
