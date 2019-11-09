@@ -75,8 +75,8 @@ namespace Lightning
 
         public void Update(float dt, float width, float height)
         {
-            time += dt;
-            normalVector = Vector3.Normalize(new Vector3(dt, dt, 30));
+            time += dt / 5;
+            normalVector = Vector3.Normalize(new Vector3((float)Math.Sin(time), (float)Math.Cos(time), 0.5f));
         }
 
         public Vector3 GetLightVector()

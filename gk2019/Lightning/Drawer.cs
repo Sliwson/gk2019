@@ -54,7 +54,7 @@ namespace Lightning
             var objectColor = new ColorHelper(GetObjectColor(x, y));
             
             var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
-            var lightVector = Variables.Light.IsConst ? Variables.Light.GetConstLightVector() : Variables.Light.GetConstLightVector();
+            var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector() : Variables.Light.GetLightVector();
 
             return lightColor * objectColor * kd * Vector3.Dot(normalVector, lightVector);
         }
@@ -67,7 +67,7 @@ namespace Lightning
             var objectColor = new ColorHelper(GetObjectColor(x, y));
 
             var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
-            var lightVector = Variables.Light.IsConst ? Variables.Light.GetConstLightVector() : Variables.Light.GetConstLightVector();
+            var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector() : Variables.Light.GetLightVector();
             var R = 2f * Vector3.Dot(normalVector, lightVector) * normalVector + (lightVector * -1);
 
             var cosM = (float)Math.Pow(Vector3.Dot(Vector3.UnitZ, R), m);

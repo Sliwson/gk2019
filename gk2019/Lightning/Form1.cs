@@ -19,7 +19,7 @@ namespace Lightning
         {
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
-            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_1, grid);
+            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_4, grid);
 
             lightTimer.Start();
         }
