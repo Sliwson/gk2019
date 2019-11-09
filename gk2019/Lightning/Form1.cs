@@ -51,6 +51,8 @@ namespace Lightning
             timer.Stop();
             var fps = 1000 / timer.ElapsedMilliseconds;
             this.Text = $"Lightning (Last draw: {fps} fps)";
+
+            GC.Collect();
         }
 
         private void lightTimer_Tick(object sender, EventArgs e)
