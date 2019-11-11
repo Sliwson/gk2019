@@ -21,7 +21,7 @@ namespace Lightning
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
             drawer = new Drawer(Properties.Resources.hp, Properties.Resources.normal_1, grid);
-
+            
             lightTimer.Start();
         }
         
@@ -59,10 +59,11 @@ namespace Lightning
 
         private void lightTimer_Tick(object sender, EventArgs e)
         {
+            Variables.Light.Update((float)lightTimer.Interval / 1000, canvas.Width, canvas.Height);
+
             if (Variables.Light.IsConst)
                 return;
 
-            Variables.Light.Update((float)lightTimer.Interval / 1000, canvas.Width, canvas.Height);
             canvas.Invalidate();
         }
 
