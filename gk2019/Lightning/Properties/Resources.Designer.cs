@@ -63,9 +63,9 @@ namespace Lightning.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gods {
+        internal static System.Drawing.Bitmap hp {
             get {
-                object obj = ResourceManager.GetObject("gods", resourceCulture);
+                object obj = ResourceManager.GetObject("hp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -76,46 +76,6 @@ namespace Lightning.Properties {
         internal static System.Drawing.Bitmap normal_1 {
             get {
                 object obj = ResourceManager.GetObject("normal_1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap normal_2 {
-            get {
-                object obj = ResourceManager.GetObject("normal_2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap normal_3 {
-            get {
-                object obj = ResourceManager.GetObject("normal_3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap normal_4 {
-            get {
-                object obj = ResourceManager.GetObject("normal_4", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap normal_5 {
-            get {
-                object obj = ResourceManager.GetObject("normal_5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
