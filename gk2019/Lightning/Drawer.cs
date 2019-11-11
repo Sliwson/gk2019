@@ -48,8 +48,23 @@ namespace Lightning
         {
             normalMap = new BmpWrapper(bitmap);
         }
-        
-        private Color GetPixelColor(int x, int y, Point triangle)
+
+        private Color GetPixelColor(int x, int y, Point triangle, List<(Point, Color)> vertexColors)
+        {
+            switch (Variables.ColorMode)
+            {
+                case FillColorMode.Precise:
+                    return GetPixelColorPrecise(x, y, triangle);
+                case FillColorMode.Interpolated:
+                    return GetPixelColorBaricentric(x, y, vertexColors);
+                case FillColorMode.Hybrid:
+                    return GetPixelColorHybrid(x, y);
+            }
+
+            return Color.White;
+        }
+
+        private Color GetPixelColorPrecise(int x, int y, Point triangle)
         {
             var coefficients = Variables.Coefficients.IsRandom ? grid.GetRandomCoefficientsForTriangle(triangle.X, triangle.Y) : Variables.Coefficients;
             var lambert = GetLambertColor(x, y, coefficients);
@@ -63,6 +78,52 @@ namespace Lightning
             }
 
             return Color.FromArgb((int)(lambert[0] * 255f), (int)(lambert[1] * 255f), (int)(lambert[2] * 255f));
+        }
+
+        private Color GetPixelColorBaricentric(int x, int y, List<(Point, Color)> triangle)
+        {
+            var A = triangle[0].Item1;
+            var B = triangle[1].Item1;
+            var C = triangle[2].Item1;
+
+            var AB = (B.X - A.X, B.Y - A.Y);
+            var AP = (x - A.X, y - A.Y);
+            var BC = (C.X - B.X, C.Y - B.Y);
+            var BP = (x - B.X, y - B.Y);
+            var AC = (C.X - A.X, C.Y - A.Y);
+
+            var pABC = GetTriangleField(AB.Item1, AB.Item2, AC.Item1, AC.Item2);
+            var pAPB = GetTriangleField(AB.Item1, AB.Item2, AP.Item1, AP.Item2);
+            var pBPC = GetTriangleField(BC.Item1, BC.Item2, BP.Item1, BP.Item2);
+            var pAPC = GetTriangleField(AC.Item1, AC.Item2, AP.Item1, AP.Item2);
+
+            var alpha = pBPC / pABC;
+            var beta = pAPC / pABC;
+            var gamma = pAPB / pABC;
+
+            var cA = triangle[0].Item2;
+            var cB = triangle[1].Item2;
+            var cC = triangle[2].Item2;
+
+            float r = alpha * cA.R + beta * cB.R + gamma * cC.R;
+            float g = alpha * cA.G + beta * cB.G + gamma * cC.G;
+            float b = alpha * cA.B + beta * cB.B + gamma * cC.B;
+
+            if (r > 255) r = 255;
+            if (g > 255) g = 255;
+            if (b > 255) b = 255;
+
+            return Color.FromArgb((int)r, (int)g, (int)b);
+        }
+
+        private float GetTriangleField(int x1, int y1, int x2, int y2)
+        {
+            return 0.5f * Math.Abs(x1 * y2 - y1 * x2);
+        }
+
+        private Color GetPixelColorHybrid(int x, int y)
+        {
+            return Color.White;
         }
 
         private float[] GetLambertColor(int x, int y, CoefficientsClass coefficients)
@@ -105,6 +166,17 @@ namespace Lightning
             return objectColor;
         }
 
+        private List<(Point, Color)> CalculateVertexColors(Point triangle)
+        {
+            var vertices = grid.GetTriangleVertices(triangle.X, triangle.Y);
+            var returnList = new List<(Point, Color)>();
+
+            foreach (var vertex in vertices)
+                returnList.Add((vertex.Position, GetPixelColorPrecise(vertex.Position.X, vertex.Position.Y, triangle)));
+
+            return returnList;
+        }
+
         private float[] GetObjectColor(int x, int y)
         {
             if (Variables.ObjectColor.IsConst)
@@ -124,6 +196,7 @@ namespace Lightning
             var activeVertices = new List<int>();
             
             int activeIndex = 0;
+            var colorsForBaricentric = CalculateVertexColors(triangle);
 
             for (int y = min; y <= max; y++)
             {
@@ -149,7 +222,7 @@ namespace Lightning
                 for(int i  = 0; i < activeList.Count - 1; i += 2)
                 {
                     for (int x = (int)Math.Round(activeList[i].X); x < (int)Math.Round(activeList[i + 1].X); x++)
-                        colorsArray[y, x] = GetPixelColor(x, y, triangle);
+                        colorsArray[y, x] = GetPixelColor(x, y, triangle, colorsForBaricentric);
                 }
 
                 foreach (var edge in activeList)
