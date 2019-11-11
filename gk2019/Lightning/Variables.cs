@@ -70,21 +70,25 @@ namespace Lightning
         public Color LightColor { get; set; }
         public bool IsConst { get; set; }
 
-        private Vector3 normalVector = Vector3.UnitZ;
+        private Vector3 position = Vector3.UnitZ;
         private float time = 0f;
 
         public void Update(float dt, float width, float height)
         {
-            time += dt / 5;
-            normalVector = Vector3.Normalize(new Vector3((float)Math.Sin(time), (float)Math.Cos(time), 0.5f));
-        }
+            time += dt / 3;
+            position = new Vector3((float)(Math.Sin(time) + 1) * 0.4f * width, (float)(Math.Cos(time) + 1) * 0.4f * height, (float)(Math.Sin(time / 4) * 50) + 400);
+        }       
 
-        public Vector3 GetLightVector()
+        public Vector3 GetLightVector(int x, int y)
         {
             if (IsConst)
+            {
                 return Vector3.UnitZ;
+            }
             else
-                return normalVector;
+            {
+                return Vector3.Normalize(new Vector3(x - position.X, y - position.Y, position.Z));
+            }
         }
     }
 

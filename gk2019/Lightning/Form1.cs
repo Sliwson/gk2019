@@ -19,7 +19,7 @@ namespace Lightning
         {
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
-            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_4, grid);
+            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_1, grid);
 
             lightTimer.Start();
         }
@@ -61,7 +61,7 @@ namespace Lightning
             if (Variables.Light.IsConst)
                 return;
 
-            Variables.Light.Update(0.5f, 1f, 1f);
+            Variables.Light.Update((float)lightTimer.Interval / 1000, canvas.Width, canvas.Height);
             canvas.Invalidate();
         }
     }
