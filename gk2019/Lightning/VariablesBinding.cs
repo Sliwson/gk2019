@@ -16,6 +16,7 @@ namespace Lightning
                 var color = objectColorDialog.Color;
                 objectColorPictureBox.BackColor = color;
                 Variables.ObjectColor.ObjectColor = color;
+                canvas.Invalidate();
             }
         }
 
@@ -26,6 +27,7 @@ namespace Lightning
                 var color = lightColorDialog.Color;
                 lightColorPictureBox.BackColor = lightColorDialog.Color;
                 Variables.Light.LightColor = color;
+                canvas.Invalidate();
             }
         }
 
@@ -33,6 +35,7 @@ namespace Lightning
        {
             mTextbox.Text = mSlider.Value.ToString();
             Variables.Coefficients.M = mSlider.Value;
+            canvas.Invalidate();
        }
 
         private void kdSlider_ValueChanged(object sender, EventArgs e)
@@ -40,6 +43,7 @@ namespace Lightning
             var value = kdSlider.Value / 100.0f;
             kdTextbox.Text = value.ToString();
             Variables.Coefficients.Kd = value;
+            canvas.Invalidate();
         }
 
         private void ksSlider_ValueChanged(object sender, EventArgs e)
@@ -47,44 +51,58 @@ namespace Lightning
             var value = ksSlider.Value / 100.0f;
             ksTextbox.Text = value.ToString();
             Variables.Coefficients.Ks = value;
+            canvas.Invalidate();
         }
 
         private void constColorRadio_CheckedChanged(object sender, EventArgs e)
         {
             Variables.ObjectColor.IsConst = constColorRadio.Checked;
+            canvas.Invalidate();
         }
 
         private void constNormalRadio_CheckedChanged(object sender, EventArgs e)
         {
             Variables.NormalVectors.IsConst = constNormalRadio.Checked;
+            canvas.Invalidate();
         }
 
         private void preciseFillColorRadio_CheckedChanged(object sender, EventArgs e)
         {
             if (preciseFillColorRadio.Checked)
+            {
                 Variables.ColorMode = FillColorMode.Precise;
+                canvas.Invalidate();
+            }
         }
 
         private void interpolatedFillColorRadio_CheckedChanged(object sender, EventArgs e)
         {
             if (interpolatedFillColorRadio.Checked)
+            {
                 Variables.ColorMode = FillColorMode.Interpolated;
+                canvas.Invalidate();
+            }
         }
 
         private void hybridFillColorRadio_CheckedChanged(object sender, EventArgs e)
         {
             if (hybridFillColorRadio.Checked)
+            {
                 Variables.ColorMode = FillColorMode.Hybrid;
+                canvas.Invalidate();
+            }
         }
 
         private void coefficientsRandomRadio_CheckedChanged(object sender, EventArgs e)
         {
             Variables.Coefficients.IsRandom = coefficientsRandomRadio.Checked;
+            canvas.Invalidate();
         }
 
         private void constLightRadio_CheckedChanged(object sender, EventArgs e)
         {
             Variables.Light.IsConst = constLightRadio.Checked;
+            canvas.Invalidate();
         }
         private void saveSizeButton_Click(object sender, EventArgs e)
         {
