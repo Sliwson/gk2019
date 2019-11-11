@@ -73,7 +73,10 @@ namespace Lightning
             
             var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
             var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector(x, y) : Variables.Light.GetLightVector(x, y);
-            var multiplier = kd * Vector3.Dot(normalVector, lightVector);
+            var cos = Vector3.Dot(normalVector, lightVector);
+            if (cos < 0) cos = 0;
+
+            var multiplier = kd * cos;
 
             for (int i = 0; i < 3; i++)
                 objectColor[i] *= lightColor[i] * multiplier;
