@@ -58,7 +58,7 @@ namespace Lightning
                 case FillColorMode.Interpolated:
                     return GetPixelColorBaricentric(x, y, vertexColors);
                 case FillColorMode.Hybrid:
-                    return GetPixelColorHybrid(x, y);
+                    return GetPixelColorHybrid(x, y, vertexColors, triangle);
             }
 
             return Color.White;
@@ -67,8 +67,11 @@ namespace Lightning
         private Color GetPixelColorPrecise(int x, int y, Point triangle)
         {
             var coefficients = Variables.Coefficients.IsRandom ? grid.GetRandomCoefficientsForTriangle(triangle.X, triangle.Y) : Variables.Coefficients;
-            var lambert = GetLambertColor(x, y, coefficients);
-            var reflection = GetReflectionColor(x, y, coefficients);
+            var normalVector = Variables.NormalVectors.IsConst? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
+            var objectColor = GetObjectColor(x, y);
+            
+            var lambert = GetLambertColor(x, y, coefficients, objectColor, normalVector);
+            var reflection = GetReflectionColor(x, y, coefficients, objectColor, normalVector);
 
             for (int i = 0; i < 3; i++)
             {
@@ -82,24 +85,8 @@ namespace Lightning
 
         private Color GetPixelColorBaricentric(int x, int y, List<(Point, Color)> triangle)
         {
-            var A = triangle[0].Item1;
-            var B = triangle[1].Item1;
-            var C = triangle[2].Item1;
-
-            var AB = (B.X - A.X, B.Y - A.Y);
-            var AP = (x - A.X, y - A.Y);
-            var BC = (C.X - B.X, C.Y - B.Y);
-            var BP = (x - B.X, y - B.Y);
-            var AC = (C.X - A.X, C.Y - A.Y);
-
-            var pABC = GetTriangleField(AB.Item1, AB.Item2, AC.Item1, AC.Item2);
-            var pAPB = GetTriangleField(AB.Item1, AB.Item2, AP.Item1, AP.Item2);
-            var pBPC = GetTriangleField(BC.Item1, BC.Item2, BP.Item1, BP.Item2);
-            var pAPC = GetTriangleField(AC.Item1, AC.Item2, AP.Item1, AP.Item2);
-
-            var alpha = pBPC / pABC;
-            var beta = pAPC / pABC;
-            var gamma = pAPB / pABC;
+            Point[] points = { triangle[0].Item1, triangle[1].Item1, triangle[2].Item1 };
+            (var alpha, var beta, var gamma) = GetInterpolationCoefficients(x, y, points);
 
             var cA = triangle[0].Item2;
             var cB = triangle[1].Item2;
@@ -116,43 +103,104 @@ namespace Lightning
             return Color.FromArgb((int)r, (int)g, (int)b);
         }
 
+        private (float, float, float) GetInterpolationCoefficients(int x, int y, Point[] points)
+        {
+            var A = points[0];
+            var B = points[1];
+            var C = points[2];
+
+            var AB = (B.X - A.X, B.Y - A.Y);
+            var AP = (x - A.X, y - A.Y);
+            var BC = (C.X - B.X, C.Y - B.Y);
+            var BP = (x - B.X, y - B.Y);
+            var AC = (C.X - A.X, C.Y - A.Y);
+
+            var pABC = GetTriangleField(AB.Item1, AB.Item2, AC.Item1, AC.Item2);
+            var pAPB = GetTriangleField(AB.Item1, AB.Item2, AP.Item1, AP.Item2);
+            var pBPC = GetTriangleField(BC.Item1, BC.Item2, BP.Item1, BP.Item2);
+            var pAPC = GetTriangleField(AC.Item1, AC.Item2, AP.Item1, AP.Item2);
+
+            var alpha = pBPC / pABC;
+            var beta = pAPC / pABC;
+            var gamma = pAPB / pABC;
+
+            return (alpha, beta, gamma);
+        }
+
         private float GetTriangleField(int x1, int y1, int x2, int y2)
         {
             return 0.5f * Math.Abs(x1 * y2 - y1 * x2);
         }
 
-        private Color GetPixelColorHybrid(int x, int y)
+        private Color GetPixelColorHybrid(int x, int y, List<(Point, Color)> triangle, Point trianglePos)
         {
-            return Color.White;
+            Point[] points = { triangle[0].Item1, triangle[1].Item1, triangle[2].Item1 };
+            (var alpha, var beta, var gamma) = GetInterpolationCoefficients(x, y, points);
+
+            var objectColors = new float[3][];
+            var normalVectors = new Vector3[3];
+
+            for (int i = 0; i < 3; i++)
+            {
+                objectColors[i] = GetObjectColor(points[i].X, points[i].Y);
+                normalVectors[i] = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(points[i].X, points[i].Y);
+            }
+
+            var objectColor = new float[3];
+            float[] barCoefficients = { alpha, beta, gamma };
+            Vector3 normalVector = Vector3.Zero;
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                    objectColor[j] += objectColors[i][j] * barCoefficients[i];
+
+                normalVector += normalVectors[i] * barCoefficients[i];
+            }
+
+            for (int i = 0; i < 3; i++)
+                if (objectColor[i] > 1)
+                    objectColor[i] = 1;
+
+            normalVector = Vector3.Normalize(normalVector);
+
+            var coefficients = Variables.Coefficients.IsRandom ? grid.GetRandomCoefficientsForTriangle(trianglePos.X, trianglePos.Y) : Variables.Coefficients;
+            var lambert = GetLambertColor(x, y, coefficients, objectColor, normalVector);
+            var reflection = GetReflectionColor(x, y, coefficients, objectColor, normalVector);
+
+            for (int i = 0; i < 3; i++)
+            {
+                lambert[i] += reflection[i];
+                if (lambert[i] < 0) lambert[i] = 0;
+                if (lambert[i] > 1) lambert[i] = 1;
+            }
+
+            return Color.FromArgb((int)(lambert[0] * 255f), (int)(lambert[1] * 255f), (int)(lambert[2] * 255f));
         }
 
-        private float[] GetLambertColor(int x, int y, CoefficientsClass coefficients)
+        private float[] GetLambertColor(int x, int y, CoefficientsClass coefficients, float[] objectColor, Vector3 normalVector)
         {
             var kd = coefficients.Kd;
             var lightColor = Variables.Light.LightColor.ToArray();
-            var objectColor = GetObjectColor(x, y);
-            
-            var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
-            var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector(x, y) : Variables.Light.GetLightVector(x, y);
+                        
+            var lightVector = Variables.Light.GetLightVector(x, y);
             var cos = Vector3.Dot(normalVector, lightVector);
             if (cos < 0) cos = 0;
 
             var multiplier = kd * cos;
 
             for (int i = 0; i < 3; i++)
-                objectColor[i] *= lightColor[i] * multiplier;
+                lightColor[i] *= objectColor[i] * multiplier;
 
-            return objectColor;
+            return lightColor;
         }
 
-        private  float[] GetReflectionColor(int x, int y, CoefficientsClass coefficients)
+        private  float[] GetReflectionColor(int x, int y, CoefficientsClass coefficients, float[] objectColor, Vector3 normalVector)
         {
             var m = coefficients.M;
             var ks = coefficients.Ks;
             var lightColor = Variables.Light.LightColor.ToArray();
-            var objectColor = GetObjectColor(x, y);
-
-            var normalVector = Variables.NormalVectors.IsConst ? Variables.NormalVectors.GetConstNormalVector() : normalMap.GetPixelAsNormalVector(x, y);
+            
             var lightVector = Variables.Light.IsConst ? Variables.Light.GetLightVector(x, y) : Variables.Light.GetLightVector(x, y);
             var R = 2f * Vector3.Dot(normalVector, lightVector) * normalVector - lightVector;
 
@@ -161,9 +209,9 @@ namespace Lightning
             cosM = (float)Math.Pow(cosM, m);
 
             for (int i = 0; i < 3; i++)
-                objectColor[i] *= lightColor[i] * cosM * ks;
+                lightColor[i] *= objectColor[i] * cosM * ks;
 
-            return objectColor;
+            return lightColor;
         }
 
         private List<(Point, Color)> CalculateVertexColors(Point triangle)
