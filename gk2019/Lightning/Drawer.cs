@@ -38,6 +38,16 @@ namespace Lightning
             this.normalMap = new BmpWrapper(normalMap);
             this.grid = grid;
         }
+
+        public void SetImage(Bitmap bitmap)
+        {
+            image = new BmpWrapper(bitmap);
+        }
+
+        public void SetNormalMap(Bitmap bitmap)
+        {
+            normalMap = new BmpWrapper(bitmap);
+        }
         
         private Color GetPixelColor(int x, int y, Point triangle)
         {

@@ -43,10 +43,12 @@
             this.lightColorPictureBox = new System.Windows.Forms.PictureBox();
             this.constLightRadio = new System.Windows.Forms.RadioButton();
             this.objectColorGroupbox = new System.Windows.Forms.GroupBox();
+            this.selectTextureButton = new System.Windows.Forms.Button();
             this.objectColorPictureBox = new System.Windows.Forms.PictureBox();
             this.textureColorRadio = new System.Windows.Forms.RadioButton();
             this.constColorRadio = new System.Windows.Forms.RadioButton();
             this.normalVectorGroupbox = new System.Windows.Forms.GroupBox();
+            this.selectNormalButton = new System.Windows.Forms.Button();
             this.normalMapRadio = new System.Windows.Forms.RadioButton();
             this.constNormalRadio = new System.Windows.Forms.RadioButton();
             this.fillColorGroupbox = new System.Windows.Forms.GroupBox();
@@ -235,6 +237,7 @@
             // 
             this.objectColorGroupbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectColorGroupbox.Controls.Add(this.selectTextureButton);
             this.objectColorGroupbox.Controls.Add(this.objectColorPictureBox);
             this.objectColorGroupbox.Controls.Add(this.textureColorRadio);
             this.objectColorGroupbox.Controls.Add(this.constColorRadio);
@@ -245,6 +248,16 @@
             this.objectColorGroupbox.TabIndex = 0;
             this.objectColorGroupbox.TabStop = false;
             this.objectColorGroupbox.Text = "Object color";
+            // 
+            // selectTextureButton
+            // 
+            this.selectTextureButton.Location = new System.Drawing.Point(74, 41);
+            this.selectTextureButton.Name = "selectTextureButton";
+            this.selectTextureButton.Size = new System.Drawing.Size(49, 20);
+            this.selectTextureButton.TabIndex = 9;
+            this.selectTextureButton.Text = "Select";
+            this.selectTextureButton.UseVisualStyleBackColor = true;
+            this.selectTextureButton.Click += new System.EventHandler(this.selectTextureButton_Click);
             // 
             // objectColorPictureBox
             // 
@@ -284,6 +297,7 @@
             // 
             this.normalVectorGroupbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.normalVectorGroupbox.Controls.Add(this.selectNormalButton);
             this.normalVectorGroupbox.Controls.Add(this.normalMapRadio);
             this.normalVectorGroupbox.Controls.Add(this.constNormalRadio);
             this.normalVectorGroupbox.Location = new System.Drawing.Point(929, 82);
@@ -293,6 +307,16 @@
             this.normalVectorGroupbox.TabIndex = 1;
             this.normalVectorGroupbox.TabStop = false;
             this.normalVectorGroupbox.Text = "Normal vectors";
+            // 
+            // selectNormalButton
+            // 
+            this.selectNormalButton.Location = new System.Drawing.Point(95, 41);
+            this.selectNormalButton.Name = "selectNormalButton";
+            this.selectNormalButton.Size = new System.Drawing.Size(49, 20);
+            this.selectNormalButton.TabIndex = 8;
+            this.selectNormalButton.Text = "Select";
+            this.selectNormalButton.UseVisualStyleBackColor = true;
+            this.selectNormalButton.Click += new System.EventHandler(this.selectNormalButton_Click);
             // 
             // normalMapRadio
             // 
@@ -603,6 +627,8 @@
         private System.Windows.Forms.Label gridSizeLabel;
         private System.Windows.Forms.Timer lightTimer;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button selectTextureButton;
+        private System.Windows.Forms.Button selectNormalButton;
     }
 }
 

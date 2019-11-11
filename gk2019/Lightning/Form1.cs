@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Lightning
         {
             InitializeComponent();
             grid = new Grid(5, 5, canvas);
-            drawer = new Drawer(Properties.Resources.gods, Properties.Resources.normal_1, grid);
+            drawer = new Drawer(Properties.Resources.hp, Properties.Resources.normal_1, grid);
 
             lightTimer.Start();
         }
@@ -63,6 +64,46 @@ namespace Lightning
 
             Variables.Light.Update((float)lightTimer.Interval / 1000, canvas.Width, canvas.Height);
             canvas.Invalidate();
+        }
+
+        private void selectTextureButton_Click(object sender, EventArgs e)
+        {
+            var bmp = GetBitmapFileDialog();
+            if (bmp == null)
+                return;
+
+            Cursor.Current = Cursors.WaitCursor;
+            drawer.SetImage(bmp);
+            canvas.Invalidate();
+            Cursor.Current = Cursors.Default;
+        }
+
+        private void selectNormalButton_Click(object sender, EventArgs e)
+        {
+            var bmp = GetBitmapFileDialog();
+            if (bmp == null)
+                return;
+
+            Cursor.Current = Cursors.WaitCursor;
+            drawer.SetNormalMap(bmp);
+            canvas.Invalidate();
+            Cursor.Current = Cursors.Default;
+        }
+
+        private Bitmap GetBitmapFileDialog()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                var stream = dialog.OpenFile();
+
+                var img = Image.FromStream(stream);
+                return new Bitmap(img);
+            }
+
+            return null;
         }
     }
 }
