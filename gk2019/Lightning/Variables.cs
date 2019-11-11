@@ -96,7 +96,7 @@ namespace Lightning
     {
         static Variables()
         {
-            ObjectColor = new ObjectColorClass(true, Color.White);
+            ObjectColor = new ObjectColorClass(false, Color.White);
             NormalVectors = new NormalVectorsClass(false);
             ColorMode = FillColorMode.Precise;
             Coefficients = new CoefficientsClass(false, 0.5f, 0.5f, 32);

@@ -93,7 +93,7 @@ namespace Lightning
         private Bitmap GetBitmapFileDialog()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg";
+            dialog.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|png files (*.png)|*.png";
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {

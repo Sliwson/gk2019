@@ -273,22 +273,22 @@
             // textureColorRadio
             // 
             this.textureColorRadio.AutoSize = true;
+            this.textureColorRadio.Checked = true;
             this.textureColorRadio.Location = new System.Drawing.Point(7, 44);
             this.textureColorRadio.Name = "textureColorRadio";
             this.textureColorRadio.Size = new System.Drawing.Size(61, 17);
             this.textureColorRadio.TabIndex = 1;
+            this.textureColorRadio.TabStop = true;
             this.textureColorRadio.Text = "Texture";
             this.textureColorRadio.UseVisualStyleBackColor = true;
             // 
             // constColorRadio
             // 
             this.constColorRadio.AutoSize = true;
-            this.constColorRadio.Checked = true;
             this.constColorRadio.Location = new System.Drawing.Point(7, 20);
             this.constColorRadio.Name = "constColorRadio";
             this.constColorRadio.Size = new System.Drawing.Size(52, 17);
             this.constColorRadio.TabIndex = 0;
-            this.constColorRadio.TabStop = true;
             this.constColorRadio.Text = "Const";
             this.constColorRadio.UseVisualStyleBackColor = true;
             this.constColorRadio.CheckedChanged += new System.EventHandler(this.constColorRadio_CheckedChanged);
