@@ -49,6 +49,7 @@ namespace Lightning
             grid.Paint(e.Graphics);
 
             timer.Stop();
+            lightTimer.Interval = (int)timer.ElapsedMilliseconds;
             var fps = 1000 / timer.ElapsedMilliseconds;
             this.Text = $"Lightning (Last draw: {fps} fps)";
 
