@@ -18,7 +18,7 @@ namespace Common
 
         public override bool HitTest(Point position)
         {
-            if (position.DistanceTo(Position) <= Radius)
+            if (position.DistanceTo(Position) <= DrawingConstants.PointRadius) 
                 return true;
 
             return false;
