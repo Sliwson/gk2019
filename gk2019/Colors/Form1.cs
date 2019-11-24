@@ -15,6 +15,7 @@ namespace Colors
         public Form1()
         {
             InitializeComponent();
+            colorRepresentation.SelectedIndex = 0;
         }
     }
 }

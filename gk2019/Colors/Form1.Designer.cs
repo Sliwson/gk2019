@@ -30,13 +30,13 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.output3 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.output2 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.output1 = new System.Windows.Forms.PictureBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.inputPicturebox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -62,20 +62,20 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.grayscaleButton = new System.Windows.Forms.Button();
+            this.separateButton = new System.Windows.Forms.Button();
+            this.colorRepresentation = new System.Windows.Forms.ComboBox();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.loadButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.output3)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.output2)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.output1)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputPicturebox)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -113,7 +113,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.pictureBox3);
+            this.groupBox3.Controls.Add(this.output3);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(621, 443);
             this.groupBox3.Name = "groupBox3";
@@ -123,20 +123,20 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "V";
             // 
-            // pictureBox3
+            // output3
             // 
-            this.pictureBox3.BackColor = System.Drawing.Color.White;
-            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox3.Location = new System.Drawing.Point(10, 16);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(240, 191);
-            this.pictureBox3.TabIndex = 1;
-            this.pictureBox3.TabStop = false;
+            this.output3.BackColor = System.Drawing.Color.White;
+            this.output3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.output3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.output3.Location = new System.Drawing.Point(10, 16);
+            this.output3.Name = "output3";
+            this.output3.Size = new System.Drawing.Size(240, 191);
+            this.output3.TabIndex = 1;
+            this.output3.TabStop = false;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.pictureBox2);
+            this.groupBox2.Controls.Add(this.output2);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(621, 223);
             this.groupBox2.Name = "groupBox2";
@@ -146,20 +146,20 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "S";
             // 
-            // pictureBox2
+            // output2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.White;
-            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(10, 16);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(240, 190);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.output2.BackColor = System.Drawing.Color.White;
+            this.output2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.output2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.output2.Location = new System.Drawing.Point(10, 16);
+            this.output2.Name = "output2";
+            this.output2.Size = new System.Drawing.Size(240, 190);
+            this.output2.TabIndex = 1;
+            this.output2.TabStop = false;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Controls.Add(this.output1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(621, 3);
             this.groupBox1.Name = "groupBox1";
@@ -169,20 +169,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "H";
             // 
-            // pictureBox1
+            // output1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(10, 16);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(240, 190);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.output1.BackColor = System.Drawing.Color.White;
+            this.output1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.output1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.output1.Location = new System.Drawing.Point(10, 16);
+            this.output1.Name = "output1";
+            this.output1.Size = new System.Drawing.Size(240, 190);
+            this.output1.TabIndex = 0;
+            this.output1.TabStop = false;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.pictureBox4);
+            this.groupBox4.Controls.Add(this.inputPicturebox);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
@@ -193,15 +193,15 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Picture";
             // 
-            // pictureBox4
+            // inputPicturebox
             // 
-            this.pictureBox4.BackColor = System.Drawing.Color.White;
-            this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox4.Location = new System.Drawing.Point(10, 16);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(592, 410);
-            this.pictureBox4.TabIndex = 0;
-            this.pictureBox4.TabStop = false;
+            this.inputPicturebox.BackColor = System.Drawing.Color.White;
+            this.inputPicturebox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inputPicturebox.Location = new System.Drawing.Point(10, 16);
+            this.inputPicturebox.Name = "inputPicturebox";
+            this.inputPicturebox.Size = new System.Drawing.Size(592, 410);
+            this.inputPicturebox.TabIndex = 0;
+            this.inputPicturebox.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -476,11 +476,11 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.button4);
-            this.groupBox5.Controls.Add(this.button3);
-            this.groupBox5.Controls.Add(this.comboBox1);
-            this.groupBox5.Controls.Add(this.button2);
-            this.groupBox5.Controls.Add(this.button1);
+            this.groupBox5.Controls.Add(this.grayscaleButton);
+            this.groupBox5.Controls.Add(this.separateButton);
+            this.groupBox5.Controls.Add(this.colorRepresentation);
+            this.groupBox5.Controls.Add(this.saveButton);
+            this.groupBox5.Controls.Add(this.loadButton);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
@@ -489,49 +489,55 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Controlls";
             // 
-            // button4
+            // grayscaleButton
             // 
-            this.button4.Location = new System.Drawing.Point(7, 132);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(121, 23);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "To Grayscale";
-            this.button4.UseVisualStyleBackColor = true;
+            this.grayscaleButton.Location = new System.Drawing.Point(7, 132);
+            this.grayscaleButton.Name = "grayscaleButton";
+            this.grayscaleButton.Size = new System.Drawing.Size(121, 23);
+            this.grayscaleButton.TabIndex = 4;
+            this.grayscaleButton.Text = "To Grayscale";
+            this.grayscaleButton.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // separateButton
             // 
-            this.button3.Location = new System.Drawing.Point(7, 105);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(121, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Separate Channels";
-            this.button3.UseVisualStyleBackColor = true;
+            this.separateButton.Location = new System.Drawing.Point(7, 105);
+            this.separateButton.Name = "separateButton";
+            this.separateButton.Size = new System.Drawing.Size(121, 23);
+            this.separateButton.TabIndex = 3;
+            this.separateButton.Text = "Separate Channels";
+            this.separateButton.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // colorRepresentation
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(7, 78);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 2;
+            this.colorRepresentation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.colorRepresentation.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.colorRepresentation.FormattingEnabled = true;
+            this.colorRepresentation.Items.AddRange(new object[] {
+            "HSV",
+            "YCbCr",
+            "Lab"});
+            this.colorRepresentation.Location = new System.Drawing.Point(7, 78);
+            this.colorRepresentation.Name = "colorRepresentation";
+            this.colorRepresentation.Size = new System.Drawing.Size(121, 21);
+            this.colorRepresentation.TabIndex = 2;
             // 
-            // button2
+            // saveButton
             // 
-            this.button2.Location = new System.Drawing.Point(7, 49);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(121, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Save";
-            this.button2.UseVisualStyleBackColor = true;
+            this.saveButton.Location = new System.Drawing.Point(7, 49);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(121, 23);
+            this.saveButton.TabIndex = 1;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // loadButton
             // 
-            this.button1.Location = new System.Drawing.Point(7, 20);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Load";
-            this.button1.UseVisualStyleBackColor = true;
+            this.loadButton.Location = new System.Drawing.Point(7, 20);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(121, 23);
+            this.loadButton.TabIndex = 0;
+            this.loadButton.Text = "Load";
+            this.loadButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -544,13 +550,13 @@
             this.Text = "Colors";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.output3)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.output2)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.output1)).EndInit();
             this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputPicturebox)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -575,18 +581,18 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox output1;
+        private System.Windows.Forms.PictureBox output3;
+        private System.Windows.Forms.PictureBox output2;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox inputPicturebox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.ComboBox colorRepresentation;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button grayscaleButton;
+        private System.Windows.Forms.Button separateButton;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label1;
