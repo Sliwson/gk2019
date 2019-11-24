@@ -196,6 +196,8 @@
             // inputPicturebox
             // 
             this.inputPicturebox.BackColor = System.Drawing.Color.White;
+            this.inputPicturebox.BackgroundImage = global::Colors.Properties.Resources.Flower;
+            this.inputPicturebox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.inputPicturebox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inputPicturebox.Location = new System.Drawing.Point(10, 16);
             this.inputPicturebox.Name = "inputPicturebox";
@@ -497,6 +499,7 @@
             this.grayscaleButton.TabIndex = 4;
             this.grayscaleButton.Text = "To Grayscale";
             this.grayscaleButton.UseVisualStyleBackColor = true;
+            this.grayscaleButton.Click += new System.EventHandler(this.grayscaleButton_Click);
             // 
             // separateButton
             // 
@@ -506,6 +509,7 @@
             this.separateButton.TabIndex = 3;
             this.separateButton.Text = "Separate Channels";
             this.separateButton.UseVisualStyleBackColor = true;
+            this.separateButton.Click += new System.EventHandler(this.separateButton_Click);
             // 
             // colorRepresentation
             // 
@@ -520,6 +524,7 @@
             this.colorRepresentation.Name = "colorRepresentation";
             this.colorRepresentation.Size = new System.Drawing.Size(121, 21);
             this.colorRepresentation.TabIndex = 2;
+            this.colorRepresentation.SelectedIndexChanged += new System.EventHandler(this.colorRepresentation_SelectedIndexChanged);
             // 
             // saveButton
             // 
@@ -529,6 +534,7 @@
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // loadButton
             // 
@@ -538,6 +544,7 @@
             this.loadButton.TabIndex = 0;
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // Form1
             // 

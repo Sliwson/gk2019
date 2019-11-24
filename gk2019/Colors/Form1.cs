@@ -17,5 +17,30 @@ namespace Colors
             InitializeComponent();
             colorRepresentation.SelectedIndex = 0;
         }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separateButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grayscaleButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void colorRepresentation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
