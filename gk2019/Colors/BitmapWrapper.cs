@@ -55,8 +55,8 @@ namespace Colors
                         byte B = currentLine[x]; 
                         byte G = currentLine[x + 1];
                         byte R = currentLine[x + 2];
-                        byte A = currentLine[x + 3];
-                        colors[y, colorX] = Color.FromArgb(R, G, B, A);
+                        byte A = 255; // currentLine[x + 3]; force 255 alpha
+                        colors[y, colorX] = Color.FromArgb(A, R, G, B);
                     }
                 });
 
@@ -84,8 +84,9 @@ namespace Colors
             return bitmap;
         }
 
-        public void WriteToBitmap(Bitmap target)
+        public Bitmap ToBitmap()
         {
+            Bitmap target = new Bitmap(size.Width, size.Height);
             unsafe
             {
                 BitmapData bitmapData = target.LockBits(new Rectangle(0, 0, target.Width, target.Height), ImageLockMode.ReadWrite, target.PixelFormat);
@@ -101,14 +102,18 @@ namespace Colors
                     for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
                     {
                         int colorX = x / bytesPerPixel;
-                        currentLine[x] = colors[y, colorX].B;
-                        currentLine[x + 1] = colors[y, colorX].G;
-                        currentLine[x + 2] = colors[y, colorX].R;
+                        var color = colors[y, colorX];
+                        currentLine[x] = color.B;
+                        currentLine[x + 1] = color.G;
+                        currentLine[x + 2] = color.R;
+                        currentLine[x + 3] = color.A;
                     }
                 });
 
                 target.UnlockBits(bitmapData);
             }
+
+            return target;
         }
 
         public void SaveToFileDialog()
@@ -118,8 +123,7 @@ namespace Colors
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Bitmap bmp = new Bitmap(size.Width, size.Height);
-                WriteToBitmap(bmp);
+                Bitmap bmp = ToBitmap();
                 bmp.Save(dialog.FileName, ImageFormat.Jpeg);
             }
         }
