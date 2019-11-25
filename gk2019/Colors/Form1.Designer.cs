@@ -126,6 +126,7 @@
             // output3
             // 
             this.output3.BackColor = System.Drawing.Color.White;
+            this.output3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.output3.Cursor = System.Windows.Forms.Cursors.Default;
             this.output3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.output3.Location = new System.Drawing.Point(10, 16);
@@ -149,6 +150,7 @@
             // output2
             // 
             this.output2.BackColor = System.Drawing.Color.White;
+            this.output2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.output2.Cursor = System.Windows.Forms.Cursors.Default;
             this.output2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.output2.Location = new System.Drawing.Point(10, 16);
@@ -172,6 +174,7 @@
             // output1
             // 
             this.output1.BackColor = System.Drawing.Color.White;
+            this.output1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.output1.Cursor = System.Windows.Forms.Cursors.Default;
             this.output1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.output1.Location = new System.Drawing.Point(10, 16);
