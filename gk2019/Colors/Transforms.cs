@@ -11,7 +11,24 @@ namespace Colors
     {
         public static void RgbToHsv(BitmapWrapper input, BitmapWrapper outH, BitmapWrapper outS, BitmapWrapper outV)
         {
+            var size = input.GetSize();
+            Parallel.For(0, size.Height, y => {
+                for (int x = 0; x < size.Width; x++)
+                {
+                    (float h, float s, float v) = RgbToHsv(input.GetPixel(x, y));
+                    
+                    h = h / 360 * 255;
+                    s *= 255;
+                    v *= 255;
 
+                    int hi = (int)h;
+                    int si = (int)s;
+                    int vi = (int)v;
+                    outH.SetPixel(x, y, Color.FromArgb(hi, hi, hi));
+                    outS.SetPixel(x, y, Color.FromArgb(si, si, si));
+                    outV.SetPixel(x, y, Color.FromArgb(vi, vi, vi));
+                }
+            });
         }
 
         private static (float, float, float) RgbToHsv(Color c)
@@ -27,7 +44,7 @@ namespace Colors
             float h = 0;
             if (max == min)
                 h = 0;
-            if (max == r)
+            else if (max == r)
                 h = (g - b) / delta;
             else if (max == g)
                 h = 2 + (b - r) / delta;
