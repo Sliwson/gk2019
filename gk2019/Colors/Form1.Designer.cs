@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.out3box = new System.Windows.Forms.GroupBox();
             this.output3 = new System.Windows.Forms.PictureBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.out2box = new System.Windows.Forms.GroupBox();
             this.output2 = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.out1box = new System.Windows.Forms.GroupBox();
             this.output1 = new System.Windows.Forms.PictureBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.inputPicturebox = new System.Windows.Forms.PictureBox();
@@ -68,11 +68,11 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.out3box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.output3)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.out2box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.output2)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.out1box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.output1)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inputPicturebox)).BeginInit();
@@ -96,9 +96,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.Controls.Add(this.groupBox3, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.out3box, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.out2box, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.out1box, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -111,17 +111,17 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(884, 661);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // groupBox3
+            // out3box
             // 
-            this.groupBox3.Controls.Add(this.output3);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(621, 443);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(10, 3, 10, 8);
-            this.groupBox3.Size = new System.Drawing.Size(260, 215);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "V";
+            this.out3box.Controls.Add(this.output3);
+            this.out3box.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.out3box.Location = new System.Drawing.Point(621, 443);
+            this.out3box.Name = "out3box";
+            this.out3box.Padding = new System.Windows.Forms.Padding(10, 3, 10, 8);
+            this.out3box.Size = new System.Drawing.Size(260, 215);
+            this.out3box.TabIndex = 2;
+            this.out3box.TabStop = false;
+            this.out3box.Text = "V";
             // 
             // output3
             // 
@@ -135,17 +135,17 @@
             this.output3.TabIndex = 1;
             this.output3.TabStop = false;
             // 
-            // groupBox2
+            // out2box
             // 
-            this.groupBox2.Controls.Add(this.output2);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(621, 223);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(10, 3, 10, 8);
-            this.groupBox2.Size = new System.Drawing.Size(260, 214);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "S";
+            this.out2box.Controls.Add(this.output2);
+            this.out2box.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.out2box.Location = new System.Drawing.Point(621, 223);
+            this.out2box.Name = "out2box";
+            this.out2box.Padding = new System.Windows.Forms.Padding(10, 3, 10, 8);
+            this.out2box.Size = new System.Drawing.Size(260, 214);
+            this.out2box.TabIndex = 1;
+            this.out2box.TabStop = false;
+            this.out2box.Text = "S";
             // 
             // output2
             // 
@@ -159,17 +159,17 @@
             this.output2.TabIndex = 1;
             this.output2.TabStop = false;
             // 
-            // groupBox1
+            // out1box
             // 
-            this.groupBox1.Controls.Add(this.output1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(621, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(10, 3, 10, 8);
-            this.groupBox1.Size = new System.Drawing.Size(260, 214);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "H";
+            this.out1box.Controls.Add(this.output1);
+            this.out1box.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.out1box.Location = new System.Drawing.Point(621, 3);
+            this.out1box.Name = "out1box";
+            this.out1box.Padding = new System.Windows.Forms.Padding(10, 3, 10, 8);
+            this.out1box.Size = new System.Drawing.Size(260, 214);
+            this.out1box.TabIndex = 0;
+            this.out1box.TabStop = false;
+            this.out1box.Text = "H";
             // 
             // output1
             // 
@@ -559,11 +559,11 @@
             this.Name = "Form1";
             this.Text = "Colors";
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
+            this.out3box.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.output3)).EndInit();
-            this.groupBox2.ResumeLayout(false);
+            this.out2box.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.output2)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.out1box.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.output1)).EndInit();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.inputPicturebox)).EndInit();
@@ -588,9 +588,9 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox out3box;
+        private System.Windows.Forms.GroupBox out2box;
+        private System.Windows.Forms.GroupBox out1box;
         private System.Windows.Forms.PictureBox output1;
         private System.Windows.Forms.PictureBox output3;
         private System.Windows.Forms.PictureBox output2;

@@ -14,10 +14,13 @@ namespace Colors
     {
         private BitmapWrapper inputBitmap;
         private BitmapWrapper[] outputBitmaps;
+        private Variables variables;
 
         public Form1()
         {
             InitializeComponent();
+
+            variables = new Variables(ColorRepresentation.HSV);
             colorRepresentation.SelectedIndex = 0;
 
             inputBitmap = new BitmapWrapper(Properties.Resources.Flower);
@@ -69,16 +72,17 @@ namespace Colors
             for (int i = 0; i < 3; i++)
                 outputBitmaps[i] = new BitmapWrapper(size.Width, size.Height);
 
-            for (int i = 0; i < 3; i++)
-                BitmapWrapper.Transform(inputBitmap, outputBitmaps[i], identity);
+            if (variables.ColorRepresentation == ColorRepresentation.HSV)
+                Transforms.RgbToHsv(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();
             output2.BackgroundImage = outputBitmaps[1].ToBitmap();
             output3.BackgroundImage = outputBitmaps[2].ToBitmap();
 
-            output1.Invalidate();
-            output2.Invalidate();
-            output3.Invalidate();
+            var outLabels = variables.GetRepresentationLabels();
+            out1box.Text = outLabels[0];
+            out2box.Text = outLabels[1];
+            out3box.Text = outLabels[2];
         }
 
         private void grayscaleButton_Click(object sender, EventArgs e)
@@ -88,7 +92,13 @@ namespace Colors
 
         private void colorRepresentation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            var i = colorRepresentation.SelectedIndex;
+            if (i == 0)
+                variables.ColorRepresentation = ColorRepresentation.HSV;
+            else if (i == 1)
+                variables.ColorRepresentation = ColorRepresentation.YCbCr;
+            else
+                variables.ColorRepresentation = ColorRepresentation.Lab;
         }
     }
 }
