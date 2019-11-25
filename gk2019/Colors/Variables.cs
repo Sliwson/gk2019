@@ -48,7 +48,28 @@ namespace Colors
 
     class Variables
     {
+        public Variables(ColorRepresentation initialRepresentation)
+        {
+            ColorRepresentation = initialRepresentation;
+            LabSettings = new LabSettings();
+        }
+
         public ColorRepresentation ColorRepresentation { get; set; }
         public LabSettings LabSettings { get; set; }
+
+        public string[] GetRepresentationLabels()
+        {
+            switch (ColorRepresentation)
+            {
+                case ColorRepresentation.HSV:
+                    return new string[] { "H", "S", "V" };
+                case ColorRepresentation.YCbCr:
+                    return new string[] { "Y", "Cb", "Cr" };
+                case ColorRepresentation.Lab:
+                    return new string[] { "L", "a", "b" };
+            }
+
+            return null;
+        }
     }
 }
