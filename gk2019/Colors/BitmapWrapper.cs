@@ -116,10 +116,13 @@ namespace Colors
             return target;
         }
 
-        public void SaveToFileDialog()
+        public void SaveToFileDialog(string title = "Save bitmap", string filename = "Bitmap")
         {
             SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|png files (*.png)|*.png";
             dialog.InitialDirectory = ".";
+            dialog.Title = title;
+            dialog.FileName = filename;
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {

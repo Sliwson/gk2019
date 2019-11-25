@@ -35,7 +35,23 @@ namespace Colors
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (outputBitmaps == null)
+            {
+                MessageBox.Show("No output bitmap!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            for (int i = 0; i < 3; i++)
+            {
+                if (outputBitmaps[i] == null)
+                {
+                    MessageBox.Show("No input bitmap!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+                outputBitmaps[i].SaveToFileDialog($"Save output {i + 1}", $"Bitmap{i+1}");                
         }
 
         private void separateButton_Click(object sender, EventArgs e)
