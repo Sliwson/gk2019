@@ -12,15 +12,25 @@ namespace Colors
 {
     public partial class Form1 : Form
     {
+        private BitmapWrapper inputBitmap;
+        private BitmapWrapper[] outputBitmaps;
+
         public Form1()
         {
             InitializeComponent();
             colorRepresentation.SelectedIndex = 0;
+
+            inputBitmap = new BitmapWrapper(Properties.Resources.Flower);
         }
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-
+            var result = BitmapWrapper.GetFromFileDialog();
+            if (result != null)
+            {
+                inputBitmap = result;
+                inputPicturebox.BackgroundImage = inputBitmap.GetUnderlyingBitmap();
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
