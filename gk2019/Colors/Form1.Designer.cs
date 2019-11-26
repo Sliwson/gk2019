@@ -57,8 +57,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.predefinedProfileCombo = new System.Windows.Forms.ComboBox();
+            this.predefinedIlumi = new System.Windows.Forms.ComboBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -258,8 +258,8 @@
             this.tableLayoutPanel3.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.comboBox2, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.comboBox3, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.predefinedProfileCombo, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.predefinedIlumi, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.numericUpDown1, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.numericUpDown9, 2, 7);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -279,6 +279,7 @@
             // 
             // numericUpDown8
             // 
+            this.numericUpDown8.DecimalPlaces = 4;
             this.numericUpDown8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown8.Location = new System.Drawing.Point(209, 141);
             this.numericUpDown8.Name = "numericUpDown8";
@@ -287,6 +288,7 @@
             // 
             // numericUpDown7
             // 
+            this.numericUpDown7.DecimalPlaces = 4;
             this.numericUpDown7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown7.Location = new System.Drawing.Point(129, 141);
             this.numericUpDown7.Name = "numericUpDown7";
@@ -295,6 +297,7 @@
             // 
             // numericUpDown6
             // 
+            this.numericUpDown6.DecimalPlaces = 4;
             this.numericUpDown6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown6.Location = new System.Drawing.Point(209, 118);
             this.numericUpDown6.Name = "numericUpDown6";
@@ -303,6 +306,7 @@
             // 
             // numericUpDown5
             // 
+            this.numericUpDown5.DecimalPlaces = 4;
             this.numericUpDown5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown5.Location = new System.Drawing.Point(129, 118);
             this.numericUpDown5.Name = "numericUpDown5";
@@ -311,6 +315,7 @@
             // 
             // numericUpDown4
             // 
+            this.numericUpDown4.DecimalPlaces = 4;
             this.numericUpDown4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown4.Location = new System.Drawing.Point(209, 95);
             this.numericUpDown4.Name = "numericUpDown4";
@@ -319,6 +324,7 @@
             // 
             // numericUpDown3
             // 
+            this.numericUpDown3.DecimalPlaces = 4;
             this.numericUpDown3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown3.Location = new System.Drawing.Point(129, 95);
             this.numericUpDown3.Name = "numericUpDown3";
@@ -327,6 +333,7 @@
             // 
             // numericUpDown2
             // 
+            this.numericUpDown2.DecimalPlaces = 4;
             this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown2.Location = new System.Drawing.Point(209, 72);
             this.numericUpDown2.Name = "numericUpDown2";
@@ -427,9 +434,9 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Left;
             this.label2.Location = new System.Drawing.Point(3, 23);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 23);
+            this.label2.Size = new System.Drawing.Size(104, 23);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Predefined iluminant";
+            this.label2.Text = "Predefined illuminant";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
@@ -443,28 +450,35 @@
             this.label1.Text = "Predefined color profile";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // comboBox2
+            // predefinedProfileCombo
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.comboBox2, 2);
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(129, 3);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(154, 21);
-            this.comboBox2.TabIndex = 8;
+            this.tableLayoutPanel3.SetColumnSpan(this.predefinedProfileCombo, 2);
+            this.predefinedProfileCombo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.predefinedProfileCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.predefinedProfileCombo.FormattingEnabled = true;
+            this.predefinedProfileCombo.Items.AddRange(new object[] {
+            "sRGB"});
+            this.predefinedProfileCombo.Location = new System.Drawing.Point(129, 3);
+            this.predefinedProfileCombo.Name = "predefinedProfileCombo";
+            this.predefinedProfileCombo.Size = new System.Drawing.Size(154, 21);
+            this.predefinedProfileCombo.TabIndex = 8;
             // 
-            // comboBox3
+            // predefinedIlumi
             // 
-            this.tableLayoutPanel3.SetColumnSpan(this.comboBox3, 2);
-            this.comboBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(129, 26);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(154, 21);
-            this.comboBox3.TabIndex = 9;
+            this.tableLayoutPanel3.SetColumnSpan(this.predefinedIlumi, 2);
+            this.predefinedIlumi.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.predefinedIlumi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.predefinedIlumi.FormattingEnabled = true;
+            this.predefinedIlumi.Items.AddRange(new object[] {
+            "D65"});
+            this.predefinedIlumi.Location = new System.Drawing.Point(129, 26);
+            this.predefinedIlumi.Name = "predefinedIlumi";
+            this.predefinedIlumi.Size = new System.Drawing.Size(154, 21);
+            this.predefinedIlumi.TabIndex = 9;
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.DecimalPlaces = 4;
             this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown1.Location = new System.Drawing.Point(129, 72);
             this.numericUpDown1.Name = "numericUpDown1";
@@ -473,6 +487,7 @@
             // 
             // numericUpDown9
             // 
+            this.numericUpDown9.DecimalPlaces = 4;
             this.numericUpDown9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown9.Location = new System.Drawing.Point(209, 164);
             this.numericUpDown9.Name = "numericUpDown9";
@@ -613,8 +628,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox predefinedProfileCombo;
+        private System.Windows.Forms.ComboBox predefinedIlumi;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numericUpDown8;
