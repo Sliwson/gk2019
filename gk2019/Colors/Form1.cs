@@ -33,6 +33,7 @@ namespace Colors
             {
                 inputBitmap = result;
                 inputPicturebox.BackgroundImage = inputBitmap.GetUnderlyingBitmap();
+                GC.Collect();
             }
         }
 
@@ -85,6 +86,7 @@ namespace Colors
             out1box.Text = outLabels[0];
             out2box.Text = outLabels[1];
             out3box.Text = outLabels[2];
+            GC.Collect();
         }
 
         private void grayscaleButton_Click(object sender, EventArgs e)
@@ -95,6 +97,7 @@ namespace Colors
             Transforms.RgbToGrayscale(inputBitmap, outputBitmap);
             inputBitmap = outputBitmap;
             inputPicturebox.BackgroundImage = inputBitmap.ToBitmap();
+            GC.Collect();
         }
 
         private void colorRepresentation_SelectedIndexChanged(object sender, EventArgs e)

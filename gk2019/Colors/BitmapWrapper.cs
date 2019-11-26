@@ -49,7 +49,7 @@ namespace Colors
                 Parallel.For(0, heightInPixels, y =>
                 {
                     byte* currentLine = PtrFirstPixel + (y * bitmapData.Stride);
-                    for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
+                    for (int x = 0; x < widthInBytes; x += bytesPerPixel)
                     {
                         int colorX = x / bytesPerPixel;
                         byte B = currentLine[x]; 
@@ -118,11 +118,13 @@ namespace Colors
 
         public void SaveToFileDialog(string title = "Save bitmap", string filename = "Bitmap")
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|png files (*.png)|*.png";
-            dialog.InitialDirectory = ".";
-            dialog.Title = title;
-            dialog.FileName = filename;
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|png files (*.png)|*.png",
+                InitialDirectory = ".",
+                Title = title,
+                FileName = filename
+            };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -133,9 +135,11 @@ namespace Colors
 
         public static BitmapWrapper GetFromFileDialog()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|png files (*.png)|*.png";
-            dialog.InitialDirectory = ".";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "bmp files (*.bmp)|*.bmp|jpg files (*.jpg)|*.jpg|png files (*.png)|*.png",
+                InitialDirectory = "."
+            };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
