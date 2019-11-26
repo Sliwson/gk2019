@@ -74,6 +74,8 @@ namespace Colors
 
             if (variables.ColorRepresentation == ColorRepresentation.HSV)
                 Transforms.RgbToHsv(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
+            else if (variables.ColorRepresentation == ColorRepresentation.YCbCr)
+                Transforms.RgbToYCbCr(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();
             output2.BackgroundImage = outputBitmaps[1].ToBitmap();
