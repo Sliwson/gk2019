@@ -89,7 +89,12 @@ namespace Colors
 
         private void grayscaleButton_Click(object sender, EventArgs e)
         {
+            var size = inputBitmap.GetSize();
+            var outputBitmap = new BitmapWrapper(size.Width, size.Height);
 
+            Transforms.RgbToGrayscale(inputBitmap, outputBitmap);
+            inputBitmap = outputBitmap;
+            inputPicturebox.BackgroundImage = inputBitmap.ToBitmap();
         }
 
         private void colorRepresentation_SelectedIndexChanged(object sender, EventArgs e)

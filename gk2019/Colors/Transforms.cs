@@ -9,6 +9,22 @@ namespace Colors
 {
     class Transforms
     {
+        public static void RgbToGrayscale(BitmapWrapper input, BitmapWrapper output)
+        {
+            BitmapWrapper.Transform(input, output, RgbToGrayscale);
+        }
+
+        public static Color RgbToGrayscale(Color c)
+        {
+            int y = (int)(0.299 * c.R + 0.587 * c.G + 0.114 * c.B);
+            if (y > 255)
+                y = 255;
+            else if (y < 0)
+                y = 0;
+
+            return Color.FromArgb(y, y, y);
+        }
+
         public static void RgbToYCbCr(BitmapWrapper input, BitmapWrapper outY, BitmapWrapper outCb, BitmapWrapper outCr)
         {
             var size = input.GetSize();
