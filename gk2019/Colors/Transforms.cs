@@ -25,9 +25,22 @@ namespace Colors
             return Color.FromArgb(y, y, y);
         }
 
-        public static void RgbToLab(BitmapWrapper input, BitmapWrapper outL, BitmapWrapper outA, BitmapWrapper outB)
+        public static void RgbToLab(BitmapWrapper input, BitmapWrapper outL, BitmapWrapper outA, BitmapWrapper outB, LabSettings s)
         {
+            Func<Chromacity, (float, float, float)> getCoordinaes = c => (c.X / c.Y, 1, (1 - c.X - c.Y) / c.Y);
+            (float Xr, float Yr, float Zr) = getCoordinaes(s.RedPrimary);
+            (float Xg, float Yg, float Zg) = getCoordinaes(s.GreenPrimary);
+            (float Xb, float Yb, float Zb) = getCoordinaes(s.BluePrimary);
 
+            float Xw = s.WhitePoint.X / s.WhitePoint.Y;
+            float Yw = 1;
+            float z = 1 - s.WhitePoint.X - s.WhitePoint.Y;
+            float Zw = z / s.WhitePoint.Y;
+
+            float[,] sMatrix = new float[3, 3] {
+                { Xr, Xg, Xb },
+                { Yr, Yg, Yb },
+                { Zr, Zg, Zb } };
         }
 
         public static void RgbToYCbCr(BitmapWrapper input, BitmapWrapper outY, BitmapWrapper outCb, BitmapWrapper outCr)
