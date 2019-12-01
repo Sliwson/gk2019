@@ -32,13 +32,22 @@ namespace Colors
 
     public enum Illuminant
     {
-        D65
+        A,
+        B,
+        C,
+        D50,
+        D55,
+        D65,
+        D75,
+        I9300K,
+        E,
+        F2,
+        F7,
+        F11
     }
 
     public class LabSettings
     {
-        public ColorProfile ColorProfile { get; set; }
-        public Illuminant Illuminant { get; set; }
         public Chromacity RedPrimary { get; set; }
         public Chromacity GreenPrimary { get; set; }
         public Chromacity BluePrimary { get; set; }
@@ -51,11 +60,9 @@ namespace Colors
         public Variables(ColorRepresentation initialRepresentation)
         {
             ColorRepresentation = initialRepresentation;
-            LabSettings = new LabSettings();
         }
 
         public ColorRepresentation ColorRepresentation { get; set; }
-        public LabSettings LabSettings { get; set; }
 
         public string[] GetRepresentationLabels()
         {
@@ -71,5 +78,39 @@ namespace Colors
 
             return null;
         }
+
+        public static Chromacity IlluminantToWhitePoint(Illuminant i)
+        {
+            switch (i)
+            {
+                case Illuminant.A:
+                    return new Chromacity { X = 0.44757f, Y = 0.40744f };
+                case Illuminant.B:
+                    return new Chromacity { X = 0.34840f, Y = 0.35160f };
+                case Illuminant.C:
+                    return new Chromacity { X = 0.31006f, Y = 0.31615f };
+                case Illuminant.D50:
+                    return new Chromacity { X = 0.34567f, Y = 0.35850f };
+                case Illuminant.D55:
+                    return new Chromacity { X = 0.33242f, Y = 0.34743f };
+                case Illuminant.D65:
+                    return new Chromacity { X = 0.31273f, Y = 0.32902f };
+                case Illuminant.D75:
+                    return new Chromacity { X = 0.29902f, Y = 0.31485f };
+                case Illuminant.I9300K:
+                    return new Chromacity { X = 0.28480f, Y = 0.29320f };
+                case Illuminant.E:
+                    return new Chromacity { X = 0.33333f, Y = 0.33333f };
+                case Illuminant.F2:
+                    return new Chromacity { X = 0.37207f, Y = 0.37512f };
+                case Illuminant.F7:
+                    return new Chromacity { X = 0.31285f, Y = 0.32918f };
+                case Illuminant.F11:
+                    return new Chromacity { X = 0.38054f, Y = 0.37691f };
+            }
+
+            return new Chromacity { X = 0.31273f, Y = 0.32902f };
+        }
+
     }
 }
