@@ -90,7 +90,7 @@ namespace Colors
                     Gamma = (float)gamma.Value
                 };
 
-                Transforms.RgbToLab(input:, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2], labSettings);
+                Transforms.RgbToLab(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2], labSettings);
             }
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();

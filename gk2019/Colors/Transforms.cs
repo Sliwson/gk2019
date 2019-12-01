@@ -51,13 +51,34 @@ namespace Colors
                 { Sr * Yr, Sg * Yg, Sb * Yb },
                 { Sr * Zr, Sg * Zg, Sb * Zb }
             };
+            
+            //transform
+            var size = input.GetSize();
+            Parallel.For(0, size.Height, h => {
+                for (int x = 0; x < size.Width; x++)
+                {
+                    (float L, float a, float b) = RgbToLab(input.GetPixel(x, h), M, new float[3] { Xw, Yw, Zw });
+
+                    int li = (int)(L / 100f * 255f);
+                    int ai = (int)a + 127;
+                    int bi = (int)b + 127;
+
+                    li = ClampColorInt(li);
+                    ai = ClampColorInt(ai);
+                    bi = ClampColorInt(bi);
+                    
+                    outL.SetPixel(x, h, Color.FromArgb(li, li, li));
+                    outA.SetPixel(x, h, Color.FromArgb(ai, 255 - ai, 127));
+                    outB.SetPixel(x, h, Color.FromArgb(bi ,127, 255 - bi));
+                }
+            });
         }
 
         private static void InverseMatrix3(float[,] m)
         {
-            float determinant = m[0, 0] * [m[1, 1] * m[2, 2] - m[2, 1] * m[1, 2]] -
-             m[0, 1] * [m[1, 0] * m[2, 2] - m[1, 2] * m[2, 0]] +
-             m[0, 2] * [m[1, 0] * m[2, 1] - m[1, 1] * m[2, 0]];
+            float determinant = m[0, 0] * (m[1, 1] * m[2, 2] - m[2, 1] * m[1, 2]) -
+             m[0, 1] * (m[1, 0] * m[2, 2] - m[1, 2] * m[2, 0]) +
+             m[0, 2] * (m[1, 0] * m[2, 1] - m[1, 1] * m[2, 0]);
 
             float invDet = 1 / determinant;
 
@@ -89,9 +110,26 @@ namespace Colors
             for (int y = 0; y < 3; y++)
             {
                 for (int x = 0; x < 3; x++)
-                    result[y] = m[y, x] * v[x];
+                    result[y] += m[y, x] * v[x];
             }
             return result;
+        }
+
+        private static (float, float, float) RgbToLab(Color c, float[,] M, float[] XwYwZw)
+        {
+            var xyz = Matrix3TimesVector(M, new float[3] { c.R / 255f, c.G / 255f, c.B / 255f });
+
+            float XR = XwYwZw[0];
+            float YR = XwYwZw[1];
+            float ZR = XwYwZw[2];
+
+            var yyr = xyz[1] / YR;
+            var rootDegree = 1.0 / 3.0;
+            float L = yyr > 0.008856 ? (116f * (float)Math.Pow(yyr, rootDegree) - 16) : 903.3f * yyr;
+            float a = 500f * (float)(Math.Pow(xyz[0] / XR, rootDegree) - Math.Pow(xyz[1] / YR, rootDegree));
+            float b = 200f * (float)(Math.Pow(xyz[1] / YR, rootDegree) - Math.Pow(xyz[2] / ZR, rootDegree));
+
+            return (L, a, b);
         }
 
         public static void RgbToYCbCr(BitmapWrapper input, BitmapWrapper outY, BitmapWrapper outCb, BitmapWrapper outCr)
@@ -177,6 +215,13 @@ namespace Colors
             float v = max;
 
             return (h, s, v);
+        }
+
+        private static int ClampColorInt(int factor)
+        {
+            if (factor < 0) factor = 0;
+            else if (factor > 255) factor = 255;
+            return factor;
         }
     }
 }
