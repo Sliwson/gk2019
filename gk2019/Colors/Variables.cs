@@ -27,7 +27,12 @@ namespace Colors
 
     public enum ColorProfile
     {
-        sRGB
+        sRGB,
+        AdobeRGB,
+        AppleRGB,
+        CIERGB,
+        WideGamut,
+        PAL
     }
 
     public enum Illuminant
@@ -46,13 +51,21 @@ namespace Colors
         F11
     }
 
-    public class LabSettings
+    public class ParametersBase
     {
         public Chromacity RedPrimary { get; set; }
         public Chromacity GreenPrimary { get; set; }
         public Chromacity BluePrimary { get; set; }
-        public Chromacity WhitePoint { get; set; }
         public float Gamma { get; set; }
+    }
+    public class LabSettings : ParametersBase
+    {
+        public Chromacity WhitePoint { get; set; }
+    }
+
+    public class PredefinedColorProfile : ParametersBase
+    {
+        public Illuminant WhitePoint { get; set; }
     }
 
     class Variables
@@ -111,6 +124,76 @@ namespace Colors
 
             return new Chromacity { X = 0.31273f, Y = 0.32902f };
         }
+        
+        public static PredefinedColorProfile ColorProfileToLabSettings(ColorProfile c)
+        {
+            switch (c)
+            {
+                case ColorProfile.sRGB:
+                    return new PredefinedColorProfile
+                    {
+                        RedPrimary = new Chromacity(0.64f, 0.33f),
+                        GreenPrimary = new Chromacity(0.3f, 0.6f),
+                        BluePrimary = new Chromacity(0.15f, 0.06f),
+                        WhitePoint = Illuminant.D65,
+                        Gamma = 2.2f
+                    };
+                case ColorProfile.AdobeRGB:
+                    return new PredefinedColorProfile
+                    {
 
+                        RedPrimary = new Chromacity(0.64f, 0.33f),
+                        GreenPrimary = new Chromacity(0.21f, 0.71f),
+                        BluePrimary = new Chromacity(0.15f, 0.06f),
+                        WhitePoint = Illuminant.D65,
+                        Gamma = 2.2f
+                    };
+                case ColorProfile.AppleRGB:
+                    return new PredefinedColorProfile
+                    {
+                        RedPrimary = new Chromacity(0.625f, 0.34f),
+                        GreenPrimary = new Chromacity(0.28f, 0.595f),
+                        BluePrimary = new Chromacity(0.155f, 0.07f),
+                        WhitePoint = Illuminant.D65,
+                        Gamma = 1.8f
+                    };
+                case ColorProfile.CIERGB:
+                    return new PredefinedColorProfile
+                    {
+                        RedPrimary = new Chromacity(0.735f, 0.265f),
+                        GreenPrimary = new Chromacity(0.274f, 0.7170f),
+                        BluePrimary = new Chromacity(0.167f, 0.009f),
+                        WhitePoint = Illuminant.E,
+                        Gamma = 2.2f
+                    };
+                case ColorProfile.WideGamut:
+                    return new PredefinedColorProfile
+                    {
+                        RedPrimary = new Chromacity(0.7347f, 0.2653f),
+                        GreenPrimary = new Chromacity(0.1152f, 0.8264f),
+                        BluePrimary = new Chromacity(0.1566f, 0.0177f),
+                        WhitePoint = Illuminant.D50,
+                        Gamma = 1.2f
+                    };
+                case ColorProfile.PAL:
+                    return new PredefinedColorProfile
+                    {
+                        RedPrimary = new Chromacity(0.64f, 0.33f),
+                        GreenPrimary = new Chromacity(0.29f, 0.6f),
+                        BluePrimary = new Chromacity(0.15f, 0.06f),
+                        WhitePoint = Illuminant.D65,
+                        Gamma = 1.95f
+                    };
+            }
+
+            return new PredefinedColorProfile
+            {
+                RedPrimary = new Chromacity(0.64f, 0.33f),
+                GreenPrimary = new Chromacity(0.3f, 0.6f),
+                BluePrimary = new Chromacity(0.15f, 0.06f),
+                WhitePoint = Illuminant.D65,
+                Gamma = 2.2f
+            };
+        }
     }
 }

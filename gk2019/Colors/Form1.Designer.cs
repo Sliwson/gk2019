@@ -502,11 +502,17 @@
             this.predefinedProfileCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.predefinedProfileCombo.FormattingEnabled = true;
             this.predefinedProfileCombo.Items.AddRange(new object[] {
-            "sRGB"});
+            "sRGB",
+            "Adobe RGB",
+            "Apple RGB",
+            "CIE RGB",
+            "Wide Gamut",
+            "PAL/SECAM"});
             this.predefinedProfileCombo.Location = new System.Drawing.Point(129, 3);
             this.predefinedProfileCombo.Name = "predefinedProfileCombo";
             this.predefinedProfileCombo.Size = new System.Drawing.Size(154, 21);
             this.predefinedProfileCombo.TabIndex = 8;
+            this.predefinedProfileCombo.SelectedIndexChanged += new System.EventHandler(this.predefinedProfileCombo_SelectedIndexChanged);
             // 
             // predefinedIlumi
             // 

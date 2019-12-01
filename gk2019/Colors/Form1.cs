@@ -23,6 +23,7 @@ namespace Colors
             variables = new Variables(ColorRepresentation.HSV);
             colorRepresentation.SelectedIndex = 0;
             predefinedIlumi.SelectedIndex = 5;
+            predefinedProfileCombo.SelectedIndex = 0;
 
             inputBitmap = new BitmapWrapper(Properties.Resources.Flower);
         }
@@ -123,6 +124,21 @@ namespace Colors
             var whitePoint = Variables.IlluminantToWhitePoint(illuminant);
             whitePointX.Value = (decimal)whitePoint.X;
             whitePointY.Value = (decimal)whitePoint.Y;
+        }
+
+        private void predefinedProfileCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var predefinedColorProfile = (ColorProfile)Enum.ToObject(typeof(ColorProfile), predefinedProfileCombo.SelectedIndex);
+            var vars = Variables.ColorProfileToLabSettings(predefinedColorProfile);
+            predefinedIlumi.SelectedIndex = (int)vars.WhitePoint;
+
+            gamma.Value = (decimal)vars.Gamma;
+            redPrimaryX.Value = (decimal)vars.RedPrimary.X;
+            redPrimaryY.Value = (decimal)vars.RedPrimary.Y;
+            greenPrimaryX.Value = (decimal)vars.GreenPrimary.X;
+            greenPrimaryY.Value = (decimal)vars.GreenPrimary.Y;
+            bluePrimaryX.Value = (decimal)vars.BluePrimary.X;
+            bluePrimaryY.Value = (decimal)vars.BluePrimary.Y;
         }
     }
 }
