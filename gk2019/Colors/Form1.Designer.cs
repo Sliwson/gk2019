@@ -40,13 +40,13 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.whitePointY = new System.Windows.Forms.NumericUpDown();
+            this.whitePointX = new System.Windows.Forms.NumericUpDown();
+            this.bluePrimaryY = new System.Windows.Forms.NumericUpDown();
+            this.bluePrimaryX = new System.Windows.Forms.NumericUpDown();
+            this.greenPrimaryY = new System.Windows.Forms.NumericUpDown();
+            this.greenPrimaryX = new System.Windows.Forms.NumericUpDown();
+            this.redPrimaryY = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -59,8 +59,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.predefinedProfileCombo = new System.Windows.Forms.ComboBox();
             this.predefinedIlumi = new System.Windows.Forms.ComboBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+            this.redPrimaryX = new System.Windows.Forms.NumericUpDown();
+            this.gamma = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.grayscaleButton = new System.Windows.Forms.Button();
             this.separateButton = new System.Windows.Forms.Button();
@@ -79,15 +79,15 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.whitePointY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.whitePointX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bluePrimaryY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bluePrimaryX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenPrimaryY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenPrimaryX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redPrimaryY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redPrimaryX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamma)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -241,13 +241,13 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown8, 2, 6);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown7, 1, 6);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown6, 2, 5);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown5, 1, 5);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown4, 2, 4);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown3, 1, 4);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown2, 2, 3);
+            this.tableLayoutPanel3.Controls.Add(this.whitePointY, 2, 6);
+            this.tableLayoutPanel3.Controls.Add(this.whitePointX, 1, 6);
+            this.tableLayoutPanel3.Controls.Add(this.bluePrimaryY, 2, 5);
+            this.tableLayoutPanel3.Controls.Add(this.bluePrimaryX, 1, 5);
+            this.tableLayoutPanel3.Controls.Add(this.greenPrimaryY, 2, 4);
+            this.tableLayoutPanel3.Controls.Add(this.greenPrimaryX, 1, 4);
+            this.tableLayoutPanel3.Controls.Add(this.redPrimaryY, 2, 3);
             this.tableLayoutPanel3.Controls.Add(this.label10, 1, 7);
             this.tableLayoutPanel3.Controls.Add(this.label9, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.label8, 0, 2);
@@ -260,8 +260,8 @@
             this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.predefinedProfileCombo, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.predefinedIlumi, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown1, 1, 3);
-            this.tableLayoutPanel3.Controls.Add(this.numericUpDown9, 2, 7);
+            this.tableLayoutPanel3.Controls.Add(this.redPrimaryX, 1, 3);
+            this.tableLayoutPanel3.Controls.Add(this.gamma, 2, 7);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -277,68 +277,68 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(294, 190);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // numericUpDown8
+            // whitePointY
             // 
-            this.numericUpDown8.DecimalPlaces = 4;
-            this.numericUpDown8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown8.Location = new System.Drawing.Point(209, 141);
-            this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown8.TabIndex = 19;
+            this.whitePointY.DecimalPlaces = 4;
+            this.whitePointY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whitePointY.Location = new System.Drawing.Point(209, 141);
+            this.whitePointY.Name = "whitePointY";
+            this.whitePointY.Size = new System.Drawing.Size(74, 20);
+            this.whitePointY.TabIndex = 19;
             // 
-            // numericUpDown7
+            // whitePointX
             // 
-            this.numericUpDown7.DecimalPlaces = 4;
-            this.numericUpDown7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown7.Location = new System.Drawing.Point(129, 141);
-            this.numericUpDown7.Name = "numericUpDown7";
-            this.numericUpDown7.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown7.TabIndex = 18;
+            this.whitePointX.DecimalPlaces = 4;
+            this.whitePointX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whitePointX.Location = new System.Drawing.Point(129, 141);
+            this.whitePointX.Name = "whitePointX";
+            this.whitePointX.Size = new System.Drawing.Size(74, 20);
+            this.whitePointX.TabIndex = 18;
             // 
-            // numericUpDown6
+            // bluePrimaryY
             // 
-            this.numericUpDown6.DecimalPlaces = 4;
-            this.numericUpDown6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown6.Location = new System.Drawing.Point(209, 118);
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown6.TabIndex = 17;
+            this.bluePrimaryY.DecimalPlaces = 4;
+            this.bluePrimaryY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bluePrimaryY.Location = new System.Drawing.Point(209, 118);
+            this.bluePrimaryY.Name = "bluePrimaryY";
+            this.bluePrimaryY.Size = new System.Drawing.Size(74, 20);
+            this.bluePrimaryY.TabIndex = 17;
             // 
-            // numericUpDown5
+            // bluePrimaryX
             // 
-            this.numericUpDown5.DecimalPlaces = 4;
-            this.numericUpDown5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown5.Location = new System.Drawing.Point(129, 118);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown5.TabIndex = 16;
+            this.bluePrimaryX.DecimalPlaces = 4;
+            this.bluePrimaryX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bluePrimaryX.Location = new System.Drawing.Point(129, 118);
+            this.bluePrimaryX.Name = "bluePrimaryX";
+            this.bluePrimaryX.Size = new System.Drawing.Size(74, 20);
+            this.bluePrimaryX.TabIndex = 16;
             // 
-            // numericUpDown4
+            // greenPrimaryY
             // 
-            this.numericUpDown4.DecimalPlaces = 4;
-            this.numericUpDown4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown4.Location = new System.Drawing.Point(209, 95);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown4.TabIndex = 15;
+            this.greenPrimaryY.DecimalPlaces = 4;
+            this.greenPrimaryY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.greenPrimaryY.Location = new System.Drawing.Point(209, 95);
+            this.greenPrimaryY.Name = "greenPrimaryY";
+            this.greenPrimaryY.Size = new System.Drawing.Size(74, 20);
+            this.greenPrimaryY.TabIndex = 15;
             // 
-            // numericUpDown3
+            // greenPrimaryX
             // 
-            this.numericUpDown3.DecimalPlaces = 4;
-            this.numericUpDown3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown3.Location = new System.Drawing.Point(129, 95);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown3.TabIndex = 14;
+            this.greenPrimaryX.DecimalPlaces = 4;
+            this.greenPrimaryX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.greenPrimaryX.Location = new System.Drawing.Point(129, 95);
+            this.greenPrimaryX.Name = "greenPrimaryX";
+            this.greenPrimaryX.Size = new System.Drawing.Size(74, 20);
+            this.greenPrimaryX.TabIndex = 14;
             // 
-            // numericUpDown2
+            // redPrimaryY
             // 
-            this.numericUpDown2.DecimalPlaces = 4;
-            this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown2.Location = new System.Drawing.Point(209, 72);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown2.TabIndex = 13;
+            this.redPrimaryY.DecimalPlaces = 4;
+            this.redPrimaryY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redPrimaryY.Location = new System.Drawing.Point(209, 72);
+            this.redPrimaryY.Name = "redPrimaryY";
+            this.redPrimaryY.Size = new System.Drawing.Size(74, 20);
+            this.redPrimaryY.TabIndex = 13;
             // 
             // label10
             // 
@@ -476,23 +476,23 @@
             this.predefinedIlumi.Size = new System.Drawing.Size(154, 21);
             this.predefinedIlumi.TabIndex = 9;
             // 
-            // numericUpDown1
+            // redPrimaryX
             // 
-            this.numericUpDown1.DecimalPlaces = 4;
-            this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown1.Location = new System.Drawing.Point(129, 72);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown1.TabIndex = 12;
+            this.redPrimaryX.DecimalPlaces = 4;
+            this.redPrimaryX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redPrimaryX.Location = new System.Drawing.Point(129, 72);
+            this.redPrimaryX.Name = "redPrimaryX";
+            this.redPrimaryX.Size = new System.Drawing.Size(74, 20);
+            this.redPrimaryX.TabIndex = 12;
             // 
-            // numericUpDown9
+            // gamma
             // 
-            this.numericUpDown9.DecimalPlaces = 4;
-            this.numericUpDown9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numericUpDown9.Location = new System.Drawing.Point(209, 164);
-            this.numericUpDown9.Name = "numericUpDown9";
-            this.numericUpDown9.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown9.TabIndex = 20;
+            this.gamma.DecimalPlaces = 4;
+            this.gamma.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gamma.Location = new System.Drawing.Point(209, 164);
+            this.gamma.Name = "gamma";
+            this.gamma.Size = new System.Drawing.Size(74, 20);
+            this.gamma.TabIndex = 20;
             // 
             // groupBox5
             // 
@@ -586,15 +586,15 @@
             this.groupBox6.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.whitePointY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.whitePointX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bluePrimaryY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bluePrimaryX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenPrimaryY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.greenPrimaryX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redPrimaryY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redPrimaryX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamma)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -632,15 +632,15 @@
         private System.Windows.Forms.ComboBox predefinedIlumi;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown numericUpDown8;
-        private System.Windows.Forms.NumericUpDown numericUpDown7;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown9;
+        private System.Windows.Forms.NumericUpDown whitePointY;
+        private System.Windows.Forms.NumericUpDown whitePointX;
+        private System.Windows.Forms.NumericUpDown bluePrimaryY;
+        private System.Windows.Forms.NumericUpDown bluePrimaryX;
+        private System.Windows.Forms.NumericUpDown greenPrimaryY;
+        private System.Windows.Forms.NumericUpDown greenPrimaryX;
+        private System.Windows.Forms.NumericUpDown redPrimaryY;
+        private System.Windows.Forms.NumericUpDown redPrimaryX;
+        private System.Windows.Forms.NumericUpDown gamma;
     }
 }
 

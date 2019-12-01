@@ -77,6 +77,14 @@ namespace Colors
                 Transforms.RgbToHsv(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
             else if (variables.ColorRepresentation == ColorRepresentation.YCbCr)
                 Transforms.RgbToYCbCr(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
+            else if (variables.ColorRepresentation == ColorRepresentation.Lab)
+            {
+                //get lab settings
+                var labSettings = new LabSettings()
+                {
+                    RedPrimary = new Chromacity { X = }
+                }
+            }
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();
             output2.BackgroundImage = outputBitmaps[1].ToBitmap();
