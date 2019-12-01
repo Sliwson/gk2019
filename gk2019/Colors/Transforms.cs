@@ -27,20 +27,71 @@ namespace Colors
 
         public static void RgbToLab(BitmapWrapper input, BitmapWrapper outL, BitmapWrapper outA, BitmapWrapper outB, LabSettings s)
         {
+            //create conversion matrix
             Func<Chromacity, (float, float, float)> getCoordinaes = c => (c.X / c.Y, 1, (1 - c.X - c.Y) / c.Y);
             (float Xr, float Yr, float Zr) = getCoordinaes(s.RedPrimary);
             (float Xg, float Yg, float Zg) = getCoordinaes(s.GreenPrimary);
             (float Xb, float Yb, float Zb) = getCoordinaes(s.BluePrimary);
-
-            float Xw = s.WhitePoint.X / s.WhitePoint.Y;
-            float Yw = 1;
-            float z = 1 - s.WhitePoint.X - s.WhitePoint.Y;
-            float Zw = z / s.WhitePoint.Y;
-
+            (float Xw, float Yw, float Zw) = getCoordinaes(s.WhitePoint);
+            
             float[,] sMatrix = new float[3, 3] {
                 { Xr, Xg, Xb },
                 { Yr, Yg, Yb },
                 { Zr, Zg, Zb } };
+
+            InverseMatrix3(sMatrix);
+            float[] SrSgSb = Matrix3TimesVector(sMatrix, new float[] { Xw, Yw, Zw });
+
+            float Sr = SrSgSb[0];
+            float Sg = SrSgSb[1];
+            float Sb = SrSgSb[2];
+
+            float[,] M = new float[3, 3] {
+                { Sr * Xr, Sg * Xg, Sb * Xb },
+                { Sr * Yr, Sg * Yg, Sb * Yb },
+                { Sr * Zr, Sg * Zg, Sb * Zb }
+            };
+        }
+
+        private static void InverseMatrix3(float[,] m)
+        {
+            float determinant = m[0, 0] * [m[1, 1] * m[2, 2] - m[2, 1] * m[1, 2]] -
+             m[0, 1] * [m[1, 0] * m[2, 2] - m[1, 2] * m[2, 0]] +
+             m[0, 2] * [m[1, 0] * m[2, 1] - m[1, 1] * m[2, 0]];
+
+            float invDet = 1 / determinant;
+
+            //optimization with on-stack calculation
+            var f00 = (m[1, 1] * m[2, 2] - m[2, 1] * m[1, 2]) * invDet;
+            var f01 = (m[0, 2] * m[2, 1] - m[0, 1] * m[2, 2]) * invDet;
+            var f02 = (m[0, 1] * m[1, 2] - m[0, 2] * m[1, 1]) * invDet;
+            var f10 = (m[1, 2] * m[2, 0] - m[1, 0] * m[2, 2]) * invDet;
+            var f11 = (m[0, 0] * m[2, 2] - m[0, 2] * m[2, 0]) * invDet;
+            var f12 = (m[1, 0] * m[0, 2] - m[0, 0] * m[1, 2]) * invDet;
+            var f20 = (m[1, 0] * m[2, 1] - m[2, 0] * m[1, 1]) * invDet;
+            var f21 = (m[2, 0] * m[0, 1] - m[0, 0] * m[2, 1]) * invDet;
+            var f22 = (m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1]) * invDet;
+
+            m[0, 0] = f00;
+            m[0, 1] = f01;
+            m[0, 2] = f02;
+            m[1, 0] = f10;
+            m[1, 1] = f11;
+            m[1, 2] = f12;
+            m[2, 0] = f20;
+            m[2, 1] = f21;
+            m[2, 2] = f22;
+        }
+
+        private static float[] Matrix3TimesVector(float[,] m, float[] v)
+        {
+            float[] result = new float[3];
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < 3; x++)
+                    result[y] = m[y, x] * v[x];
+            }
+            return result;
         }
 
         public static void RgbToYCbCr(BitmapWrapper input, BitmapWrapper outY, BitmapWrapper outCb, BitmapWrapper outCr)
