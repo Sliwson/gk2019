@@ -60,8 +60,8 @@ namespace Colors
                     (float L, float a, float b) = RgbToLab(input.GetPixel(x, h), M, new float[3] { Xw, Yw, Zw });
 
                     int li = (int)(L / 100f * 255f);
-                    int ai = (int)a + 127;
-                    int bi = (int)b + 127;
+                    int ai = (int)(a * 128f / 100f) + 127;
+                    int bi = (int)(b * 128f / 100f) + 127;
 
                     li = ClampColorInt(li);
                     ai = ClampColorInt(ai);
