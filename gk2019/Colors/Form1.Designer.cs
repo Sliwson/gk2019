@@ -281,7 +281,17 @@
             // 
             this.whitePointY.DecimalPlaces = 4;
             this.whitePointY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whitePointY.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.whitePointY.Location = new System.Drawing.Point(209, 141);
+            this.whitePointY.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.whitePointY.Name = "whitePointY";
             this.whitePointY.Size = new System.Drawing.Size(74, 20);
             this.whitePointY.TabIndex = 19;
@@ -290,7 +300,17 @@
             // 
             this.whitePointX.DecimalPlaces = 4;
             this.whitePointX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whitePointX.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.whitePointX.Location = new System.Drawing.Point(129, 141);
+            this.whitePointX.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.whitePointX.Name = "whitePointX";
             this.whitePointX.Size = new System.Drawing.Size(74, 20);
             this.whitePointX.TabIndex = 18;
@@ -299,6 +319,11 @@
             // 
             this.bluePrimaryY.DecimalPlaces = 4;
             this.bluePrimaryY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bluePrimaryY.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.bluePrimaryY.Location = new System.Drawing.Point(209, 118);
             this.bluePrimaryY.Name = "bluePrimaryY";
             this.bluePrimaryY.Size = new System.Drawing.Size(74, 20);
@@ -308,6 +333,11 @@
             // 
             this.bluePrimaryX.DecimalPlaces = 4;
             this.bluePrimaryX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bluePrimaryX.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.bluePrimaryX.Location = new System.Drawing.Point(129, 118);
             this.bluePrimaryX.Name = "bluePrimaryX";
             this.bluePrimaryX.Size = new System.Drawing.Size(74, 20);
@@ -317,6 +347,11 @@
             // 
             this.greenPrimaryY.DecimalPlaces = 4;
             this.greenPrimaryY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.greenPrimaryY.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.greenPrimaryY.Location = new System.Drawing.Point(209, 95);
             this.greenPrimaryY.Name = "greenPrimaryY";
             this.greenPrimaryY.Size = new System.Drawing.Size(74, 20);
@@ -326,6 +361,11 @@
             // 
             this.greenPrimaryX.DecimalPlaces = 4;
             this.greenPrimaryX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.greenPrimaryX.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.greenPrimaryX.Location = new System.Drawing.Point(129, 95);
             this.greenPrimaryX.Name = "greenPrimaryX";
             this.greenPrimaryX.Size = new System.Drawing.Size(74, 20);
@@ -335,6 +375,11 @@
             // 
             this.redPrimaryY.DecimalPlaces = 4;
             this.redPrimaryY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redPrimaryY.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.redPrimaryY.Location = new System.Drawing.Point(209, 72);
             this.redPrimaryY.Name = "redPrimaryY";
             this.redPrimaryY.Size = new System.Drawing.Size(74, 20);
@@ -493,6 +538,11 @@
             // 
             this.redPrimaryX.DecimalPlaces = 4;
             this.redPrimaryX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redPrimaryX.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.redPrimaryX.Location = new System.Drawing.Point(129, 72);
             this.redPrimaryX.Name = "redPrimaryX";
             this.redPrimaryX.Size = new System.Drawing.Size(74, 20);
@@ -502,6 +552,11 @@
             // 
             this.gamma.DecimalPlaces = 4;
             this.gamma.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gamma.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.gamma.Location = new System.Drawing.Point(209, 164);
             this.gamma.Name = "gamma";
             this.gamma.Size = new System.Drawing.Size(74, 20);
