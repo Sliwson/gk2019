@@ -325,6 +325,11 @@
             0,
             262144});
             this.bluePrimaryY.Location = new System.Drawing.Point(209, 118);
+            this.bluePrimaryY.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.bluePrimaryY.Name = "bluePrimaryY";
             this.bluePrimaryY.Size = new System.Drawing.Size(74, 20);
             this.bluePrimaryY.TabIndex = 17;
@@ -339,6 +344,11 @@
             0,
             262144});
             this.bluePrimaryX.Location = new System.Drawing.Point(129, 118);
+            this.bluePrimaryX.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.bluePrimaryX.Name = "bluePrimaryX";
             this.bluePrimaryX.Size = new System.Drawing.Size(74, 20);
             this.bluePrimaryX.TabIndex = 16;
@@ -353,6 +363,11 @@
             0,
             262144});
             this.greenPrimaryY.Location = new System.Drawing.Point(209, 95);
+            this.greenPrimaryY.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.greenPrimaryY.Name = "greenPrimaryY";
             this.greenPrimaryY.Size = new System.Drawing.Size(74, 20);
             this.greenPrimaryY.TabIndex = 15;
@@ -367,6 +382,11 @@
             0,
             262144});
             this.greenPrimaryX.Location = new System.Drawing.Point(129, 95);
+            this.greenPrimaryX.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.greenPrimaryX.Name = "greenPrimaryX";
             this.greenPrimaryX.Size = new System.Drawing.Size(74, 20);
             this.greenPrimaryX.TabIndex = 14;
@@ -381,6 +401,11 @@
             0,
             262144});
             this.redPrimaryY.Location = new System.Drawing.Point(209, 72);
+            this.redPrimaryY.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.redPrimaryY.Name = "redPrimaryY";
             this.redPrimaryY.Size = new System.Drawing.Size(74, 20);
             this.redPrimaryY.TabIndex = 13;
@@ -550,6 +575,11 @@
             0,
             262144});
             this.redPrimaryX.Location = new System.Drawing.Point(129, 72);
+            this.redPrimaryX.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.redPrimaryX.Name = "redPrimaryX";
             this.redPrimaryX.Size = new System.Drawing.Size(74, 20);
             this.redPrimaryX.TabIndex = 12;
@@ -564,6 +594,11 @@
             0,
             262144});
             this.gamma.Location = new System.Drawing.Point(209, 164);
+            this.gamma.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.gamma.Name = "gamma";
             this.gamma.Size = new System.Drawing.Size(74, 20);
             this.gamma.TabIndex = 20;
