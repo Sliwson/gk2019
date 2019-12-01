@@ -22,6 +22,7 @@ namespace Colors
 
             variables = new Variables(ColorRepresentation.HSV);
             colorRepresentation.SelectedIndex = 0;
+            predefinedIlumi.SelectedIndex = 5;
 
             inputBitmap = new BitmapWrapper(Properties.Resources.Flower);
         }
@@ -80,10 +81,7 @@ namespace Colors
             else if (variables.ColorRepresentation == ColorRepresentation.Lab)
             {
                 //get lab settings
-                var labSettings = new LabSettings()
-                {
-                    RedPrimary = new Chromacity { X = }
-                }
+                
             }
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();
@@ -117,6 +115,14 @@ namespace Colors
                 variables.ColorRepresentation = ColorRepresentation.YCbCr;
             else
                 variables.ColorRepresentation = ColorRepresentation.Lab;
+        }
+
+        private void predefinedIlumi_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var illuminant = (Illuminant)Enum.ToObject(typeof(Illuminant), predefinedIlumi.SelectedIndex);
+            var whitePoint = Variables.IlluminantToWhitePoint(illuminant);
+            whitePointX.Value = (decimal)whitePoint.X;
+            whitePointY.Value = (decimal)whitePoint.Y;
         }
     }
 }

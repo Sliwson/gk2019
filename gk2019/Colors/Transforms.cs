@@ -25,6 +25,11 @@ namespace Colors
             return Color.FromArgb(y, y, y);
         }
 
+        public static void RgbToLab(BitmapWrapper input, BitmapWrapper outL, BitmapWrapper outA, BitmapWrapper outB)
+        {
+
+        }
+
         public static void RgbToYCbCr(BitmapWrapper input, BitmapWrapper outY, BitmapWrapper outCb, BitmapWrapper outCr)
         {
             var size = input.GetSize();

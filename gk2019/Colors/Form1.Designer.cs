@@ -469,12 +469,25 @@
             this.predefinedIlumi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.predefinedIlumi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.predefinedIlumi.FormattingEnabled = true;
+            this.predefinedIlumi.ImeMode = System.Windows.Forms.ImeMode.On;
             this.predefinedIlumi.Items.AddRange(new object[] {
-            "D65"});
+            "A",
+            "B",
+            "C",
+            "D50",
+            "D55",
+            "D65",
+            "D75",
+            "9300K",
+            "E",
+            "F2",
+            "F7",
+            "F11"});
             this.predefinedIlumi.Location = new System.Drawing.Point(129, 26);
             this.predefinedIlumi.Name = "predefinedIlumi";
             this.predefinedIlumi.Size = new System.Drawing.Size(154, 21);
             this.predefinedIlumi.TabIndex = 9;
+            this.predefinedIlumi.SelectedIndexChanged += new System.EventHandler(this.predefinedIlumi_SelectedIndexChanged);
             // 
             // redPrimaryX
             // 
