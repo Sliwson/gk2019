@@ -292,9 +292,19 @@
             0,
             0,
             0});
+            this.whitePointY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.whitePointY.Name = "whitePointY";
             this.whitePointY.Size = new System.Drawing.Size(74, 20);
             this.whitePointY.TabIndex = 19;
+            this.whitePointY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // whitePointX
             // 
@@ -311,9 +321,19 @@
             0,
             0,
             0});
+            this.whitePointX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.whitePointX.Name = "whitePointX";
             this.whitePointX.Size = new System.Drawing.Size(74, 20);
             this.whitePointX.TabIndex = 18;
+            this.whitePointX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // bluePrimaryY
             // 
@@ -330,9 +350,19 @@
             0,
             0,
             0});
+            this.bluePrimaryY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.bluePrimaryY.Name = "bluePrimaryY";
             this.bluePrimaryY.Size = new System.Drawing.Size(74, 20);
             this.bluePrimaryY.TabIndex = 17;
+            this.bluePrimaryY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // bluePrimaryX
             // 
@@ -349,9 +379,19 @@
             0,
             0,
             0});
+            this.bluePrimaryX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.bluePrimaryX.Name = "bluePrimaryX";
             this.bluePrimaryX.Size = new System.Drawing.Size(74, 20);
             this.bluePrimaryX.TabIndex = 16;
+            this.bluePrimaryX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // greenPrimaryY
             // 
@@ -368,9 +408,19 @@
             0,
             0,
             0});
+            this.greenPrimaryY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.greenPrimaryY.Name = "greenPrimaryY";
             this.greenPrimaryY.Size = new System.Drawing.Size(74, 20);
             this.greenPrimaryY.TabIndex = 15;
+            this.greenPrimaryY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // greenPrimaryX
             // 
@@ -387,9 +437,19 @@
             0,
             0,
             0});
+            this.greenPrimaryX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.greenPrimaryX.Name = "greenPrimaryX";
             this.greenPrimaryX.Size = new System.Drawing.Size(74, 20);
             this.greenPrimaryX.TabIndex = 14;
+            this.greenPrimaryX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // redPrimaryY
             // 
@@ -406,9 +466,19 @@
             0,
             0,
             0});
+            this.redPrimaryY.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.redPrimaryY.Name = "redPrimaryY";
             this.redPrimaryY.Size = new System.Drawing.Size(74, 20);
             this.redPrimaryY.TabIndex = 13;
+            this.redPrimaryY.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // label10
             // 
@@ -580,9 +650,19 @@
             0,
             0,
             0});
+            this.redPrimaryX.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.redPrimaryX.Name = "redPrimaryX";
             this.redPrimaryX.Size = new System.Drawing.Size(74, 20);
             this.redPrimaryX.TabIndex = 12;
+            this.redPrimaryX.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // gamma
             // 
@@ -599,9 +679,19 @@
             0,
             0,
             0});
+            this.gamma.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             this.gamma.Name = "gamma";
             this.gamma.Size = new System.Drawing.Size(74, 20);
             this.gamma.TabIndex = 20;
+            this.gamma.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
             // 
             // groupBox5
             // 

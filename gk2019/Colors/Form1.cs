@@ -68,7 +68,6 @@ namespace Colors
                 return;
             }
 
-            Func<Color, Color> identity = (Color c) => { return c; };
             var size = inputBitmap.GetSize();
             outputBitmaps = new BitmapWrapper[3];
 
@@ -82,7 +81,16 @@ namespace Colors
             else if (variables.ColorRepresentation == ColorRepresentation.Lab)
             {
                 //get lab settings
-                
+                var labSettings = new LabSettings
+                {
+                    RedPrimary = new Chromacity((float)redPrimaryX.Value, (float)redPrimaryY.Value),
+                    GreenPrimary = new Chromacity((float)greenPrimaryX.Value, (float)greenPrimaryY.Value),
+                    BluePrimary = new Chromacity((float)bluePrimaryX.Value, (float)bluePrimaryY.Value),
+                    WhitePoint = new Chromacity((float)whitePointX.Value, (float)whitePointY.Value),
+                    Gamma = (float)gamma.Value
+                };
+
+                Transforms.RgbToLab(input:, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2], labSettings);
             }
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();
