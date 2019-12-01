@@ -173,7 +173,7 @@ namespace Colors
                         GreenPrimary = new Chromacity(0.1152f, 0.8264f),
                         BluePrimary = new Chromacity(0.1566f, 0.0177f),
                         WhitePoint = Illuminant.D50,
-                        Gamma = 1.2f
+                        Gamma = 2.2f
                     };
                 case ColorProfile.PAL:
                     return new PredefinedColorProfile
