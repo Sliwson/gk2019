@@ -74,6 +74,7 @@ namespace Colors
             for (int i = 0; i < 3; i++)
                 outputBitmaps[i] = new BitmapWrapper(size.Width, size.Height);
 
+            Cursor.Current = Cursors.WaitCursor;
             try
             {
                 if (variables.ColorRepresentation == ColorRepresentation.HSV)
@@ -97,6 +98,7 @@ namespace Colors
             }
             catch (Exception ex)
             {
+                Cursor.Current = Cursors.Default;
                 MessageBox.Show("Error while transforming! \n" + ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -109,6 +111,8 @@ namespace Colors
             out2box.Text = outLabels[1];
             out3box.Text = outLabels[2];
             GC.Collect();
+
+            Cursor.Current = Cursors.Default;
         }
 
         private void grayscaleButton_Click(object sender, EventArgs e)
