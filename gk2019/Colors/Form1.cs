@@ -74,23 +74,30 @@ namespace Colors
             for (int i = 0; i < 3; i++)
                 outputBitmaps[i] = new BitmapWrapper(size.Width, size.Height);
 
-            if (variables.ColorRepresentation == ColorRepresentation.HSV)
-                Transforms.RgbToHsv(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
-            else if (variables.ColorRepresentation == ColorRepresentation.YCbCr)
-                Transforms.RgbToYCbCr(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
-            else if (variables.ColorRepresentation == ColorRepresentation.Lab)
+            try
             {
-                //get lab settings
-                var labSettings = new LabSettings
+                if (variables.ColorRepresentation == ColorRepresentation.HSV)
+                    Transforms.RgbToHsv(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
+                else if (variables.ColorRepresentation == ColorRepresentation.YCbCr)
+                    Transforms.RgbToYCbCr(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2]);
+                else if (variables.ColorRepresentation == ColorRepresentation.Lab)
                 {
-                    RedPrimary = new Chromacity((float)redPrimaryX.Value, (float)redPrimaryY.Value),
-                    GreenPrimary = new Chromacity((float)greenPrimaryX.Value, (float)greenPrimaryY.Value),
-                    BluePrimary = new Chromacity((float)bluePrimaryX.Value, (float)bluePrimaryY.Value),
-                    WhitePoint = new Chromacity((float)whitePointX.Value, (float)whitePointY.Value),
-                    Gamma = (float)gamma.Value
-                };
+                    //get lab settings
+                    var labSettings = new LabSettings
+                    {
+                        RedPrimary = new Chromacity((float)redPrimaryX.Value, (float)redPrimaryY.Value),
+                        GreenPrimary = new Chromacity((float)greenPrimaryX.Value, (float)greenPrimaryY.Value),
+                        BluePrimary = new Chromacity((float)bluePrimaryX.Value, (float)bluePrimaryY.Value),
+                        WhitePoint = new Chromacity((float)whitePointX.Value, (float)whitePointY.Value),
+                        Gamma = (float)gamma.Value
+                    };
 
-                Transforms.RgbToLab(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2], labSettings);
+                    Transforms.RgbToLab(inputBitmap, outputBitmaps[0], outputBitmaps[1], outputBitmaps[2], labSettings);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while transforming! \n" + ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             output1.BackgroundImage = outputBitmaps[0].ToBitmap();
