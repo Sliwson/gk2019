@@ -57,7 +57,7 @@ namespace Colors
             Parallel.For(0, size.Height, h => {
                 for (int x = 0; x < size.Width; x++)
                 {
-                    (float L, float a, float b) = RgbToLab(input.GetPixel(x, h), M, new float[3] { Xw, Yw, Zw });
+                    (float L, float a, float b) = RgbToLab(input.GetPixel(x, h), M, new float[3] { Xw, Yw, Zw }, s.Gamma);
 
                     int li = (int)(L / 100f * 255f);
                     int ai = (int)(a * 128f / 100f) + 127;
@@ -115,9 +115,10 @@ namespace Colors
             return result;
         }
 
-        private static (float, float, float) RgbToLab(Color c, float[,] M, float[] XwYwZw)
+        private static (float, float, float) RgbToLab(Color c, float[,] M, float[] XwYwZw, float gamma)
         {
-            var xyz = Matrix3TimesVector(M, new float[3] { c.R / 255f, c.G / 255f, c.B / 255f });
+            float[] rgb = new float[3] { (float)Math.Pow(c.R / 255f, gamma), (float)Math.Pow(c.G / 255f, gamma), (float)Math.Pow(c.B / 255f, gamma) };
+            var xyz = Matrix3TimesVector(M, rgb);
 
             float XR = XwYwZw[0];
             float YR = XwYwZw[1];
