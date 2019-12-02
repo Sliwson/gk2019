@@ -159,5 +159,69 @@ namespace Colors
             bluePrimaryX.Value = (decimal)vars.BluePrimary.X;
             bluePrimaryY.Value = (decimal)vars.BluePrimary.Y;
         }
+
+        private void generateLinesButton_Click(object sender, EventArgs e)
+        {
+            var size = inputPicturebox.Size;
+            var workingBitmap = new BitmapWrapper(size.Width, size.Height);
+
+            Color[] colors = new Color[27];
+            int i = 0;
+            for (int r = 0; r <= 2; r++)
+            {
+                for (int g = 0; g <= 2; g++)
+                {
+                    for (int b = 0; b <= 2; b++)
+                    {
+                        int R = (int)(127.5 * r);
+                        int G = (int)(127.5 * g);
+                        int B = (int)(127.5 * b);
+                        colors[i] = Color.FromArgb(R, G, B);
+                        i++;
+                    }
+                }
+            }
+
+            //generate color lines
+            float gap = size.Width / 54f;
+            float acc = 0;
+            for (int x = 0; x < size.Width / 2; x++, acc++)
+            {
+                int color = (int)(acc / gap);
+                for (int y = 0; y < size.Height / 2; y++)
+                    workingBitmap.SetPixel(x, y, colors[color]);
+            }
+
+            //grays
+            for (int x = size.Width / 2; x < size.Width; x++)
+            {
+                var color = Transforms.RgbToGrayscale(workingBitmap.GetPixel(x - size.Width / 2, 0));
+                for (int y = 0; y < size.Height / 2; y++)
+                    workingBitmap.SetPixel(x, y, color);
+            }
+            
+            for (int x = 0; x < size.Width / 2; x++)
+            {
+                var color = workingBitmap.GetPixel(x, 0);
+                int gray = (int)(0.33 * (color.R + color.G + color.B));
+                for (int y = size.Height / 2; y < size.Height; y++)
+                    workingBitmap.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+            }
+            
+            for (int x = size.Width / 2; x < size.Width; x++)
+            {
+                var color = workingBitmap.GetPixel(x - size.Width / 2, 0);
+                var max = Math.Max(color.R, Math.Max(color.G, color.B));
+                var min = Math.Min(color.R, Math.Min(color.G, color.B));
+                int gray = (int)(0.5 * (min + max));
+                for (int y = size.Height / 2; y < size.Height; y++)
+                    workingBitmap.SetPixel(x, y, Color.FromArgb(gray, gray, gray));
+            }
+
+            inputBitmap = workingBitmap;
+            inputPicturebox.BackgroundImage = inputBitmap.ToBitmap();
+
+            GC.Collect();
+        }
     }
 }

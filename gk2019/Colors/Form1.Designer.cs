@@ -67,6 +67,7 @@
             this.colorRepresentation = new System.Windows.Forms.ComboBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
+            this.generateLinesButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.out3box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.output3)).BeginInit();
@@ -695,6 +696,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.generateLinesButton);
             this.groupBox5.Controls.Add(this.grayscaleButton);
             this.groupBox5.Controls.Add(this.separateButton);
             this.groupBox5.Controls.Add(this.colorRepresentation);
@@ -762,6 +764,16 @@
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // generateLinesButton
+            // 
+            this.generateLinesButton.Location = new System.Drawing.Point(7, 161);
+            this.generateLinesButton.Name = "generateLinesButton";
+            this.generateLinesButton.Size = new System.Drawing.Size(121, 23);
+            this.generateLinesButton.TabIndex = 5;
+            this.generateLinesButton.Text = "Generate Lines";
+            this.generateLinesButton.UseVisualStyleBackColor = true;
+            this.generateLinesButton.Click += new System.EventHandler(this.generateLinesButton_Click);
             // 
             // Form1
             // 
@@ -840,6 +852,7 @@
         private System.Windows.Forms.NumericUpDown redPrimaryY;
         private System.Windows.Forms.NumericUpDown redPrimaryX;
         private System.Windows.Forms.NumericUpDown gamma;
+        private System.Windows.Forms.Button generateLinesButton;
     }
 }
 
