@@ -16,5 +16,15 @@ namespace _3D
         {
             InitializeComponent();
         }
+
+        private void canvas_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            canvas.Invalidate();
+        }
     }
 }
