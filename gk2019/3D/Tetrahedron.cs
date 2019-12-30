@@ -12,12 +12,15 @@ namespace _3D
         public List<Vector3> vertices = new List<Vector3>();
         public List<(int, int)> edges = new List<(int, int)>();
 
-        public Tetrahedron()
+        public Tetrahedron(float scale = 1f)
         {
             vertices.Add(new Vector3(-1f, 0f, -1f));
             vertices.Add(new Vector3(1f, 0f, -1f));
             vertices.Add(new Vector3(0f, 0f, 1f));
             vertices.Add(new Vector3(0f, 2f, 0f));
+
+            for (int i = 0; i < vertices.Count; i++)
+                vertices[i] *= scale;
 
             edges.Add((0, 1));
             edges.Add((1, 2));
@@ -27,7 +30,7 @@ namespace _3D
             edges.Add((2, 3));
         }
         
-        public List<Vector3> getVertices()
+        public List<Vector3> GetVertices()
         {
             return vertices;
         }
