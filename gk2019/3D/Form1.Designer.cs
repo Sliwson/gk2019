@@ -31,23 +31,26 @@
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.canvas = new System.Windows.Forms.PictureBox();
+            this.fov = new System.Windows.Forms.TrackBar();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fov)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanel1.Controls.Add(this.canvas, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.fov, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(948, 566);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // canvas
@@ -58,10 +61,21 @@
             this.canvas.Location = new System.Drawing.Point(10, 10);
             this.canvas.Margin = new System.Windows.Forms.Padding(10);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(680, 430);
+            this.canvas.Size = new System.Drawing.Size(678, 546);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            // 
+            // fov
+            // 
+            this.fov.Dock = System.Windows.Forms.DockStyle.Top;
+            this.fov.Location = new System.Drawing.Point(701, 3);
+            this.fov.Maximum = 180;
+            this.fov.Minimum = 5;
+            this.fov.Name = "fov";
+            this.fov.Size = new System.Drawing.Size(244, 45);
+            this.fov.TabIndex = 1;
+            this.fov.Value = 60;
             // 
             // timer
             // 
@@ -73,12 +87,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(948, 566);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "3D";
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fov)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -88,6 +104,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox canvas;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.TrackBar fov;
     }
 }
 

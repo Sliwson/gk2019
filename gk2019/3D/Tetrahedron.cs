@@ -16,7 +16,7 @@ namespace _3D
         {
             vertices.Add(new Vector3(-1f, 0f, -1f));
             vertices.Add(new Vector3(1f, 0f, -1f));
-            vertices.Add(new Vector3(0f, 0f, 1f));
+            vertices.Add(new Vector3(1f, 0f, 1f));
             vertices.Add(new Vector3(0f, 2f, 0f));
 
             for (int i = 0; i < vertices.Count; i++)
