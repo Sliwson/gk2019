@@ -33,20 +33,23 @@ namespace _3D
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
             var cameraMatrix = mainCamera.GetCameraMatrix(canvas.Width, canvas.Height, fov.Value);
-            var modelMatrix = GetModelMatrix();
 
-            var m = Matrix4x4.Multiply(Matrix4x4.Multiply(modelMatrix, mView), cameraMatrix);
-            var points = TransformVertices(tetrahedron.GetVertices(), m);
-            Draw(points, tetrahedron.GetEdges(), e.Graphics);
+            for (int i = 0; i < 2; i++)
+            {
+                var modelMatrix = GetModelMatrix(i);
+                var m = Matrix4x4.Multiply(Matrix4x4.Multiply(modelMatrix, mView), cameraMatrix);
+                var points = TransformVertices(tetrahedron.GetVertices(), m);
+                Draw(points, tetrahedron.GetEdges(), e.Graphics);
+            }
         }
 
-        private Matrix4x4 GetModelMatrix()
+        private Matrix4x4 GetModelMatrix(int i)
         {
-            Matrix4x4 model = Matrix4x4.Identity;
-            model.M11 = (float)Math.Cos(time);
-            model.M12 = (float)-Math.Sin(time);
-            model.M21 = (float)Math.Sin(time);
-            model.M22 = (float)Math.Cos(time);
+            Matrix4x4 model = Matrix4x4.CreateScale(i + 1) * Matrix4x4.CreateTranslation(0.2f * (2 * i - 1), 0, 0);
+            model.M11 = (float)Math.Cos(time * (i + 1));
+            model.M12 = (float)-Math.Sin(time * (i + 1));
+            model.M21 = (float)Math.Sin(time * (i + 1));
+            model.M22 = (float)Math.Cos(time * (i + 1));
             return model;
         }
 
