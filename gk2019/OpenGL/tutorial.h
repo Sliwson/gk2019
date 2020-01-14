@@ -3,4 +3,4 @@
 
 void CompileShaders();
 void Clear();
-GLint GetTriangleVao();
+GLint GetTriangleEbo();
