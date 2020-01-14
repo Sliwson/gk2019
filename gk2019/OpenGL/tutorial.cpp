@@ -24,7 +24,7 @@ GLint CompileShader(GLenum type, const std::string& source, unsigned int shaderP
     return shader;
 }
 
-void CompileShaders()
+GLint CompileShaders()
 {
     const std::string vertexShaderSource =
 #include "vertex.vs"
@@ -43,6 +43,8 @@ void CompileShaders()
 
     glDeleteShader(vertexShader);
     glDeleteShader(pixelShader);
+
+    return shaderProgram;
 }
 
 void Clear()
@@ -54,10 +56,10 @@ void Clear()
 GLint GetTriangleVao()
 {
     float vertices[] = {
-     0.5f,  0.5f, 0.0f,  // top right
-     0.5f, -0.5f, 0.0f,  // bottom right
-    -0.5f, -0.5f, 0.0f,  // bottom left
-    -0.5f,  0.5f, 0.0f   // top left 
+     0.5f,  0.5f, 0.0f, 1.f, 0.f, 0.f, // top right
+     0.5f, -0.5f, 0.0f, 0.f, 1.f, 0.f, // bottom right
+    -0.5f, -0.5f, 0.0f, 0.f, 0.f, 1.f, // bottom left
+    -0.5f,  0.5f, 0.0f , 0.5f, 0.5f, 0.5f // top left 
     };
 
     unsigned int indices[] = {
@@ -74,8 +76,11 @@ GLint GetTriangleVao()
     
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
+    
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+    glEnableVertexAttribArray(1);
     
     unsigned int EBO;
     glGenBuffers(1, &EBO);

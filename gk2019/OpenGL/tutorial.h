@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
 
-void CompileShaders();
+GLint CompileShaders();
 void Clear();
 GLint GetTriangleVao();

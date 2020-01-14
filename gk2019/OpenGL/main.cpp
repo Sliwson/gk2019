@@ -45,29 +45,37 @@ GLFWwindow* InitWindowSystem()
     return window;
 }
 
+void MainLoop(GLFWwindow *window)
+{
+	auto program = CompileShaders();
+	auto triangle = GetTriangleVao();
+    auto colorUniform = glGetUniformLocation(program, "objectColor");
+    
+    while (!glfwWindowShouldClose(window))
+    {
+        auto time = glfwGetTime();
+
+        processInput(window);
+
+        Clear();
+
+        glUniform4f(colorUniform, 0.f, .5f * sin(time) + 0.5f, 0.f, 1.f);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBindVertexArray(triangle);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+}
+
 int main(int argc, char** argv)
 {
     auto* window = InitWindowSystem();
     if (window == nullptr)
         return -1;
 
-    CompileShaders();
-
-	auto triangle = GetTriangleVao();
-    
-    while (!glfwWindowShouldClose(window))
-    {
-        processInput(window);
-
-        Clear();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glBindVertexArray(triangle);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    MainLoop(window);
 
     glfwTerminate();
 	return 0;
