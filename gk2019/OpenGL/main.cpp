@@ -53,16 +53,17 @@ int main(int argc, char** argv)
 
     CompileShaders();
 
-	auto triangle = GetTriangleEbo();
+	auto triangle = GetTriangleVao();
     
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
 
         Clear();
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangle);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBindVertexArray(triangle);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

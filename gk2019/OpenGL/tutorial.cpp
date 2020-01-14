@@ -51,7 +51,7 @@ void Clear()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-GLint GetTriangleEbo()
+GLint GetTriangleVao()
 {
     float vertices[] = {
      0.5f,  0.5f, 0.0f,  // top right
@@ -83,6 +83,6 @@ GLint GetTriangleEbo()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    return EBO;
+    return VAO;
 }
 
