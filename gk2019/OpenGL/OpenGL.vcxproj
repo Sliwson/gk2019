@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <ItemGroup>
