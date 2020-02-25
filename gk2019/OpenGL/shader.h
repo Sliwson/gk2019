@@ -8,6 +8,7 @@ class Shader
 {
 public:
 	Shader(const std::string& vertexShader, const std::string& pixelShader);
+	~Shader();
 
 	void Use();
 	void SetBool(const std::string& name, bool value) const;
@@ -17,5 +18,5 @@ public:
 private:
 	GLint CompileShader(GLenum type, const std::string& source, unsigned int shaderProgram);
 
-	GLint id;
+	GLint id = 0;
 };

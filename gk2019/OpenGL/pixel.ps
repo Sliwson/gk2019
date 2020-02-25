@@ -1,10 +1,15 @@
 R""(
 	#version 460 core
+
 	out vec4 fragmentColor;
-	in vec3 color;
+
+	in vec3 outColor;
+	in vec2 textureCoordinates;
+
+	uniform sampler2D shaderTexture;
 
 	void main()
 	{
-		fragmentColor = vec4(color, 1.0);
+		fragmentColor = texture(shaderTexture, textureCoordinates) * vec4(outColor, 1.0); 
 	} 
 )""

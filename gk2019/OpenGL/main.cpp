@@ -47,12 +47,16 @@ GLFWwindow* InitWindowSystem()
 
 void MainLoop(GLFWwindow *window)
 {
-    std::unique_ptr<Shader> shader (CreateShader());
+    std::unique_ptr<Shader> shader(CreateShader());
+    std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
+
 	auto triangle = GetTriangleVao();
     
     while (!glfwWindowShouldClose(window))
     {
         shader->Use();
+        texture->Use();
+
         auto time = glfwGetTime();
 
         processInput(window);

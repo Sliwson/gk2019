@@ -9,8 +9,15 @@ Shader::Shader(const std::string& vertexShader, const std::string& pixelShader)
 
     glLinkProgram(id);
 
+    glDetachShader(vertex, id);
+    glDetachShader(pixel, id);
     glDeleteShader(vertex);
     glDeleteShader(pixel);
+}
+
+Shader::~Shader()
+{
+    glDeleteProgram(id);
 }
 
 void Shader::Use()
