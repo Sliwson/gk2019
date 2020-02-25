@@ -47,20 +47,18 @@ GLFWwindow* InitWindowSystem()
 
 void MainLoop(GLFWwindow *window)
 {
-	auto program = CompileShaders();
+    std::unique_ptr<Shader> shader (CreateShader());
 	auto triangle = GetTriangleVao();
-    auto colorUniform = glGetUniformLocation(program, "objectColor");
     
     while (!glfwWindowShouldClose(window))
     {
+        shader->Use();
         auto time = glfwGetTime();
 
         processInput(window);
 
         Clear();
 
-        glUniform4f(colorUniform, 0.f, .5f * sin(time) + 0.5f, 0.f, 1.f);
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glBindVertexArray(triangle);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

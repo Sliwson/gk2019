@@ -2,49 +2,17 @@
 #include <string>
 #include <iostream>
 
-GLint CompileShader(GLenum type, const std::string& source, unsigned int shaderProgram)
-{
-    GLint shader = glCreateShader(type);
-
-    const char* src = source.c_str();
-    glShaderSource(shader, 1, &src, nullptr);
-    glCompileShader(shader);
-
-    GLint success;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-   
-    if (!success)
-    {
-		char infoLog[512];
-        glGetShaderInfoLog(shader, 512, NULL, infoLog);
-        std::cout << "Error: " << infoLog << std::endl;
-    }
-
-    glAttachShader(shaderProgram, shader);
-    return shader;
-}
-
-GLint CompileShaders()
+Shader* CreateShader()
 {
     const std::string vertexShaderSource =
 #include "vertex.vs"
 	;
 
     const std::string pixelShaderSource =
-#include "pixel.vs"
+#include "pixel.ps"
 	;
 
-    auto shaderProgram = glCreateProgram();
-    auto vertexShader = CompileShader(GL_VERTEX_SHADER, vertexShaderSource, shaderProgram);
-    auto pixelShader = CompileShader(GL_FRAGMENT_SHADER, pixelShaderSource, shaderProgram);
-
-    glLinkProgram(shaderProgram);
-    glUseProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(pixelShader);
-
-    return shaderProgram;
+    return new Shader(vertexShaderSource, pixelShaderSource);
 }
 
 void Clear()
