@@ -56,10 +56,12 @@ GLFWwindow* InitWindowSystem()
 
 void MainLoop(GLFWwindow *window)
 {
+    glEnable(GL_DEPTH_TEST);
+
     std::unique_ptr<Shader> shader(CreateShader());
     std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
 
-	auto triangle = GetTriangleVao();
+	auto cube = GetCube();
     
     while (!glfwWindowShouldClose(window))
     {
@@ -67,8 +69,7 @@ void MainLoop(GLFWwindow *window)
         texture->Use();
 
         auto time = glfwGetTime();
-        auto model = glm::rotate(glm::mat4(1.f), sinf(time) * glm::pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::rotate(model, cosf(time) * glm::pi<float>(), glm::vec3(.0f, 1.0f, 0.0f));
+        auto model = glm::rotate(glm::mat4(1.f), (float)time * glm::pi<float>(), glm::vec3(.1f, .1f, .0f));
         const auto view = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, 0.0f, -3.0f));
         const auto projection = glm::perspective(glm::radians(45.0f), (float)wndWidth / (float)wndHeight, 0.1f, 100.0f);
         
@@ -80,8 +81,8 @@ void MainLoop(GLFWwindow *window)
 
         Clear();
 
-        glBindVertexArray(triangle);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(cube);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

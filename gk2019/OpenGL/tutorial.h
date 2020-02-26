@@ -7,3 +7,4 @@
 Shader* CreateShader();
 void Clear();
 GLint GetTriangleVao();
+GLint GetCube();
