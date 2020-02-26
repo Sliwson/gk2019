@@ -1,5 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 #include "tutorial.h"
@@ -58,6 +60,8 @@ void MainLoop(GLFWwindow *window)
         texture->Use();
 
         auto time = glfwGetTime();
+		glm::mat4 trans = glm::rotate(glm::mat4(1.f), static_cast<float>(time), glm::vec3( 0.f, 0.f, 1.f ));
+        shader->SetMatrix("transform", trans);
 
         processInput(window);
 

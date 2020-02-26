@@ -1,4 +1,5 @@
 #include "shader.h"
+#include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader(const std::string& vertexShader, const std::string& pixelShader)
 {
@@ -38,6 +39,11 @@ void Shader::SetInt(const std::string& name, int value) const
 void Shader::SetFloat(const std::string& name, float value) const
 {
     glUniform1f(glGetUniformLocation(id, name.c_str()), value);
+}
+
+void Shader::SetMatrix(const std::string& name, glm::mat4 matrix)
+{
+    glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 GLint Shader::CompileShader(GLenum type, const std::string& source, unsigned int shaderProgram)

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "shader.h"
-#include "Texture.h"
+#include "texture.h"
 #include <glad/glad.h>
 
 Shader* CreateShader();
