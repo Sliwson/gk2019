@@ -24,10 +24,10 @@ void Clear()
 GLint GetTriangleVao()
 {
     float vertices[] = {
-     0.5f,  0.5f, 0.0f,   1.f, 0.f, 0.f,  1.0f, 1.0f, // top right
-     0.5f, -0.5f, 0.0f,   0.f, 1.f, 0.f,  1.0f, 0.0f, // bottom right
-    -0.5f, -0.5f, 0.0f,   0.f, 0.f, 1.f,  0.0f, 0.0f, // bottom left
-    -0.5f,  0.5f, 0.0f,   .5f, .5f, .5f,  0.0f, 1.0f  // top left 
+     0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
+     0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+    -0.5f,  0.5f, 0.0f, 0.0f, 1.0f  // top left 
     };
 
     unsigned int indices[] = {
@@ -45,13 +45,11 @@ GLint GetTriangleVao()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    const auto stride = 8 * sizeof(float);
+    const auto stride = 5 * sizeof(float);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, nullptr);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
     
     unsigned int EBO;
     glGenBuffers(1, &EBO);

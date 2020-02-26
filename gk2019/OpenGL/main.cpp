@@ -6,9 +6,16 @@
 
 #include "tutorial.h"
 
+namespace {
+    int wndWidth = 800;
+    int wndHeight = 600;
+}
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+    wndWidth = width;
+    wndHeight = height;
 }
 
 void processInput(GLFWwindow* window)
@@ -24,7 +31,7 @@ GLFWwindow* InitWindowSystem()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Bowling", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(wndWidth, wndHeight, "Bowling", NULL, NULL);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -60,8 +67,14 @@ void MainLoop(GLFWwindow *window)
         texture->Use();
 
         auto time = glfwGetTime();
-		glm::mat4 trans = glm::rotate(glm::mat4(1.f), static_cast<float>(time), glm::vec3( 0.f, 0.f, 1.f ));
-        shader->SetMatrix("transform", trans);
+        auto model = glm::rotate(glm::mat4(1.f), sinf(time) * glm::pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, cosf(time) * glm::pi<float>(), glm::vec3(.0f, 1.0f, 0.0f));
+        const auto view = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, 0.0f, -3.0f));
+        const auto projection = glm::perspective(glm::radians(45.0f), (float)wndWidth / (float)wndHeight, 0.1f, 100.0f);
+        
+        shader->SetMatrix("model", model);
+        shader->SetMatrix("projection", projection);
+        shader->SetMatrix("view", view);
 
         processInput(window);
 
