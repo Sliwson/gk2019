@@ -24,9 +24,6 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tutorial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,9 +35,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tutorial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="meshes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

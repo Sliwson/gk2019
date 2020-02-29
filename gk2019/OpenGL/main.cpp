@@ -6,9 +6,11 @@
 #include <algorithm>
 #include <numeric>
 
-#include "tutorial.h"
 #include "mesh.h"
+#include "meshes.h"
+#include "shader.h"
 #include "vertex.h"
+#include "texture.h"
 
 namespace {
 	int wndWidth = 800;
@@ -87,75 +89,6 @@ namespace {
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	}
-
-	Mesh* GetTriangleMesh()
-	{
-		std::vector<Vertex> vertices{ {
-		{ {0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 1.0f}}, // top right
-		{ {0.5f,  -0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 0.0f}}, // top right
-		{ {-0.5f, -0.5f, 0.0f}, {0.f, 0.f, 0.f}, { .0f, .0f}}, // top right
-		{ {-0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, { .0f, 1.0f}}, // top right
-		} };
-
-		std::vector<unsigned int> indices{
-			0, 1, 3,   // first triangle
-			1, 2, 3    // second triangle
-		};
-
-		return new Mesh(vertices, indices);
-	}
-
-	Mesh* GetCubeMesh()
-	{
-		std::vector<Vertex> vertices{ {
-		{{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
-		{{ 0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {1.0f, 0.0f}},
-		{{ 0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
-		{{ 0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
-		{{-0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 1.0f}},
-		{{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
-		                              
-		{{-0.5f, -0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {0.0f, 0.0f}},
-		{{ 0.5f, -0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {1.0f, 0.0f}},
-		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {1.0f, 1.0f}},
-		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {1.0f, 1.0f}},
-		{{-0.5f,  0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {0.0f, 1.0f}},
-		{{-0.5f, -0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {0.0f, 0.0f}},
-                                                
-		{{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-		{{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
-		{{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-		{{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-		{{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
-		{{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-													                                   
-		{{ 0.5f,  0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-		{{ 0.5f,  0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
-		{{ 0.5f, -0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-		{{ 0.5f, -0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-		{{ 0.5f, -0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
-		{{ 0.5f,  0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-		                           
-		{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
-		{{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}, {1.0f, 1.0f}},
-		{{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
-		{{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
-		{{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}, {0.0f, 0.0f}},
-		{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
-		                           
-		{{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}, {0.0f, 1.0f}},
-		{{ 0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}, {1.0f, 1.0f}},
-		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}, {1.0f, 0.0f}},
-		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}, {1.0f, 0.0f}},
-		{{-0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}, {0.0f, 0.0f}},
-		{{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}, {0.0f, 1.0f}}
-		}};                                         
-
-		std::vector<unsigned int> indices(vertices.size());
-		std::iota(std::begin(indices), std::end(indices), 0);
-
-		return new Mesh(vertices, indices);
 	}
 
 	void MainLoop(GLFWwindow *window)
