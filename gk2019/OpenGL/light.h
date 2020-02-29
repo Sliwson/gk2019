@@ -14,6 +14,7 @@ public:
 	Light(Mesh* mesh, glm::vec3 position, glm::vec3 color) : mesh(mesh), position(position), color(color) { }
 
 	void Render(Shader* shader, const glm::mat4& view, const glm::mat4& projection);
+	void Use(Shader* shader);
 
 private:
 	glm::vec3 position;

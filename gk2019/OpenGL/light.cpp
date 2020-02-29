@@ -12,3 +12,10 @@ void Light::Render(Shader* shader, const glm::mat4& view, const glm::mat4& proje
 	shader->SetVector3("color", color);
 	mesh->Draw(shader, model, view, projection);
 }
+
+void Light::Use(Shader* shader)
+{
+	shader->Use();
+	shader->SetVector3("lightPosition", position);
+	shader->SetVector3("lightColor", color);
+}

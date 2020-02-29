@@ -16,6 +16,9 @@ void Mesh::Draw(Shader* shader, const glm::mat4& model, const glm::mat4& view, c
     shader->SetMatrix("model", model);
     shader->SetMatrix("projection", projection);
     shader->SetMatrix("view", view);
+	
+    const auto normal = glm::mat3(transpose(inverse(model)));
+    shader->SetMatrix3("normalMatrix", normal);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
