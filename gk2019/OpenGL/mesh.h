@@ -11,8 +11,7 @@ class Mesh
 {
 public:
 	Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices);
-	virtual void SetModelMatrix(glm::mat4 model) { this->model = model; }
-	virtual void Draw(Shader* shader, const glm::mat4& view, const glm::mat4& projection);
+	virtual void Draw(Shader* shader, const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection);
 	virtual ~Mesh();
 
 protected:
@@ -20,6 +19,5 @@ protected:
 
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;
-	glm::mat4 model;
 	GLuint VAO, VBO, EBO;
 };

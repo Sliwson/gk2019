@@ -4,14 +4,13 @@
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
 {
-    model = glm::mat4(1.f);
     this->vertices = vertices;
     this->indices = indices;
 
     Init();
 }
 
-void Mesh::Draw(Shader* shader, const glm::mat4& view, const glm::mat4&projection)
+void Mesh::Draw(Shader* shader, const glm::mat4& model, const glm::mat4& view, const glm::mat4&projection)
 {
     shader->Use();
     shader->SetMatrix("model", model);

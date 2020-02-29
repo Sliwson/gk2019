@@ -11,6 +11,7 @@
 #include "shader.h"
 #include "vertex.h"
 #include "texture.h"
+#include "light.h"
 
 namespace {
 	int wndWidth = 800;
@@ -97,6 +98,7 @@ namespace {
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
 		std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
+		std::unique_ptr<Light> light(new Light(mesh.get(), { -0.6f, .7f, .8f }, { 1.f, 1.f, 0.5f }));
 
 		while (!glfwWindowShouldClose(window))
 		{
@@ -109,9 +111,10 @@ namespace {
 			ProcessInput(window);
 			Clear();
 
-			mesh->SetModelMatrix(model);
 			texture->Use();
-			mesh->Draw(shader.get(), view, projection);
+			mesh->Draw(shader.get(), model, view, projection);
+
+			light->Render(lightCubeShader.get(), view, projection);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
