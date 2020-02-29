@@ -3,15 +3,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <algorithm>
+#include <numeric>
 
 #include "tutorial.h"
 #include "mesh.h"
 #include "vertex.h"
 
 namespace {
-    int wndWidth = 800;
-    int wndHeight = 600;
- 
+	int wndWidth = 800;
+	int wndHeight = 600;
+
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
 		glViewport(0, 0, width, height);
@@ -24,32 +26,32 @@ namespace {
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, true);
 	}
-    
-    Shader* CreateNormalShader()
+
+	Shader* CreateNormalShader()
 	{
 		const std::string vertexShaderSource =
-			#include "vertex.vs"
-		;
+#include "vertex.vs"
+			;
 		const std::string pixelShaderSource =
-			#include "pixel.ps"
-		;
+#include "pixel.ps"
+			;
 
 		return new Shader(vertexShaderSource, pixelShaderSource);
 	}
 
-    Shader* CreateLightCubeShader()
-    {
-        const std::string vertexShaderSource =
-			#include "light.vs"
-		;
+	Shader* CreateLightCubeShader()
+	{
+		const std::string vertexShaderSource =
+#include "light.vs"
+			;
 		const std::string pixelShaderSource =
-			#include "light.ps"
-		;
+#include "light.ps"
+			;
 
 		return new Shader(vertexShaderSource, pixelShaderSource);
-    }
-    
-    GLFWwindow* InitWindowSystem()
+	}
+
+	GLFWwindow* InitWindowSystem()
 	{
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -72,7 +74,7 @@ namespace {
 			glfwTerminate();
 			return nullptr;
 		}
-	   
+
 		glViewport(0, 0, wndWidth, wndHeight);
 		glEnable(GL_DEPTH_TEST);
 
@@ -86,21 +88,73 @@ namespace {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
-	
+
 	Mesh* GetTriangleMesh()
 	{
-		std::vector<Vertex> vertices {{
-		Vertex { {0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 1.0f}}, // top right
-		Vertex { {0.5f,  -0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 0.0f}}, // top right
-		Vertex { {-0.5f, -0.5f, 0.0f}, {0.f, 0.f, 0.f}, { .0f, .0f}}, // top right
-		Vertex { {-0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, { .0f, 1.0f}}, // top right
-		}};
+		std::vector<Vertex> vertices{ {
+		{ {0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 1.0f}}, // top right
+		{ {0.5f,  -0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 0.0f}}, // top right
+		{ {-0.5f, -0.5f, 0.0f}, {0.f, 0.f, 0.f}, { .0f, .0f}}, // top right
+		{ {-0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, { .0f, 1.0f}}, // top right
+		} };
 
-		std::vector<unsigned int> indices {
+		std::vector<unsigned int> indices{
 			0, 1, 3,   // first triangle
 			1, 2, 3    // second triangle
 		};
-		
+
+		return new Mesh(vertices, indices);
+	}
+
+	Mesh* GetCubeMesh()
+	{
+		std::vector<Vertex> vertices{ {
+		{{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
+		{{ 0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {1.0f, 0.0f}},
+		{{ 0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
+		{{ 0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
+		{{-0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 1.0f}},
+		{{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
+		                              
+		{{-0.5f, -0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {0.0f, 0.0f}},
+		{{ 0.5f, -0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {1.0f, 0.0f}},
+		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {1.0f, 1.0f}},
+		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {1.0f, 1.0f}},
+		{{-0.5f,  0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {0.0f, 1.0f}},
+		{{-0.5f, -0.5f,  0.5f}, {0.0f,  0.0f, 1.0f},  {0.0f, 0.0f}},
+                                                
+		{{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+		{{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
+		{{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+		{{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+		{{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
+		{{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+													                                   
+		{{ 0.5f,  0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+		{{ 0.5f,  0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
+		{{ 0.5f, -0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+		{{ 0.5f, -0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+		{{ 0.5f, -0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
+		{{ 0.5f,  0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+		                           
+		{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
+		{{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}, {1.0f, 1.0f}},
+		{{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
+		{{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
+		{{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}, {0.0f, 0.0f}},
+		{{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
+		                           
+		{{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}, {0.0f, 1.0f}},
+		{{ 0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}, {1.0f, 1.0f}},
+		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}, {1.0f, 0.0f}},
+		{{ 0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}, {1.0f, 0.0f}},
+		{{-0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}, {0.0f, 0.0f}},
+		{{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}, {0.0f, 1.0f}}
+		}};                                         
+
+		std::vector<unsigned int> indices(vertices.size());
+		std::iota(std::begin(indices), std::end(indices), 0);
+
 		return new Mesh(vertices, indices);
 	}
 
@@ -109,7 +163,7 @@ namespace {
 		std::unique_ptr<Shader> shader(CreateNormalShader());
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
 		std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
-		std::unique_ptr<Mesh> mesh(GetTriangleMesh());
+		std::unique_ptr<Mesh> mesh(GetCubeMesh());
 
 		while (!glfwWindowShouldClose(window))
 		{
@@ -123,7 +177,8 @@ namespace {
 			Clear();
 
 			mesh->SetModelMatrix(model);
-			mesh->Draw(lightCubeShader.get(), view, projection);
+			texture->Use();
+			mesh->Draw(shader.get(), view, projection);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
