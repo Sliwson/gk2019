@@ -17,6 +17,7 @@ void Mesh::Draw(Shader* shader, Camera* camera, const glm::mat4& model)
     shader->SetMatrix("model", model);
     shader->SetMatrix("projection", camera->GetProjectionMatrix());
     shader->SetMatrix("view", camera->GetViewMatrix());
+    shader->SetVector3("viewPosition", camera->GetPosition());
 	
     const auto normal = glm::mat3(transpose(inverse(model)));
     shader->SetMatrix3("normalMatrix", normal);
