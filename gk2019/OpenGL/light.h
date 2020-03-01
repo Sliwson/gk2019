@@ -19,6 +19,7 @@ public:
 	void Use(Shader* shader);
 
 	void SetPosition(glm::vec3 newPosition) { position = newPosition; }
+	void SetColor(glm::vec3 newColor) { color = newColor; }
 
 private:
 	glm::vec3 position;

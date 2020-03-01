@@ -91,6 +91,7 @@ namespace {
 
 			camera->Update(wndWidth, wndHeight);
 
+			light->SetColor( {sin(time * 2.0f), sin(time * 0.7f), sin(time * 1.3f)});
 			light->SetPosition({ sinf(time) * 1.8f, 2.f, cosf(time) * 1.8f + 2.f });
 			light->Use(shader.get());
 			light->Render(lightCubeShader.get(), camera.get());
