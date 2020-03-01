@@ -13,6 +13,8 @@
 #include "texture.h"
 #include "light.h"
 #include "camera.h"
+#include "shaders.h"
+#include "lights.h"
 
 namespace {
 	int wndWidth = 800;
@@ -29,30 +31,6 @@ namespace {
 	{
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, true);
-	}
-
-	Shader* CreateNormalShader()
-	{
-		const std::string vertexShaderSource =
-#include "vertex.vs"
-			;
-		const std::string pixelShaderSource =
-#include "pixel.ps"
-			;
-
-		return new Shader(vertexShaderSource, pixelShaderSource);
-	}
-
-	Shader* CreateLightCubeShader()
-	{
-		const std::string vertexShaderSource =
-#include "light.vs"
-			;
-		const std::string pixelShaderSource =
-#include "light.ps"
-			;
-
-		return new Shader(vertexShaderSource, pixelShaderSource);
 	}
 
 	GLFWwindow* InitWindowSystem()
@@ -99,7 +77,7 @@ namespace {
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
 		std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
-		std::unique_ptr<Light> light(new Light(mesh.get(), { -0.6f, .7f, 1.8f }, { 1.f, 1.f, 0.5f }));
+		std::unique_ptr<Light> light(GetSampleLight(mesh.get()));
 		std::unique_ptr<Camera> camera(new Camera({ 0.f, 0.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
 
 		while (!glfwWindowShouldClose(window))

@@ -4,6 +4,16 @@
 #include "vertex.h"
 #include <numeric>
 
+Material GetSimpleMaterial()
+{
+	Material m;
+	m.ambient = { 1.f, .5f, .3f };
+	m.diffuse = { 1.f, .5f, .3f };
+	m.specular = { .5f, .5f, .5f };
+	m.shininess = 32.f;
+	return m;
+}
+
 Mesh* GetTriangleMesh()
 {
 	std::vector<Vertex> vertices{ {
@@ -18,7 +28,7 @@ Mesh* GetTriangleMesh()
 		1, 2, 3    // second triangle
 	};
 
-	return new Mesh(vertices, indices);
+	return new Mesh(vertices, indices, GetSimpleMaterial());
 }
 
 Mesh* GetCubeMesh()
@@ -70,6 +80,6 @@ Mesh* GetCubeMesh()
 	std::vector<unsigned int> indices(vertices.size());
 	std::iota(std::begin(indices), std::end(indices), 0);
 
-	return new Mesh(vertices, indices);
+	return new Mesh(vertices, indices, GetSimpleMaterial());
 }
 

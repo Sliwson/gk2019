@@ -12,7 +12,8 @@ class Camera;
 class Light
 {
 public:
-	Light(Mesh* mesh, glm::vec3 position, glm::vec3 color) : mesh(mesh), position(position), color(color) { }
+	Light(Mesh* mesh, glm::vec3 position, glm::vec3 color, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) : 
+		mesh(mesh), position(position), color(color), ambient(ambient), diffuse(diffuse), specular(specular) { }
 
 	void Render(Shader* shader, Camera* camera);
 	void Use(Shader* shader);
@@ -22,6 +23,9 @@ public:
 private:
 	glm::vec3 position;
 	glm::vec3 color;
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
 	Mesh* mesh;
 
 	const float scale = 0.1f;

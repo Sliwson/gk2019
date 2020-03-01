@@ -17,6 +17,9 @@ void Light::Render(Shader* shader, Camera* camera)
 void Light::Use(Shader* shader)
 {
 	shader->Use();
-	shader->SetVector3("lightPosition", position);
-	shader->SetVector3("lightColor", color);
+	shader->SetVector3("light.position", position);
+	shader->SetVector3("light.color", color);
+	shader->SetVector3("light.ambient", ambient);
+	shader->SetVector3("light.diffuse", diffuse);
+	shader->SetVector3("light.specular", specular);
 }
