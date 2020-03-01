@@ -112,11 +112,13 @@ namespace {
 			Clear();
 
 			camera->Update(wndWidth, wndHeight);
-			texture->Use();
-			light->Use(shader.get());
-			mesh->Draw(shader.get(), camera.get(), model);
 
+			light->SetPosition({ sinf(time) * 1.8f, 2.f, cosf(time) * 1.8f + 2.f });
+			light->Use(shader.get());
 			light->Render(lightCubeShader.get(), camera.get());
+
+			texture->Use();
+			mesh->Draw(shader.get(), camera.get(), model);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
