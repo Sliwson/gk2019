@@ -1,8 +1,9 @@
 #include "light.h"
 #include "shader.h"
 #include "mesh.h"
+#include "camera.h"
 
-void Light::Render(Shader* shader, const glm::mat4& view, const glm::mat4& projection)
+void Light::Render(Shader* shader, Camera* camera)
 {
 	glm::mat4 model(1.f);
 	model = glm::translate(model, position);
@@ -10,7 +11,7 @@ void Light::Render(Shader* shader, const glm::mat4& view, const glm::mat4& proje
 
 	shader->Use();
 	shader->SetVector3("color", color);
-	mesh->Draw(shader, model, view, projection);
+	mesh->Draw(shader, camera, model);
 }
 
 void Light::Use(Shader* shader)

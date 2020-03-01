@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include "shader.h"
 #include "vertex.h"
+#include "camera.h"
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
 {
@@ -10,12 +11,12 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices)
     Init();
 }
 
-void Mesh::Draw(Shader* shader, const glm::mat4& model, const glm::mat4& view, const glm::mat4&projection)
+void Mesh::Draw(Shader* shader, Camera* camera, const glm::mat4& model)
 {
     shader->Use();
     shader->SetMatrix("model", model);
-    shader->SetMatrix("projection", projection);
-    shader->SetMatrix("view", view);
+    shader->SetMatrix("projection", camera->GetProjectionMatrix());
+    shader->SetMatrix("view", camera->GetViewMatrix());
 	
     const auto normal = glm::mat3(transpose(inverse(model)));
     shader->SetMatrix3("normalMatrix", normal);

@@ -5,13 +5,14 @@
 #include <vector>
 
 class Shader;
+class Camera;
 struct Vertex;
 
 class Mesh
 {
 public:
 	Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices);
-	virtual void Draw(Shader* shader, const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection);
+	virtual void Draw(Shader* shader, Camera* camera, const glm::mat4& model);
 	virtual ~Mesh();
 
 protected:

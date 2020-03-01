@@ -12,6 +12,7 @@
 #include "vertex.h"
 #include "texture.h"
 #include "light.h"
+#include "camera.h"
 
 namespace {
 	int wndWidth = 800;
@@ -98,24 +99,24 @@ namespace {
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
 		std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
-		std::unique_ptr<Light> light(new Light(mesh.get(), { -0.6f, .7f, 2.8f }, { 1.f, 1.f, 0.5f }));
+		std::unique_ptr<Light> light(new Light(mesh.get(), { -0.6f, .7f, 1.8f }, { 1.f, 1.f, 0.5f }));
+		std::unique_ptr<Camera> camera(new Camera({ 0.f, 0.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
 
 		while (!glfwWindowShouldClose(window))
 		{
 			auto time = glfwGetTime();
 			
 			const auto model = glm::rotate(glm::mat4(1.f), (float)time, glm::vec3(.02f, .03f, .0f));
-			const auto view = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, 0.0f, -3.0f));
-			const auto projection = glm::perspective(glm::radians(45.0f), (float)wndWidth / (float)wndHeight, 0.1f, 100.0f);
 
 			ProcessInput(window);
 			Clear();
 
+			camera->Update(wndWidth, wndHeight);
 			texture->Use();
 			light->Use(shader.get());
-			mesh->Draw(shader.get(), model, view, projection);
+			mesh->Draw(shader.get(), camera.get(), model);
 
-			light->Render(lightCubeShader.get(), view, projection);
+			light->Render(lightCubeShader.get(), camera.get());
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
