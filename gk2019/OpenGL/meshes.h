@@ -7,9 +7,6 @@
 Material GetSimpleMaterial()
 {
 	Material m;
-	m.ambient = { 1.f, .5f, .3f };
-	m.diffuse = { 1.f, .5f, .3f };
-	m.specular = { .5f, .5f, .5f };
 	m.shininess = 32.f;
 	return m;
 }

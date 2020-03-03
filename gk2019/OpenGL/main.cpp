@@ -107,16 +107,27 @@ namespace {
 		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
 		std::unique_ptr<Light> light(GetSampleLight(mesh.get()));
+		
+		glm::vec3 cubePositions[] = {
+			glm::vec3(0.0f,  0.0f,  0.0f),
+			glm::vec3(2.0f,  5.0f, -15.0f),
+			glm::vec3(-1.5f, -2.2f, -2.5f),
+			glm::vec3(-3.8f, -2.0f, -12.3f),
+			glm::vec3(2.4f, -0.4f, -3.5f),
+			glm::vec3(-1.7f,  3.0f, -7.5f),
+			glm::vec3(1.3f, -2.0f, -2.5f),
+			glm::vec3(1.5f,  2.0f, -2.5f),
+			glm::vec3(1.5f,  0.2f, -1.5f),
+			glm::vec3(-1.3f,  1.0f, -1.5f)
+		};
 
-		auto prevTime = glfwGetTime();
+		float prevTime = static_cast<float>(glfwGetTime());
 		while (!glfwWindowShouldClose(window))
 		{
-			auto time = glfwGetTime();
+			float time = static_cast<float>(glfwGetTime());
 			deltaTime = time - prevTime;
 			prevTime = time;
 			
-			const auto model = glm::rotate(glm::mat4(1.f), (float)time, glm::vec3(.02f, .03f, .0f));
-
 			ProcessInput(window);
 			Clear();
 
@@ -129,7 +140,12 @@ namespace {
 
 			diffuseTex->Use(shader.get());
 			specularTex->Use(shader.get());
-			mesh->Draw(shader.get(), currentCamera.get(), model);
+
+			for (int i = 0; i < 10; i++)
+			{
+				const auto model = glm::translate(glm::mat4(1.f), cubePositions[i]) * glm::rotate(glm::mat4(1.f), (float)(time + 1.f * i), glm::vec3(.02f, .03f, .0f)); 
+				mesh->Draw(shader.get(), currentCamera.get(), model);
+			}
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

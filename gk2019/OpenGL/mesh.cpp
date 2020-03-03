@@ -23,9 +23,6 @@ void Mesh::Draw(Shader* shader, Camera* camera, const glm::mat4& model)
     const auto normal = glm::mat3(transpose(inverse(model)));
     shader->SetMatrix3("normalMatrix", normal);
 
-    shader->SetVector3("material.ambient", material.ambient); 
-    shader->SetVector3("material.diffuse", material.diffuse); 
-    shader->SetVector3("material.specular", material.specular); 
     shader->SetFloat("material.shininess", material.shininess); 
 
 	glBindVertexArray(VAO);
