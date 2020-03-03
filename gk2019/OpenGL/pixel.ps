@@ -3,9 +3,8 @@ R""(
 
 	struct Material 
 	{
-		vec3 ambient;
-		vec3 diffuse;
-		vec3 specular;
+		sampler2D diffuse;
+		sampler2D specular;
 		float shininess;
 	};
 
@@ -24,15 +23,14 @@ R""(
 	in vec3 normalVector;
 	in vec2 textureCoordinates;
 
-	uniform sampler2D shaderTexture;
 	uniform vec3 viewPosition;
-
 	uniform Material material;
 	uniform Light light;
 
 	void main()
 	{
-		vec4 color = texture(shaderTexture, textureCoordinates);
+		vec3 diffuseColor = vec3(texture(material.diffuse, textureCoordinates));
+		vec3 specularColor = vec3(texture(material.specular, textureCoordinates));
 
 		vec3 normal = normalize(normalVector);
 		vec3 lightVector = normalize(light.position - fragmentPosition);  
@@ -42,10 +40,10 @@ R""(
 		vec3 reflectDirection = reflect(-lightVector, normal);
 		float specularWeight = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
 
-		vec3 ambient = light.ambient * material.ambient * light.color;
-		vec3 diffuse = light.diffuse * material.diffuse * diffuseWeight * light.color;
-		vec3 specular = light.specular * material.specular * specularWeight * light.color;
+		vec3 ambient = light.ambient * diffuseColor * light.color;
+		vec3 diffuse = light.diffuse * diffuseColor * diffuseWeight * light.color;
+		vec3 specular = light.specular * specularColor * specularWeight * light.color;
 
-		fragmentColor = vec4((ambient + diffuse + specular), 1.0) * color;
+		fragmentColor = vec4((ambient + diffuse + specular), 1.0);
 	} 
 )""

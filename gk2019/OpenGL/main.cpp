@@ -75,7 +75,8 @@ namespace {
 	{
 		std::unique_ptr<Shader> shader(CreateNormalShader());
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
-		std::unique_ptr<Texture> texture(new Texture("textures/brick.png"));
+		std::unique_ptr<Texture> diffuseTex(new Texture("textures/brick.png", TextureType::Diffuse));
+		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
 		std::unique_ptr<Light> light(GetSampleLight(mesh.get()));
 		std::unique_ptr<Camera> camera(new Camera({ 0.f, 0.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
@@ -91,12 +92,13 @@ namespace {
 
 			camera->Update(wndWidth, wndHeight);
 
-			light->SetColor( {sin(time * 2.0f), sin(time * 0.7f), sin(time * 1.3f)});
-			light->SetPosition({ sinf(time) * 1.8f, 2.f, cosf(time) * 1.8f + 2.f });
+			light->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
+			light->SetPosition({ sinf(time) * 1.8f, 1.f, cosf(time) * 1.8f + 2.f });
 			light->Use(shader.get());
 			light->Render(lightCubeShader.get(), camera.get());
 
-			texture->Use();
+			diffuseTex->Use(shader.get());
+			specularTex->Use(shader.get());
 			mesh->Draw(shader.get(), camera.get(), model);
 
 			glfwSwapBuffers(window);

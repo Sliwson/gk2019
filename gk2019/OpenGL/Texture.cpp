@@ -1,10 +1,13 @@
-#include "Texture.h"
+#include "texture.h"
+#include "shader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
  
-Texture::Texture(const std::string& name)
+Texture::Texture(const std::string& name, TextureType type)
 {
+	this->type = type;
+
 	int width, height, nrChannels;
 	unsigned char* data = stbi_load(name.c_str(), &width, &height, &nrChannels, 0);
 	
@@ -31,7 +34,19 @@ Texture::~Texture()
 	glDeleteTextures(1, &id);
 }
 
-void Texture::Use()
+void Texture::Use(Shader* shader)
 {
+	switch (type)
+	{
+	case TextureType::Diffuse:
+		shader->SetInt("material.diffuse", 0);
+		glActiveTexture(GL_TEXTURE0);
+		break;
+	case TextureType::Specular:
+		shader->SetInt("material.specular", 1);
+		glActiveTexture(GL_TEXTURE1);
+		break;
+	}
+
 	glBindTexture(GL_TEXTURE_2D, id);
 }
