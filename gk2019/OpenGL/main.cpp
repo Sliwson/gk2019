@@ -19,6 +19,9 @@
 namespace {
 	int wndWidth = 800;
 	int wndHeight = 600;
+	std::shared_ptr<Camera> currentCamera;
+	float deltaTime = 0.f;
+	glm::vec2 previousMousePosition = { wndWidth / 2, wndHeight / 2 };
 
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
@@ -27,10 +30,30 @@ namespace {
 		wndHeight = height;
 	}
 
+	void MouseCallback(GLFWwindow* window, double x, double y)
+	{
+		const auto motionDelta = glm::vec2{ x, y } - previousMousePosition;
+		currentCamera->ProcessMouseEvent(motionDelta);
+		previousMousePosition = { x, y };
+	}
+
+	void ScrollCallback(GLFWwindow* window, double x, double y)
+	{
+		currentCamera->ProcessMouseScroll({ x, y });
+	}
+
 	void ProcessInput(GLFWwindow* window)
 	{
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, true);
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+			currentCamera->ProcessKeyboardEvent(CameraDirection::Forward, deltaTime);
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+			currentCamera->ProcessKeyboardEvent(CameraDirection::Backward, deltaTime);
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+			currentCamera->ProcessKeyboardEvent(CameraDirection::Left, deltaTime);
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+			currentCamera->ProcessKeyboardEvent(CameraDirection::Right, deltaTime);
 	}
 
 	GLFWwindow* InitWindowSystem()
@@ -61,6 +84,10 @@ namespace {
 		glEnable(GL_DEPTH_TEST);
 
 		glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
+		glfwSetScrollCallback(window, ScrollCallback);
+		glfwSetCursorPosCallback(window, MouseCallback);
+
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		return window;
 	}
@@ -73,33 +100,36 @@ namespace {
 
 	void MainLoop(GLFWwindow *window)
 	{
+		currentCamera.reset(new Camera({ 0.f, 0.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
 		std::unique_ptr<Shader> shader(CreateNormalShader());
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
 		std::unique_ptr<Texture> diffuseTex(new Texture("textures/brick.png", TextureType::Diffuse));
 		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
 		std::unique_ptr<Light> light(GetSampleLight(mesh.get()));
-		std::unique_ptr<Camera> camera(new Camera({ 0.f, 0.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
 
+		auto prevTime = glfwGetTime();
 		while (!glfwWindowShouldClose(window))
 		{
 			auto time = glfwGetTime();
+			deltaTime = time - prevTime;
+			prevTime = time;
 			
 			const auto model = glm::rotate(glm::mat4(1.f), (float)time, glm::vec3(.02f, .03f, .0f));
 
 			ProcessInput(window);
 			Clear();
 
-			camera->Update(wndWidth, wndHeight);
+			currentCamera->Update(wndWidth, wndHeight);
 
 			light->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
 			light->SetPosition({ sinf(time) * 1.8f, 1.f, cosf(time) * 1.8f + 2.f });
 			light->Use(shader.get());
-			light->Render(lightCubeShader.get(), camera.get());
+			light->Render(lightCubeShader.get(), currentCamera.get());
 
 			diffuseTex->Use(shader.get());
 			specularTex->Use(shader.get());
-			mesh->Draw(shader.get(), camera.get(), model);
+			mesh->Draw(shader.get(), currentCamera.get(), model);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
