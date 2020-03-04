@@ -12,9 +12,14 @@ R""(
 	{
 		vec3 position;
 		vec3 color;
+
 		vec3 ambient;
 		vec3 diffuse;
 		vec3 specular;
+
+		float constant;
+		float linear;
+		float quadratic;
 	};
 
 	out vec4 fragmentColor;
@@ -29,6 +34,9 @@ R""(
 
 	void main()
 	{
+		float distance = length(light.position - fragmentPosition);
+		float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * distance * distance);
+
 		vec3 diffuseColor = vec3(texture(material.diffuse, textureCoordinates));
 		vec3 specularColor = vec3(texture(material.specular, textureCoordinates));
 
@@ -44,6 +52,6 @@ R""(
 		vec3 diffuse = light.diffuse * diffuseColor * diffuseWeight * light.color;
 		vec3 specular = light.specular * specularColor * specularWeight * light.color;
 
-		fragmentColor = vec4((ambient + diffuse + specular), 1.0);
+		fragmentColor = vec4((ambient + diffuse + specular) * attenuation, 1.0);
 	} 
 )""

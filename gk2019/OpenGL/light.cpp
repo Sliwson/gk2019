@@ -22,4 +22,7 @@ void Light::Use(Shader* shader)
 	shader->SetVector3("light.ambient", ambient);
 	shader->SetVector3("light.diffuse", diffuse);
 	shader->SetVector3("light.specular", specular);
+	shader->SetFloat("light.constant", constant);
+	shader->SetFloat("light.linear", linear);
+	shader->SetFloat("light.quadratic", quadratic);
 }
