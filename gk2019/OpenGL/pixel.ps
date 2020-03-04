@@ -27,6 +27,7 @@ R""(
 		vec3 position;
 		vec3 direction;
 		float cutOff;
+		float outerCutOff;
 		vec3 color;
 
 		vec3 ambient;
@@ -49,7 +50,7 @@ R""(
 	uniform PointLight pointLight;
 	uniform SpotLight spotLight;
 
-	vec4 GetPhongColor(vec3 lightPosition, vec3 attenuationProps, vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular)
+	vec4 GetPhongColor(vec3 lightPosition, vec3 attenuationProps, vec3 lightAmbient, vec3 lightDiffuse, vec3 lightSpecular, vec3 color)
 	{
 		float distance = length(lightPosition - fragmentPosition);
 		float attenuation = 1.0 / (attenuationProps.x + attenuationProps.y * distance + attenuationProps.z * distance * distance);
@@ -65,20 +66,30 @@ R""(
 		vec3 reflectDirection = reflect(-pointLightVector, normal);
 		float specularWeight = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
 		
-		vec3 ambient = lightAmbient * diffuseColor * pointLight.color;
-		vec3 diffuse = lightDiffuse * diffuseColor * diffuseWeight * pointLight.color;
-		vec3 specular = lightSpecular * specularColor * specularWeight * pointLight.color;
+		vec3 ambient = lightAmbient * diffuseColor * color;
+		vec3 diffuse = lightDiffuse * diffuseColor * diffuseWeight * color;
+		vec3 specular = lightSpecular * specularColor * specularWeight * color;
 
 		return vec4((ambient + diffuse + specular) * attenuation, 1.0);
 	}
 
 	vec4 GetPointLightColor()
 	{
-		return GetPhongColor(pointLight.position, vec3(pointLight.constant, pointLight.linear, pointLight.quadratic), pointLight.ambient, pointLight.diffuse, pointLight.specular);
+		return GetPhongColor(pointLight.position, vec3(pointLight.constant, pointLight.linear, pointLight.quadratic), pointLight.ambient, pointLight.diffuse, pointLight.specular, pointLight.color);
+	}
+
+	vec4 GetSpotLightColor()
+	{
+		vec3 lightVector = normalize(spotLight.position - fragmentPosition);  
+		float t = dot(lightVector, normalize(-spotLight.direction));
+		float epsilon   = spotLight.cutOff - spotLight.outerCutOff;
+		float intensity = clamp((t - spotLight.outerCutOff) / epsilon, 0.0, 1.0);   
+
+		return GetPhongColor(spotLight.position, vec3(spotLight.constant, spotLight.linear, spotLight.quadratic), spotLight.ambient, spotLight.diffuse, spotLight.specular, spotLight.color) * intensity;
 	}
 
 	void main()
 	{
-		fragmentColor = GetPointLightColor();
+		fragmentColor = GetPointLightColor() + GetSpotLightColor();
 	} 
 )""

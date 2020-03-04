@@ -107,6 +107,7 @@ namespace {
 		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
 		std::unique_ptr<PointLight> light(GetSamplePointLight(mesh.get()));
+		std::unique_ptr<SpotLight> spotLight(GetSampleSpotLight());
 		
 		glm::vec3 cubePositions[] = {
 			glm::vec3(0.0f,  0.0f,  0.0f),
@@ -137,6 +138,10 @@ namespace {
 			light->SetPosition({ sinf(time) * 1.8f, 1.f, cosf(time) * 1.8f + 2.f });
 			light->Use(shader.get());
 			light->Render(lightCubeShader.get(), currentCamera.get());
+			
+			spotLight->SetPosition(currentCamera->GetPosition());
+			spotLight->SetDirection(currentCamera->GetFrontVector());
+			spotLight->Use(shader.get());
 
 			diffuseTex->Use(shader.get());
 			specularTex->Use(shader.get());

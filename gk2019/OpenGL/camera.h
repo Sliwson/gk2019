@@ -21,6 +21,7 @@ public:
 
 	void SetPosition(glm::vec3 newPosition) { position = newPosition; }
 	glm::vec3 GetPosition() const { return position; }
+	glm::vec3 GetFrontVector() const { return front; }
 
 	void Update(int width, int height);
 	void ProcessKeyboardEvent(CameraDirection direction, float dt);

@@ -35,10 +35,11 @@ void SpotLight::Render(Shader* shader, Camera* camera)
 
 void SpotLight::Use(Shader* shader)
 {
-	UseWithName(shader, "directionalLight");
-	shader->SetVector3("directionalLight.position", position);
-	shader->SetVector3("directionalLight.direction", direction);
-	shader->SetFloat("directionalLight.cutoff", cutoff);
+	UseWithName(shader, "spotLight");
+	shader->SetVector3("spotLight.position", position);
+	shader->SetVector3("spotLight.direction", direction);
+	shader->SetFloat("spotLight.cutOff", glm::cos(cutoff));
+	shader->SetFloat("spotLight.outerCutOff", glm::cos(1.5f * cutoff));
 }
 
 void PointLight::Render(Shader* shader, Camera* camera)

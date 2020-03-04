@@ -48,6 +48,9 @@ public:
 	virtual void Render(Shader* shader, Camera* camera) override;
 	virtual void Use(Shader* shader) override;
 
+	void SetPosition(glm::vec3 newPosition) { position = newPosition; }
+	void SetDirection(glm::vec3 newDirection) { direction = newDirection; }
+
 private:
 	glm::vec3 position;
 	glm::vec3 direction;
