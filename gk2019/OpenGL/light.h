@@ -20,6 +20,8 @@ public:
 	virtual void Use(Shader* shader) = 0;
 
 	void SetColor(glm::vec3 newColor) { color = newColor; }
+	void SetOn(bool value) { isOn = value; }
+	bool IsOn() const { return isOn; }
 
 protected:
 	virtual void UseWithName(Shader* shader, std::string name);
@@ -36,6 +38,7 @@ protected:
 
 	Mesh* mesh;
 
+	bool isOn = true;
 	const float scale = 0.1f;
 };
 
@@ -73,10 +76,15 @@ private:
 
 };
 
-//TODO:
 class DirectionalLight : public Light
 {
 public:
-	void Use(Shader* shader) override {}
+	DirectionalLight(Mesh* mesh, glm::vec3 direction, glm::vec3 color, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) :
+		Light(mesh, color, ambient, diffuse, specular), direction(direction) { };
+
+	void Use(Shader* shader) override;
 	void Render(Shader* shader, Camera* camera) override {}
+
+private:
+	glm::vec3 direction;
 };

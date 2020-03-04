@@ -5,19 +5,23 @@
 
 void Light::UseWithName(Shader* shader, std::string name)
 {
+	auto lightColor = isOn ? color : glm::vec3{ 0.f, 0.f, 0.f };
+
 	shader->Use();
-	shader->SetVector3(name + ".color", color);
+	shader->SetVector3(name + ".color", lightColor);
 	shader->SetVector3(name + ".ambient", ambient);
 	shader->SetVector3(name + ".diffuse", diffuse);
 	shader->SetVector3(name + ".specular", specular);
 	shader->SetFloat(name + ".constant", constant);
 	shader->SetFloat(name + ".linear", linear);
 	shader->SetFloat(name + ".quadratic", quadratic);
-
 }
 
 void Light::RenderWithPosition(Shader* shader, Camera* camera, const glm::vec3& position)
 {
+	if (!isOn)
+		return;
+
 	glm::mat4 model(1.f);
 	model = glm::translate(model, position);
 	model = glm::scale(model, glm::vec3(scale));
@@ -51,4 +55,10 @@ void PointLight::Use(Shader* shader)
 {
 	UseWithName(shader, "pointLight");
 	shader->SetVector3("pointLight.position", position);
+}
+
+void DirectionalLight::Use(Shader* shader)
+{
+	UseWithName(shader, "directionalLight");
+	shader->SetVector3("directionalLight.direction", direction);
 }

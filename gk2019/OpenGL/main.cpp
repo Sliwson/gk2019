@@ -19,9 +19,13 @@
 namespace {
 	int wndWidth = 800;
 	int wndHeight = 600;
-	std::shared_ptr<Camera> currentCamera;
 	float deltaTime = 0.f;
 	glm::vec2 previousMousePosition = { wndWidth / 2, wndHeight / 2 };
+	
+	std::shared_ptr<Camera> currentCamera;
+	std::shared_ptr<DirectionalLight> dirLight;
+	std::shared_ptr<PointLight> pointLight;
+	std::shared_ptr<SpotLight> spotLight;
 
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
@@ -44,16 +48,40 @@ namespace {
 
 	void ProcessInput(GLFWwindow* window)
 	{
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		const auto isKeyPressed = [&](int key) {
+			return glfwGetKey(window, key) == GLFW_PRESS;
+		};
+
+		if (isKeyPressed(GLFW_KEY_ESCAPE))
 			glfwSetWindowShouldClose(window, true);
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		if (isKeyPressed(GLFW_KEY_W))
 			currentCamera->ProcessKeyboardEvent(CameraDirection::Forward, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		if (isKeyPressed(GLFW_KEY_S))
 			currentCamera->ProcessKeyboardEvent(CameraDirection::Backward, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		if (isKeyPressed(GLFW_KEY_A))
 			currentCamera->ProcessKeyboardEvent(CameraDirection::Left, deltaTime);
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		if (isKeyPressed(GLFW_KEY_D))
 			currentCamera->ProcessKeyboardEvent(CameraDirection::Right, deltaTime);
+		
+	}
+
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		if (key == GLFW_KEY_L && action == GLFW_PRESS)
+		{
+			dirLight->SetOn(!dirLight->IsOn());
+			std::cout << "Directional light state = " << dirLight->IsOn() << std::endl;
+		}
+		if (key == GLFW_KEY_K && action == GLFW_PRESS)
+		{
+			pointLight->SetOn(!pointLight->IsOn());
+			std::cout << "Point light state = " << pointLight->IsOn() << std::endl;
+		}
+		if (key == GLFW_KEY_J && action == GLFW_PRESS)
+		{
+			spotLight->SetOn(!spotLight->IsOn());
+			std::cout << "Spot light state = " << spotLight->IsOn() << std::endl;
+		}
 	}
 
 	GLFWwindow* InitWindowSystem()
@@ -85,6 +113,7 @@ namespace {
 
 		glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
 		glfwSetScrollCallback(window, ScrollCallback);
+		glfwSetKeyCallback(window, KeyCallback);
 		glfwSetCursorPosCallback(window, MouseCallback);
 
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -92,9 +121,11 @@ namespace {
 		return window;
 	}
 
-	void Clear()
+	void Clear(glm::vec3 fadeColor)
 	{
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		const glm::vec3 backgroundColor = { 0.58f, 0.8f, 1.f };
+		const auto color = backgroundColor * fadeColor;
+		glClearColor(color.x, color.y, color.z, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
@@ -106,8 +137,9 @@ namespace {
 		std::unique_ptr<Texture> diffuseTex(new Texture("textures/brick.png", TextureType::Diffuse));
 		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
-		std::unique_ptr<PointLight> light(GetSamplePointLight(mesh.get()));
-		std::unique_ptr<SpotLight> spotLight(GetSampleSpotLight());
+		pointLight.reset(GetSamplePointLight(mesh.get()));
+		spotLight.reset(GetSampleSpotLight());
+		dirLight.reset(GetSampleDirectionalLight());
 		
 		glm::vec3 cubePositions[] = {
 			glm::vec3(0.0f,  0.0f,  0.0f),
@@ -129,19 +161,23 @@ namespace {
 			deltaTime = time - prevTime;
 			prevTime = time;
 			
+			glm::vec3 dayNightColor = glm::vec3(glm::clamp(sin(0.5f * time), -0.5f, 0.5f) + 0.5f);
 			ProcessInput(window);
-			Clear();
+			Clear(dayNightColor);
 
 			currentCamera->Update(wndWidth, wndHeight);
 
-			light->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
-			light->SetPosition({ sinf(time) * 1.8f, 1.f, cosf(time) * 1.8f + 2.f });
-			light->Use(shader.get());
-			light->Render(lightCubeShader.get(), currentCamera.get());
-			
+			pointLight->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
+			pointLight->SetPosition({ sinf(time) * 1.8f, 1.f, cosf(time) * 1.8f + 2.f });
+			pointLight->Use(shader.get());
+			pointLight->Render(lightCubeShader.get(), currentCamera.get());
+
 			spotLight->SetPosition(currentCamera->GetPosition());
 			spotLight->SetDirection(currentCamera->GetFrontVector());
 			spotLight->Use(shader.get());
+
+			dirLight->Use(shader.get());
+			dirLight->SetColor(dayNightColor);
 
 			diffuseTex->Use(shader.get());
 			specularTex->Use(shader.get());
