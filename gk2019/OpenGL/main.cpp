@@ -106,7 +106,7 @@ namespace {
 		std::unique_ptr<Texture> diffuseTex(new Texture("textures/brick.png", TextureType::Diffuse));
 		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
 		std::unique_ptr<Mesh> mesh(GetCubeMesh());
-		std::unique_ptr<Light> light(GetSampleLight(mesh.get()));
+		std::unique_ptr<PointLight> light(GetSamplePointLight(mesh.get()));
 		
 		glm::vec3 cubePositions[] = {
 			glm::vec3(0.0f,  0.0f,  0.0f),

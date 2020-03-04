@@ -3,7 +3,20 @@
 #include "mesh.h"
 #include "camera.h"
 
-void Light::Render(Shader* shader, Camera* camera)
+void Light::UseWithName(Shader* shader, std::string name)
+{
+	shader->Use();
+	shader->SetVector3(name + ".color", color);
+	shader->SetVector3(name + ".ambient", ambient);
+	shader->SetVector3(name + ".diffuse", diffuse);
+	shader->SetVector3(name + ".specular", specular);
+	shader->SetFloat(name + ".constant", constant);
+	shader->SetFloat(name + ".linear", linear);
+	shader->SetFloat(name + ".quadratic", quadratic);
+
+}
+
+void Light::RenderWithPosition(Shader* shader, Camera* camera, const glm::vec3& position)
 {
 	glm::mat4 model(1.f);
 	model = glm::translate(model, position);
@@ -14,15 +27,27 @@ void Light::Render(Shader* shader, Camera* camera)
 	mesh->Draw(shader, camera, model);
 }
 
-void Light::Use(Shader* shader)
+void SpotLight::Render(Shader* shader, Camera* camera)
 {
-	shader->Use();
-	shader->SetVector3("light.position", position);
-	shader->SetVector3("light.color", color);
-	shader->SetVector3("light.ambient", ambient);
-	shader->SetVector3("light.diffuse", diffuse);
-	shader->SetVector3("light.specular", specular);
-	shader->SetFloat("light.constant", constant);
-	shader->SetFloat("light.linear", linear);
-	shader->SetFloat("light.quadratic", quadratic);
+	//do not render directional light cube
+	return;
+}
+
+void SpotLight::Use(Shader* shader)
+{
+	UseWithName(shader, "directionalLight");
+	shader->SetVector3("directionalLight.position", position);
+	shader->SetVector3("directionalLight.direction", direction);
+	shader->SetFloat("directionalLight.cutoff", cutoff);
+}
+
+void PointLight::Render(Shader* shader, Camera* camera)
+{
+	RenderWithPosition(shader, camera, position);
+}
+
+void PointLight::Use(Shader* shader)
+{
+	UseWithName(shader, "pointLight");
+	shader->SetVector3("pointLight.position", position);
 }
