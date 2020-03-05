@@ -6,4 +6,6 @@
 struct Material
 {
 	float shininess;
+	std::unique_ptr<Texture> diffuse;
+	std::unique_ptr<Texture> specular;
 };

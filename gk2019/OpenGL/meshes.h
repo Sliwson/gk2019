@@ -2,16 +2,10 @@
 
 #include "mesh.h"
 #include "vertex.h"
+#include "material.h"
 #include <numeric>
 
-Material GetSimpleMaterial()
-{
-	Material m;
-	m.shininess = 32.f;
-	return m;
-}
-
-Mesh* GetTriangleMesh()
+Mesh* GetTriangleMesh(Material* material)
 {
 	std::vector<Vertex> vertices{ {
 	{ {0.5f,  0.5f, 0.0f}, {0.f, 0.f, 0.f}, {1.0f, 1.0f}}, // top right
@@ -25,10 +19,10 @@ Mesh* GetTriangleMesh()
 		1, 2, 3    // second triangle
 	};
 
-	return new Mesh(vertices, indices, GetSimpleMaterial());
+	return new Mesh(vertices, indices, material);
 }
 
-Mesh* GetCubeMesh()
+Mesh* GetCubeMesh(Material* material)
 {
 	std::vector<Vertex> vertices{ {
 	{{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
@@ -77,6 +71,6 @@ Mesh* GetCubeMesh()
 	std::vector<unsigned int> indices(vertices.size());
 	std::iota(std::begin(indices), std::end(indices), 0);
 
-	return new Mesh(vertices, indices, GetSimpleMaterial());
+	return new Mesh(vertices, indices, material);
 }
 

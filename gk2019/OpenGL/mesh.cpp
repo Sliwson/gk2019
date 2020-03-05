@@ -3,11 +3,11 @@
 #include "vertex.h"
 #include "camera.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, Material material)
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices, Material* material)
 {
     this->vertices = vertices;
     this->indices = indices;
-    this->material = material;
+    this->material.reset(material);
 
     Init();
 }
@@ -23,7 +23,11 @@ void Mesh::Draw(Shader* shader, Camera* camera, const glm::mat4& model)
     const auto normal = glm::mat3(transpose(inverse(model)));
     shader->SetMatrix3("normalMatrix", normal);
 
-    shader->SetFloat("material.shininess", material.shininess); 
+    shader->SetFloat("material.shininess", material->shininess); 
+    if (material->diffuse != nullptr)
+        material->diffuse->Use(shader);
+    if (material->specular != nullptr)
+        material->specular->Use(shader);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
