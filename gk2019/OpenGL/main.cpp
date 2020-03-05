@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <numeric>
 
+#include "model.h"
+#include "bowlingModel.h"
 #include "mesh.h"
 #include "meshes.h"
 #include "shader.h"
@@ -131,28 +133,25 @@ namespace {
 
 	void MainLoop(GLFWwindow *window)
 	{
-		currentCamera.reset(new Camera({ 0.f, 0.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
+		currentCamera.reset(new Camera({ 0.f, 1.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
+
 		std::unique_ptr<Shader> shader(CreateNormalShader());
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
-		std::unique_ptr<Texture> diffuseTex(new Texture("textures/brick.png", TextureType::Diffuse));
-		std::unique_ptr<Texture> specularTex(new Texture("textures/brick.png", TextureType::Specular));
-		std::unique_ptr<Mesh> mesh(GetCubeMesh());
+		
+		std::unique_ptr<Texture> whiteSpec(new Texture("textures/white.png", TextureType::Specular));
+		std::unique_ptr<Texture> whiteDiff(new Texture("textures/white.png", TextureType::Diffuse));
+
+		std::unique_ptr<Mesh> mesh(GetCubeMesh(new Material { 
+			32.f, 
+			std::unique_ptr<Texture>(new Texture("textures/brick.png", TextureType::Diffuse)),
+			std::unique_ptr<Texture>(new Texture("textures/brick.png", TextureType::Specular))
+		}));
+
 		pointLight.reset(GetSamplePointLight(mesh.get()));
 		spotLight.reset(GetSampleSpotLight());
 		dirLight.reset(GetSampleDirectionalLight());
-		
-		glm::vec3 cubePositions[] = {
-			glm::vec3(0.0f,  0.0f,  0.0f),
-			glm::vec3(2.0f,  5.0f, -15.0f),
-			glm::vec3(-1.5f, -2.2f, -2.5f),
-			glm::vec3(-3.8f, -2.0f, -12.3f),
-			glm::vec3(2.4f, -0.4f, -3.5f),
-			glm::vec3(-1.7f,  3.0f, -7.5f),
-			glm::vec3(1.3f, -2.0f, -2.5f),
-			glm::vec3(1.5f,  2.0f, -2.5f),
-			glm::vec3(1.5f,  0.2f, -1.5f),
-			glm::vec3(-1.3f,  1.0f, -1.5f)
-		};
+
+		std::unique_ptr<BowlingModel> model(new BowlingModel("models/bowling.obj"));
 
 		float prevTime = static_cast<float>(glfwGetTime());
 		while (!glfwWindowShouldClose(window))
@@ -168,7 +167,7 @@ namespace {
 			currentCamera->Update(wndWidth, wndHeight);
 
 			pointLight->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
-			pointLight->SetPosition({ sinf(time) * 1.8f, 1.f, cosf(time) * 1.8f + 2.f });
+			pointLight->SetPosition({ sinf(time) * 1.8f, 1.3f, cosf(time) * 1.8f + 2.f });
 			pointLight->Use(shader.get());
 			pointLight->Render(lightCubeShader.get(), currentCamera.get());
 
@@ -179,14 +178,16 @@ namespace {
 			dirLight->Use(shader.get());
 			dirLight->SetColor(dayNightColor);
 
-			diffuseTex->Use(shader.get());
-			specularTex->Use(shader.get());
+			//render brick floor
+			for (int y = -3; y <= 3; y++)
+				for (int x = -3; x <= 3; x++)
+					mesh->Draw(shader.get(), currentCamera.get(), glm::translate(glm::mat4(1.f), { x, -0.5, y }));
 
-			for (int i = 0; i < 10; i++)
-			{
-				const auto model = glm::translate(glm::mat4(1.f), cubePositions[i]) * glm::rotate(glm::mat4(1.f), (float)(time + 1.f * i), glm::vec3(.02f, .03f, .0f)); 
-				mesh->Draw(shader.get(), currentCamera.get(), model);
-			}
+			//my model has empty textures, so override
+			whiteDiff->Use(shader.get());
+			whiteSpec->Use(shader.get());
+			model->Update(deltaTime);
+			model->Render(shader.get(), currentCamera.get(), glm::mat4(1.f));
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
