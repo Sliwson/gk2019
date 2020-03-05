@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bowlingModel.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="light.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bowlingModel.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="lights.h" />
