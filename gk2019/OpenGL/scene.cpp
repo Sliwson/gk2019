@@ -95,32 +95,36 @@ void SampleScene::ScrollCallback(GLFWwindow* window, double x, double y)
 
 void SampleScene::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_L && action == GLFW_PRESS)
+	const auto isKeyPressed = [&](int keyId) {
+		return key == keyId && action == GLFW_PRESS;
+	};
+
+	if (isKeyPressed(GLFW_KEY_L))
 	{
 		dirLight->SetOn(!dirLight->IsOn());
 		std::cout << "Directional light state = " << dirLight->IsOn() << std::endl;
 	}
-	if (key == GLFW_KEY_K && action == GLFW_PRESS)
+	if (isKeyPressed(GLFW_KEY_K))
 	{
 		pointLight->SetOn(!pointLight->IsOn());
 		std::cout << "Point light state = " << pointLight->IsOn() << std::endl;
 	}
-	if (key == GLFW_KEY_J && action == GLFW_PRESS)
+	if (isKeyPressed(GLFW_KEY_J))
 	{
 		spotLight->SetOn(!spotLight->IsOn());
 		std::cout << "Spot light state = " << spotLight->IsOn() << std::endl;
 	}
-	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+	if (isKeyPressed(GLFW_KEY_1))
 	{
 		currentCamera = camera1;
 		std::cout << "Camera active = 1" << std::endl;
 	}
-	if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+	if (isKeyPressed(GLFW_KEY_2))
 	{
 		currentCamera = camera2;
 		std::cout << "Camera active = 2" << std::endl;
 	}
-	if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+	if (isKeyPressed(GLFW_KEY_3))
 	{
 		currentCamera = camera3;
 		std::cout << "Camera active = 3" << std::endl;
