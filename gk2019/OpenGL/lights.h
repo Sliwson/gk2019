@@ -1,7 +1,6 @@
 #pragma once
 
 #include "light.h"
-#include "mesh.h"
 
 PointLight* GetSamplePointLight(Mesh* mesh)
 {
