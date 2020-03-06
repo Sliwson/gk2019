@@ -25,6 +25,9 @@ namespace {
 	glm::vec2 previousMousePosition = { wndWidth / 2, wndHeight / 2 };
 	
 	std::shared_ptr<Camera> currentCamera;
+	std::shared_ptr<MovableCamera> camera1;
+	std::shared_ptr<LookAtCamera> camera2;
+	std::shared_ptr<FollowingCamera> camera3;
 	std::shared_ptr<DirectionalLight> dirLight;
 	std::shared_ptr<PointLight> pointLight;
 	std::shared_ptr<SpotLight> spotLight;
@@ -39,13 +42,13 @@ namespace {
 	void MouseCallback(GLFWwindow* window, double x, double y)
 	{
 		const auto motionDelta = glm::vec2{ x, y } - previousMousePosition;
-		currentCamera->ProcessMouseEvent(motionDelta);
+		camera1->ProcessMouseEvent(motionDelta);
 		previousMousePosition = { x, y };
 	}
 
 	void ScrollCallback(GLFWwindow* window, double x, double y)
 	{
-		currentCamera->ProcessMouseScroll({ x, y });
+		camera1->ProcessMouseScroll({ x, y });
 	}
 
 	void ProcessInput(GLFWwindow* window)
@@ -56,14 +59,15 @@ namespace {
 
 		if (isKeyPressed(GLFW_KEY_ESCAPE))
 			glfwSetWindowShouldClose(window, true);
+
 		if (isKeyPressed(GLFW_KEY_W))
-			currentCamera->ProcessKeyboardEvent(CameraDirection::Forward, deltaTime);
+			camera1->ProcessKeyboardEvent(CameraDirection::Forward, deltaTime);
 		if (isKeyPressed(GLFW_KEY_S))
-			currentCamera->ProcessKeyboardEvent(CameraDirection::Backward, deltaTime);
+			camera1->ProcessKeyboardEvent(CameraDirection::Backward, deltaTime);
 		if (isKeyPressed(GLFW_KEY_A))
-			currentCamera->ProcessKeyboardEvent(CameraDirection::Left, deltaTime);
+			camera1->ProcessKeyboardEvent(CameraDirection::Left, deltaTime);
 		if (isKeyPressed(GLFW_KEY_D))
-			currentCamera->ProcessKeyboardEvent(CameraDirection::Right, deltaTime);
+			camera1->ProcessKeyboardEvent(CameraDirection::Right, deltaTime);
 		
 	}
 
@@ -83,6 +87,21 @@ namespace {
 		{
 			spotLight->SetOn(!spotLight->IsOn());
 			std::cout << "Spot light state = " << spotLight->IsOn() << std::endl;
+		}
+		if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		{
+			currentCamera = camera1;
+			std::cout << "Camera active = 1" << std::endl;
+		}
+		if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+		{
+			currentCamera = camera2;
+			std::cout << "Camera active = 2" << std::endl;
+		}
+		if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+		{
+			currentCamera = camera3;
+			std::cout << "Camera active = 3" << std::endl;
 		}
 	}
 
@@ -133,7 +152,10 @@ namespace {
 
 	void MainLoop(GLFWwindow *window)
 	{
-		currentCamera.reset(new Camera({ 0.f, 1.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
+		camera1.reset(new MovableCamera({ 0.f, 1.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
+		camera2.reset(new LookAtCamera({ 0.f, 1.f, 5.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
+		camera3.reset(new FollowingCamera({ 2.f, 4.f, 2.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
+		currentCamera = camera1;
 
 		std::unique_ptr<Shader> shader(CreateNormalShader());
 		std::unique_ptr<Shader> lightCubeShader(CreateLightCubeShader());
@@ -165,6 +187,8 @@ namespace {
 			Clear(dayNightColor);
 
 			currentCamera->Update(wndWidth, wndHeight);
+			camera2->SetTarget(model->GetSpherePosition());
+			camera3->SetTarget(model->GetSpherePosition());
 
 			pointLight->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
 			pointLight->SetPosition({ sinf(time) * 1.8f, 1.3f, cosf(time) * 1.8f + 2.f });

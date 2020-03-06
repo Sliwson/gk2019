@@ -21,7 +21,7 @@ void Camera::Update(int width, int height)
 	up = glm::normalize(glm::cross(right, front));
 }
 
-void Camera::ProcessKeyboardEvent(CameraDirection direction, float dt)
+void MovableCamera::ProcessKeyboardEvent(CameraDirection direction, float dt)
 {
 	float velocity = movementSpeed * dt;
 	switch (direction)
@@ -40,7 +40,7 @@ void Camera::ProcessKeyboardEvent(CameraDirection direction, float dt)
 	}
 }
 
-void Camera::ProcessMouseEvent(glm::vec2 offset)
+void MovableCamera::ProcessMouseEvent(glm::vec2 offset)
 {
 	offset *= mouseSensitivity;
 
@@ -49,8 +49,19 @@ void Camera::ProcessMouseEvent(glm::vec2 offset)
 	pitch = glm::clamp(pitch, -89.f, 89.f);
 }
 
-void Camera::ProcessMouseScroll(glm::vec2 offset)
+void MovableCamera::ProcessMouseScroll(glm::vec2 offset)
 {
 	zoom -= offset.y;
 	zoom = glm::clamp(zoom, 1.f, 45.f);
+}
+
+void LookAtCamera::SetTarget(glm::vec3 target)
+{
+	front = target - position;
+}
+
+void FollowingCamera::SetTarget(glm::vec3 target)
+{
+	position = target + offset;
+	front = target - position;
 }
