@@ -44,7 +44,12 @@ void SampleScene::Update(float dt)
 	ProcessInput();
 
 	glm::vec3 dayNightColor = glm::vec3(glm::clamp(sin(0.5f * time), -0.5f, 0.5f) + 0.5f);
+	if (useFog) dayNightColor = { 0.5f, 0.5f, 0.5f };
 	Clear(dayNightColor);
+
+	shader->SetBool("blinnPhong", useBlinnPhong);
+	shader->SetBool("useFog", useFog);
+	shader->SetVector3("backgroundColor", dayNightColor);
 
 	currentCamera->Update(wndWidth, wndHeight);
 	camera2->SetTarget(model->GetSpherePosition());
@@ -56,7 +61,7 @@ void SampleScene::Update(float dt)
 	pointLight->Render(lightCubeShader.get(), currentCamera.get());
 
 	spotLight->SetPosition(currentCamera->GetPosition());
-	spotLight->SetDirection(currentCamera->GetFrontVector());
+	spotLight->SetDirection(currentCamera->GetFrontVector() + reflectorOffset);
 	spotLight->Use(shader.get());
 
 	dirLight->Use(shader.get());
@@ -129,6 +134,19 @@ void SampleScene::KeyCallback(GLFWwindow* window, int key, int scancode, int act
 		currentCamera = camera3;
 		std::cout << "Camera active = 3" << std::endl;
 	}
+	if (isKeyPressed(GLFW_KEY_P))
+	{
+		useBlinnPhong = !useBlinnPhong;
+		if (useBlinnPhong)
+			std::cout << "Using Blinn model" << std::endl;
+		else
+			std::cout << "Using Phong model" << std::endl;
+	}
+	if (isKeyPressed(GLFW_KEY_F))
+	{
+		useFog = !useFog;
+		std::cout << "Use fog = " << useFog << std::endl;
+	}
 }
 	
 void SampleScene::ProcessInput()
@@ -147,6 +165,14 @@ void SampleScene::ProcessInput()
 		camera1->ProcessKeyboardEvent(CameraDirection::Left, lastDt);
 	if (isKeyPressed(GLFW_KEY_D))
 		camera1->ProcessKeyboardEvent(CameraDirection::Right, lastDt);
+	if (isKeyPressed(GLFW_KEY_UP))
+		reflectorOffset.y += lastDt;
+	if (isKeyPressed(GLFW_KEY_RIGHT))
+		reflectorOffset.x += lastDt;
+	if (isKeyPressed(GLFW_KEY_DOWN))
+		reflectorOffset.y -= lastDt;
+	if (isKeyPressed(GLFW_KEY_LEFT))
+		reflectorOffset.x -= lastDt;
 }
 
 void SampleScene::Clear(glm::vec3 fadeColor)

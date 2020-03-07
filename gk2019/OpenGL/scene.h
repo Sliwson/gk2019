@@ -68,5 +68,8 @@ protected:
 	std::shared_ptr<SpotLight> spotLight;
 
 	glm::vec2 previousMousePosition = { wndWidth / 2, wndHeight / 2 };
+	glm::vec3 reflectorOffset = { 0.f, 0.f, 0.f };
+	bool useBlinnPhong = false;
+	bool useFog = false;
 	float time = 0;
 };
