@@ -18,7 +18,9 @@ SampleScene::SampleScene(GLFWwindow* window) : Scene(window)
 	camera3.reset(new FollowingCamera({ 2.f, 4.f, 2.f }, 45.f, 0.1f, 100.f, wndWidth, wndHeight));
 	currentCamera = camera1;
 
-	shader.reset(CreateNormalShader());
+	gouraudShader.reset(CreateGouraudShader());
+	phongShader.reset(CreateNormalShader());
+	currentShader = phongShader;
 	lightCubeShader.reset(CreateLightCubeShader());
 	
 	whiteSpec.reset(new Texture("textures/white.png", TextureType::Specular));
@@ -47,9 +49,9 @@ void SampleScene::Update(float dt)
 	if (useFog) dayNightColor = { 0.5f, 0.5f, 0.5f };
 	Clear(dayNightColor);
 
-	shader->SetBool("blinnPhong", useBlinnPhong);
-	shader->SetBool("useFog", useFog);
-	shader->SetVector3("backgroundColor", dayNightColor);
+	currentShader->SetBool("blinnPhong", useBlinnPhong);
+	currentShader->SetBool("useFog", useFog);
+	currentShader->SetVector3("backgroundColor", dayNightColor);
 
 	currentCamera->Update(wndWidth, wndHeight);
 	camera2->SetTarget(model->GetSpherePosition());
@@ -57,26 +59,26 @@ void SampleScene::Update(float dt)
 
 	pointLight->SetColor( { abs(sin(time * 2.0f)), abs(sin(time * 0.7f)), abs(sin(time * 1.3f))});
 	pointLight->SetPosition({ sinf(time) * 1.8f, 1.3f, cosf(time) * 1.8f + 2.f });
-	pointLight->Use(shader.get());
+	pointLight->Use(currentShader.get());
 	pointLight->Render(lightCubeShader.get(), currentCamera.get());
 
 	spotLight->SetPosition(currentCamera->GetPosition());
 	spotLight->SetDirection(currentCamera->GetFrontVector() + reflectorOffset);
-	spotLight->Use(shader.get());
+	spotLight->Use(currentShader.get());
 
-	dirLight->Use(shader.get());
+	dirLight->Use(currentShader.get());
 	dirLight->SetColor(dayNightColor);
 
 	//render brick floor
 	for (int y = -3; y <= 3; y++)
 		for (int x = -3; x <= 3; x++)
-			mesh->Draw(shader.get(), currentCamera.get(), glm::translate(glm::mat4(1.f), { x, -0.5, y }));
+			mesh->Draw(currentShader.get(), currentCamera.get(), glm::translate(glm::mat4(1.f), { x, -0.5, y }));
 
 	//my model has empty textures, so override
-	whiteDiff->Use(shader.get());
-	whiteSpec->Use(shader.get());
+	whiteDiff->Use(currentShader.get());
+	whiteSpec->Use(currentShader.get());
 	model->Update(dt);
-	model->Render(shader.get(), currentCamera.get(), glm::mat4(1.f));
+	model->Render(currentShader.get(), currentCamera.get(), glm::mat4(1.f));
 }
 
 void SampleScene::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -146,6 +148,16 @@ void SampleScene::KeyCallback(GLFWwindow* window, int key, int scancode, int act
 	{
 		useFog = !useFog;
 		std::cout << "Use fog = " << useFog << std::endl;
+	}
+	if (isKeyPressed(GLFW_KEY_G))
+	{
+		currentShader = gouraudShader;
+		std::cout << "Using gouraud shading" << std::endl;
+	}
+	if (isKeyPressed(GLFW_KEY_N))
+	{
+		currentShader = phongShader;
+		std::cout << "Using phong shading" << std::endl;
 	}
 }
 	

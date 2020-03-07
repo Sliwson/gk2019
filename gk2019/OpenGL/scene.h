@@ -52,7 +52,9 @@ protected:
 	virtual void ProcessInput();
 	virtual void Clear(glm::vec3 fadeColor);
 	
-	std::unique_ptr<Shader> shader;
+	std::shared_ptr<Shader> currentShader;
+	std::shared_ptr<Shader> phongShader;
+	std::shared_ptr<Shader> gouraudShader;
 	std::unique_ptr<Shader> lightCubeShader;
 	std::unique_ptr<Texture> whiteSpec;
 	std::unique_ptr<Texture> whiteDiff;

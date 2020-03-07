@@ -25,3 +25,15 @@ Shader* CreateLightCubeShader()
 
 	return new Shader(vertexShaderSource, pixelShaderSource);
 }
+
+Shader* CreateGouraudShader()
+{
+	const std::string vertexShaderSource =
+#include "gouraud.vs"
+			;
+		const std::string pixelShaderSource =
+#include "gouraud.ps"
+			;
+
+	return new Shader(vertexShaderSource, pixelShaderSource);
+}

@@ -106,5 +106,11 @@
     <None Include="light.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="gouraud.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="gouraud.ps">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
