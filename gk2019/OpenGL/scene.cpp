@@ -23,9 +23,6 @@ SampleScene::SampleScene(GLFWwindow* window) : Scene(window)
 	currentShader = phongShader;
 	lightCubeShader.reset(CreateLightCubeShader());
 	
-	whiteSpec.reset(new Texture("textures/white.png", TextureType::Specular));
-	whiteDiff.reset(new Texture("textures/white.png", TextureType::Diffuse));
-
 	mesh.reset(GetCubeMesh(new Material { 
 		32.f, 
 		std::unique_ptr<Texture>(new Texture("textures/brick.png", TextureType::Diffuse)),
@@ -45,13 +42,12 @@ void SampleScene::Update(float dt)
 	lastDt = dt;
 	ProcessInput();
 
-	glm::vec3 dayNightColor = glm::vec3(glm::clamp(sin(0.5f * time), -0.5f, 0.5f) + 0.5f);
-	if (useFog) dayNightColor = { 0.5f, 0.5f, 0.5f };
-	Clear(dayNightColor);
+	const auto background = GetBackgroundColor();
+	Clear(background);
 
 	currentShader->SetBool("blinnPhong", useBlinnPhong);
 	currentShader->SetBool("useFog", useFog);
-	currentShader->SetVector3("backgroundColor", dayNightColor);
+	currentShader->SetVector3("backgroundColor", background);
 
 	currentCamera->Update(wndWidth, wndHeight);
 	camera2->SetTarget(model->GetSpherePosition());
@@ -67,16 +63,13 @@ void SampleScene::Update(float dt)
 	spotLight->Use(currentShader.get());
 
 	dirLight->Use(currentShader.get());
-	dirLight->SetColor(dayNightColor);
+	dirLight->SetColor(GetDayNightIntensity());
 
 	//render brick floor
 	for (int y = -3; y <= 3; y++)
 		for (int x = -3; x <= 3; x++)
 			mesh->Draw(currentShader.get(), currentCamera.get(), glm::translate(glm::mat4(1.f), { x, -0.5, y }));
 
-	//my model has empty textures, so override
-	whiteDiff->Use(currentShader.get());
-	whiteSpec->Use(currentShader.get());
 	model->Update(dt);
 	model->Render(currentShader.get(), currentCamera.get(), glm::mat4(1.f));
 }
@@ -187,10 +180,24 @@ void SampleScene::ProcessInput()
 		reflectorOffset.x -= lastDt;
 }
 
-void SampleScene::Clear(glm::vec3 fadeColor)
+void SampleScene::Clear(glm::vec3 color)
 {
-	const glm::vec3 backgroundColor = { 0.58f, 0.8f, 1.f };
-	const auto color = backgroundColor * fadeColor;
 	glClearColor(color.x, color.y, color.z, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+glm::vec3 SampleScene::GetBackgroundColor() const
+{
+	if (useFog)
+		return { 0.5f, 0.5f, 0.5f };
+
+	const glm::vec3 backgroundColor = { 0.58f, 0.8f, 1.f };
+	const auto dayNightColor = GetDayNightIntensity();
+	
+	return dayNightColor * backgroundColor;
+}
+
+glm::vec3 SampleScene::GetDayNightIntensity() const
+{
+	return glm::vec3(glm::clamp(sin(0.5f * time), -0.5f, 0.5f) + 0.5f);
 }

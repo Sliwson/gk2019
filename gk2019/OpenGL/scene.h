@@ -51,13 +51,13 @@ public:
 protected:
 	virtual void ProcessInput();
 	virtual void Clear(glm::vec3 fadeColor);
+	glm::vec3 GetBackgroundColor() const;
+	glm::vec3 GetDayNightIntensity() const;
 	
 	std::shared_ptr<Shader> currentShader;
 	std::shared_ptr<Shader> phongShader;
 	std::shared_ptr<Shader> gouraudShader;
 	std::unique_ptr<Shader> lightCubeShader;
-	std::unique_ptr<Texture> whiteSpec;
-	std::unique_ptr<Texture> whiteDiff;
 	std::unique_ptr<Mesh> mesh;
 	std::unique_ptr<BowlingModel> model;
 
