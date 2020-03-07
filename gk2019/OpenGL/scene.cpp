@@ -63,7 +63,7 @@ void SampleScene::Update(float dt)
 	spotLight->Use(currentShader.get());
 
 	dirLight->Use(currentShader.get());
-	dirLight->SetColor(GetDayNightIntensity());
+	dirLight->SetColor(GetDayNightIntensity() * 0.75f);
 
 	//render brick floor
 	for (int y = -3; y <= 3; y++)
